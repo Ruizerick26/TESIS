@@ -2,5 +2,64 @@ import { Schema, model } from "mongoose"
 import bcrypt from 'bcryptjs'
 
 const usuarioSchema = new Schema({
-    
+    nombre: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    apellido: {
+        type: String,
+        required : true,
+        trim: true
+    },
+    email:{
+        type: String,
+        required : true,
+        trim: true
+    },
+    FechaNacimiento:{
+        type: Date,
+        required: true,
+        trim: true,
+        default: Date.now()
+    },
+    Genero:{
+        type: String,
+        required: true,
+        trim: true
+    },
+    password:{
+        type: String,
+        required: true,
+        trim: true
+    },
+    token:{
+        type: String,
+        default: null
+    }
+
+},{
+    timestamps: true
 })
+
+//encriptar password
+
+usuarioSchema.method.matchPassword = async function(password){
+    const salt = await bcrypt.genSalt(10)
+    const passwordEncryp = await bcrypt.hash(password,salt)
+    return passwordEncryp
+}
+
+//comparar el password con la base
+usuarioSchema.methods.matchPassword = async function(password){
+    const response = await bcrypt.compare(password,this.password)
+    return response
+}
+
+//crear token
+usuarioSchema.methods.crearToken = function(){
+    const tokenGenerado = this.token = Math.random().toString(36).slice(2) 
+    return tokenGenerado  
+}
+
+export default model('usuario', usuarioSchema)
