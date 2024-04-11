@@ -16,3 +16,5 @@ router.post('/nuevopasword', (res,req) => res.send("Nueva contraseña"))
 router.put('/usuario/actualizarPassword', (res,req)=> res.send("ACTUALZIAR CONTRASEÑA"))
 router.put('/usuario/:id', (res,req)=> res.send("PERFIL DEL USUARIO"))
 router.get('/usuario/:id', (res,req)=> res.send("ACTUALIZAR PERFIL"))
+
+export default router
