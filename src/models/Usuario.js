@@ -17,7 +17,7 @@ const usuarioSchema = new Schema({
         required : true,
         trim: true
     },
-    FechaNacimiento:{
+    fechaNacimiento:{
         type: Date,
         required: true,
         trim: true,
@@ -36,6 +36,10 @@ const usuarioSchema = new Schema({
     token:{
         type: String,
         default: null
+    },
+    confirmar:{
+        type: Boolean,
+        default: false
     }
 
 },{
@@ -44,7 +48,7 @@ const usuarioSchema = new Schema({
 
 //encriptar password
 
-usuarioSchema.method.matchPassword = async function(password){
+usuarioSchema.methods.encrypPassword = async function(password){
     const salt = await bcrypt.genSalt(10)
     const passwordEncryp = await bcrypt.hash(password,salt)
     return passwordEncryp
