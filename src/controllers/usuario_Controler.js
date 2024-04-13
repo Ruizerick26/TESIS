@@ -32,8 +32,19 @@ const login = (req,res)=>{
     res.status(200).json({msg:"Usuario logueado"})
 }
 
-const confirmemail = (req,res)=>{
-    res.status(200).json({msg:"Usuario confirmado"})
+const confirmemail = async (req,res)=>{
+
+    if(!(req.params.token)) return res.status(404).json({msg:"Lo sentimos, no se puede validar la cuenta"})
+
+    const usuarioBDD = await Usuario.findOne({token:req.params.token})
+    if(!usuarioBDD?.token) return res.status(404).json({msg:"La cuenta ya ha sido confirmada"})
+
+
+    usuarioBDD.token = null
+    usuarioBDD.confirmar=true
+    await usuarioBDD.save()
+    res.status(200).json({msg:"Token confirmado, ya puedes iniciar sesión"}) 
+
 }
 
 export {
