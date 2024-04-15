@@ -28,8 +28,32 @@ const register = async(req,res)=>{
     res.status(200).json({msg:"Revisa tu correo electronico"})
 }
 
-const login = (req,res)=>{
-    res.status(200).json({msg:"Usuario logueado"})
+const login = async (req,res)=>{
+    const {email, password} = req.body
+
+    Object.entries(Object.values(req.body)).length ===0 ? console.log("esta vacio"):console.log("esta lleno")
+    if (Object.entries(Object.values(req.body)).length ===0) return res.status(404).json({msg:"Lo sentimos, debes llenar todos los campos"})
+
+    const UsuarioBDD = await Usuario.findOne({email}).select("-status -__v -token -updatedAt -createdAt")
+    if(!UsuarioBDD) return res.status(404).json({msg:"Usuario no registrado"})
+
+    if(UsuarioBDD?.confirmar === false) return res.status(404).json({msg:"Debes confirmar tu cuenta primero"})
+
+    const VerificarPassword = await UsuarioBDD.matchPassword(password)
+    if(!VerificarPassword) return res.status(404).json({msg:"Contraseña incorrecta"})
+
+    const token = generarJWT(UsuarioBDD._id,"Usuario")
+    const {nombre,apellido,_id,genero,fechaNacimiento} = UsuarioBDD
+
+    res.status(200).json({
+        token,
+        _id,
+        nombre,
+        apellido,
+        genero,
+        fechaNacimiento,
+        email: UsuarioBDD.email
+    })
 }
 
 const confirmemail = async (req,res)=>{

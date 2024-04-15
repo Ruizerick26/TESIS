@@ -23,7 +23,7 @@ const usuarioSchema = new Schema({
         trim: true,
         default: Date.now()
     },
-    Genero:{
+    genero:{
         type: String,
         required: true,
         trim: true
