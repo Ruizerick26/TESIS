@@ -71,15 +71,54 @@ const confirmemail = async (req,res)=>{
 
 }
 
-const recuperaCon = (req,res)=>{
-    res.status(200).json({msg:"Recupera contraseeña"})
+const recuperaCon = async (req,res)=>{
+    const {email} = req.body
+
+    Object.entries(Object.values(req.body)).length ===0 ? console.log("esta vacio"):console.log("esta lleno")
+    if (Object.entries(Object.values(req.body)).length ===0) return res.status(404).json({msg:"Lo sentimos, debes llenar todos los campos"})
+
+    const UsuarioBDD = Usuario.findOne({email})
+    if(!UsuarioBDD) return res.status(404).json({msg:"Lo sentimos, Correo no registrado"})
+    
+    const token = UsuarioBDD.crearToken()
+    UsuarioBDD.token = token
+
+    await sendMailToRecoveryPassword(email,token)
+    await UsuarioBDD.save()
+
+    res.status(200).json({msg:"Revisa tu correo para restablecer tu contraseña"})
 }
-const comprobarRecuperacion = (req,res)=>{
-    res.status(200).json({msg:"Comprobar token"})
+
+
+const comprobarRecuperacion = async(req,res)=>{
+
+    if(!(req.params.token)) return res.status(404).json({msg:"Lo sentimos, no se puede validar la cuenta"})
+    const UsuarioBDD = await Usuario.findOne({token:req.params.token})
+    if(UsuarioBDD?.token !== req.params.token) return res.status(404).json({msg:"Lo sentimos, no se puede validar la cuenta"})
+    await UsuarioBDD.save()
+    res.status(200).json({msg:"Token confirmado, ya puedes crear tu nuevo password"}) 
 }
-const nuevaContraseña = (req,res)=>{
-    res.status(200).json({msg:"Nueva contraseeña"})
+
+
+const nuevaContraseña = async(req,res)=>{
+    const{password,confirmpassword} = req.body
+
+    Object.entries(Object.values(req.body)).length ===0 ? console.log("esta vacio"):console.log("esta lleno")
+    if (Object.entries(Object.values(req.body)).length ===0) return res.status(404).json({msg:"Lo sentimos, debes llenar todos los campos"})
+
+    if(password != confirmpassword) return res.status(404).json({msg:"Lo sentimos, los passwords no coinciden"})
+    
+    const UsuarioBDD = await Usuario.findOne({token:req.params.token})
+    if(UsuarioBDD?.token !== req.params.token) return res.status(404).json({msg:"Lo sentimos, no se puede validar la cuenta"})
+    
+    UsuarioBDD.token = null
+    UsuarioBDD.password = await UsuarioBDD.encrypPassword(password)
+    await UsuarioBDD.save()
+    
+    res.status(200).json({msg:"Felicitaciones, ya puedes iniciar sesión con tu nuevo password"}) 
 }
+
+
 const actualizarPassword = (req,res)=>{
     res.status(200).json({msg:"Actualizar contraseeña"})
 }
