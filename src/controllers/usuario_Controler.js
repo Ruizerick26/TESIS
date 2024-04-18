@@ -71,8 +71,33 @@ const confirmemail = async (req,res)=>{
 
 }
 
+const recuperaCon = (req,res)=>{
+    res.status(200).json({msg:"Recupera contraseeña"})
+}
+const comprobarRecuperacion = (req,res)=>{
+    res.status(200).json({msg:"Comprobar token"})
+}
+const nuevaContraseña = (req,res)=>{
+    res.status(200).json({msg:"Nueva contraseeña"})
+}
+const actualizarPassword = (req,res)=>{
+    res.status(200).json({msg:"Actualizar contraseeña"})
+}
+const perfil = (req,res)=>{
+    res.status(200).json({msg:"Perfil Usuario"})
+}
+const actualizarPerfil = (req,res)=>{
+    res.status(200).json({msg:"Actualizar Perfil Usuario"})
+}
+
 export {
     register,
     login,
-    confirmemail
+    confirmemail,
+    recuperaCon,
+    comprobarRecuperacion,
+    nuevaContraseña,
+    actualizarPassword,
+    perfil,
+    actualizarPerfil
 }

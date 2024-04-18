@@ -2,7 +2,13 @@ import {Router} from 'express'
 import {
     register,
     login,
-    confirmemail
+    confirmemail,
+    recuperaCon,
+    comprobarRecuperacion,
+    nuevaContraseña,
+    actualizarPassword,
+    perfil,
+    actualizarPerfil
 } from '../controllers/usuario_Controler.js'
 
 
@@ -13,14 +19,14 @@ const router = Router()
 router.post('/login', login)
 router.post('/register', register)
 router.get('/confirmar/:token', confirmemail)
-router.post('/recuperar', (res,req)=> res.send("Recuperar cuenta"))
-router.get('/recuperar/:token', (res,req) => res.send("Comprobar token"))
-router.post('/nuevopasword', (res,req) => res.send("Nueva contraseña"))
+router.post('/recuperar', recuperaCon)
+router.get('/recuperar/:token', comprobarRecuperacion)
+router.post('/nuevopasword', nuevaContraseña)
 
 //rutas PRIVADAS
 
-router.put('/usuario/actualizarPassword', (res,req)=> res.send("ACTUALZIAR CONTRASEÑA"))
-router.put('/usuario/:id', (res,req)=> res.send("PERFIL DEL USUARIO"))
-router.get('/usuario/:id', (res,req)=> res.send("ACTUALIZAR PERFIL"))
+router.put('/usuario/actualizarPassword', actualizarPassword)
+router.put('/usuario/:id', perfil)
+router.get('/usuario/:id', actualizarPerfil)
 
 export default router
