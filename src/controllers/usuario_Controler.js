@@ -119,14 +119,48 @@ const nuevaContraseña = async(req,res)=>{
 }
 
 
-const actualizarPassword = (req,res)=>{
-    res.status(200).json({msg:"Actualizar contraseeña"})
+const actualizarPassword = async(req,res)=>{
+    const {passwordactual,passwordnuevo} = req.body
+
+    const UsuarioBDD = await Usuario.findById(req.UsuarioBDD._id)
+    if(!UsuarioBDD) return res.status(404).json({msg:`Lo sentimos, no existe el Usuario ${id}`})
+
+    const verificarPassword = await UsuarioBDD.matchPassword(passwordactual)
+    if(!verificarPassword) return res.status(404).json({msg:"Lo sentimos, el password actual no es el correcto"})
+
+    UsuarioBDD.password = await UsuarioBDD.encrypPassword(passwordnuevo)
+    await UsuarioBDD.save()
+    res.status(200).json({msg:"Password actualizado correctamente"})
 }
-const perfil = (req,res)=>{
-    res.status(200).json({msg:"Perfil Usuario"})
+const perfil = async(req,res)=>{
+    const {id} = req.params
+
+    const UsuarioBDD = await Usuario.findById(id)
+    if(!UsuarioBDD) return res.status(404).json({msg:"Error al buscar el usuario"})
+
+    res.status(200).json({UsuarioBDD})
 }
-const actualizarPerfil = (req,res)=>{
-    res.status(200).json({msg:"Actualizar Perfil Usuario"})
+const actualizarPerfil = async(req,res)=>{
+    const {id} = req.params
+
+
+    if( !mongoose.Types.ObjectId.isValid(id) ) return res.status(404).json({msg:`Lo sentimos, debe ser un id válido`});
+    
+    Object.entries(Object.values(req.body)).length ===0 ? console.log("esta vacio"):console.log("esta lleno")
+    if (Object.entries(Object.values(req.body)).length ===0) return res.status(404).json({msg:"Lo sentimos, debes llenar todos los campos"})
+
+
+    const UsuarioBDD = await Usuario.findById(id)
+    if(!UsuarioBDD) return res.status(404).json({msg:`Lo sentimos, no existe el Usuario ${id}`})
+    
+
+	UsuarioBDD.nombre = req.body.nombre || UsuarioBDD?.nombre
+    UsuarioBDD.apellido = req.body.apellido  || UsuarioBDD?.apellido
+    UsuarioBDD.fechaNacimiento = req.body.fechaNacimiento ||  UsuarioBDD?.fechaNacimiento
+    UsuarioBDD.genero = req.body.genero || UsuarioBDD?.genero
+    await UsuarioBDD.save()
+
+    res.status(200).json({msg:"Perfil actualizado correctamente"})
 }
 
 export {
