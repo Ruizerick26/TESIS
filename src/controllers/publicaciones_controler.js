@@ -1,9 +1,11 @@
 import Publicacion from "../models/Publicacion.js";
 import mongoose from "mongoose";
+import Usuario from "../models/Usuario.js";
 
+const publicacionesGlobales = async(req,res)=>{
+    const publicacionBDD = await Publicacion.find({}).select("imagen descripcion usuarioID")
 
-const publicacionesGlobales = (req,res)=>{
-    res.status(200).json({msg:"Publicaciones globales"})
+    res.status(200).json(publicacionBDD)
 }
 const publicar = (req,res)=>{
     res.status(200).json({msg:"Publicaciones globales"})
