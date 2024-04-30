@@ -11,7 +11,7 @@ const Publicicacion = new Schema({
     },
     usuarioID:{
         type: mongoose.Schema.Types.ObjectID,
-        ref: Usuario
+        ref: 'Usuario'
     },
     likes:{
         type: Number
