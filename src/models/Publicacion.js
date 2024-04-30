@@ -7,7 +7,7 @@ const Publicicacion = new Schema({
     },
     imagen:{
         public_id: String,
-        secure_url:Sring
+        secure_url:String
     },
     usuarioID:{
         type: mongoose.Schema.Types.ObjectID,
