@@ -10,7 +10,7 @@ import {
     perfil,
     actualizarPerfil
 } from '../controllers/usuario_Controler.js'
-
+import verificarAutentication  from '../middlewares/autentication.js'
 
 const router = Router()
 
@@ -25,8 +25,9 @@ router.post('/nuevopasword', nuevaContraseña)
 
 //rutas PRIVADAS
 
-router.put('/usuario/actualizarPassword', actualizarPassword)
-router.put('/usuario/:id', perfil)
-router.get('/usuario/:id', actualizarPerfil)
+router.put('/usuario/actualizarPassword',verificarAutentication, actualizarPassword)
+router.put('/usuario/:id',verificarAutentication, perfil)
+router.get('/usuario/:id',verificarAutentication, actualizarPerfil)
+
 
 export default router

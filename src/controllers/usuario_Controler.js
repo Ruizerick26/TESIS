@@ -3,6 +3,7 @@ import generarJWT from '../helpers/crearJWT.js'
 import mongoose from 'mongoose'
 import { sendMailToUser, sendMailToRecoveryPassword } from '../config/nodemailer.js'
 import moment from 'moment'
+import Publicacion from '../models/Publicacion.js'
  
 moment.suppressDeprecationWarnings = true
 
@@ -135,10 +136,12 @@ const actualizarPassword = async(req,res)=>{
 const perfil = async(req,res)=>{
     const {id} = req.params
 
-    const UsuarioBDD = await Usuario.findById(id)
+    const UsuarioBDD = await Usuario.findById(id).select("-createdAt -updatedAt -__v -token -confirmar -email")
     if(!UsuarioBDD) return res.status(404).json({msg:"Error al buscar el usuario"})
 
-    res.status(200).json({UsuarioBDD})
+    const publicacionBDD = await Publicacion.find({}).where('usuarioID').equals(id)
+
+    res.status(200).json({UsuarioBDD,publicacionBDD})
 }
 const actualizarPerfil = async(req,res)=>{
     const {id} = req.params

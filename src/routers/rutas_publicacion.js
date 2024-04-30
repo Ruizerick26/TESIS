@@ -1,12 +1,24 @@
 import { Router } from "express";
+import {
+    publicacionesGlobales,
+    publicar,
+    actualizarPublicacion,
+    publicacionUnica,
+    BorrarPublicacion
+} from '../controllers/publicaciones_controler.js'
+import verificarAutentication from "../middlewares/autentication.js"
+
 
 const router = Router()
 
+//Rutas publicas
+router.get('/publicaciones',publicacionesGlobales)
+
+
 //rutas privadas
-router.post('/publicar',(res,req)=> res.send('publicar imagen'))
-router.put('/publicar/:id',(res,req)=> res.send('actualizar descripcion publicacion'))
-router.get('/publicar/:id',(res,req)=> res.send('ver publicacion'))
-router.get('/publicaciones', (res,req)=> res.send('Listar publicaciones'))
-router.delete('/publicar/eliminar',(res,req)=> res.send('eliminar publicacion'))
+router.post('/publicar',verificarAutentication,publicar)
+router.put('/publicar/:id',verificarAutentication,actualizarPublicacion)
+router.get('/publicar/:id',verificarAutentication, publicacionUnica)
+router.delete('/publicar/eliminar',verificarAutentication,BorrarPublicacion)
 
 export default router

@@ -12,6 +12,16 @@ const Publicicacion = new Schema({
     usuarioID:{
         type: mongoose.Schema.Types.ObjectID,
         ref: Usuario
+    },
+    likes:{
+        type: Number
+    },
+    dislike:{
+        type: Number
+    },
+    reporte:{
+        type: String,
+        trim: true
     }
 },
 {
