@@ -5,23 +5,26 @@ const Publicicacion = new Schema({
         type: String,
         require: true
     },
-    imagen:{
-        public_id: String,
-        secure_url:String
-    },
     usuarioID:{
         type: mongoose.Schema.Types.ObjectID,
         ref: 'Usuario'
     },
     likes:{
-        type: Number
+        type: Number,
+        default: 0
     },
     dislike:{
-        type: Number
+        type: Number,
+        default: 0
     },
-    reporte:{
-        type: String,
-        trim: true
+    estilo:{
+        temporada: String,
+        epoca: String,
+        genero: String
+    },
+    imagen:{
+        public_id: String,
+        secure_url:String
     }
 },
 {

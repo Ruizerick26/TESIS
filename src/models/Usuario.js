@@ -23,11 +23,6 @@ const usuarioSchema = new Schema({
         trim: true,
         default: Date.now()
     },
-    genero:{
-        type: String,
-        required: true,
-        trim: true
-    },
     password:{
         type: String,
         required: true,
@@ -38,6 +33,14 @@ const usuarioSchema = new Schema({
         default: null
     },
     confirmar:{
+        type: Boolean,
+        default: false
+    },
+    bloqueo:{
+        type: Boolean,
+        default: false
+    },
+    restriccion:{
         type: Boolean,
         default: false
     }

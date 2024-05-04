@@ -1,5 +1,5 @@
 //importar cloudinary
-import cloudinary from 'cloudinary'
+import {v2 as cloudinary} from 'cloudinary'
 
 //establecer variables de entorno
 cloudinary.config({ 
