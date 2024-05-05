@@ -26,8 +26,8 @@ router.post('/nuevopasword', nuevaContraseña)
 //rutas PRIVADAS
 
 router.put('/usuario/actualizarPassword',verificarAutentication, actualizarPassword)
-router.put('/usuario/:id',verificarAutentication, perfil)
-router.get('/usuario/:id',verificarAutentication, actualizarPerfil)
+router.get('/usuario/:id',verificarAutentication, perfil)
+router.put('/usuario/:id',verificarAutentication, actualizarPerfil)
 
 
 export default router
