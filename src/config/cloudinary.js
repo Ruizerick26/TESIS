@@ -10,12 +10,12 @@ cloudinary.config({
 });
 
 //Crear el metodo para enviar la imagen a cloudinary
-module.exports.uploadImage = async(filePath) => {
+const uploadImage = async(filePath) => {
     return await cloudinary.uploader.upload(filePath,{folder:'aplicacionMovil'})
 }
 
 //Crear metodo para eliminar las imagenes de cloudinary
-module.exports.deleteImage = async (publicId)=>{   
+const deleteImage = async (publicId)=>{   
     return await cloudinary.uploader.destroy(publicId)
 }
 
