@@ -18,3 +18,8 @@ module.exports.uploadImage = async(filePath) => {
 module.exports.deleteImage = async (publicId)=>{   
     return await cloudinary.uploader.destroy(publicId)
 }
+
+export{
+    uploadImage,
+    deleteImage
+}
