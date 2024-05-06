@@ -134,13 +134,16 @@ const actualizarPassword = async(req,res)=>{
     res.status(200).json({msg:"Password actualizado correctamente"})
 }
 const perfil = async(req,res)=>{
+    
     const {id} = req.params
+    if( !mongoose.Types.ObjectId.isValid(id) ) return res.status(404).json({msg:`Lo sentimos, no existe el veterinario ${id}`});
 
     const UsuarioBDD = await Usuario.findById(id).select("-createdAt -updatedAt -__v -token -confirmar -email")
+    
     if(!UsuarioBDD) return res.status(404).json({msg:"Error al buscar el usuario"})
 
     const publicacionBDD = await Publicacion.find({}).where('usuarioID').equals(id)
-
+    
     res.status(200).json({UsuarioBDD,publicacionBDD})
 }
 const actualizarPerfil = async(req,res)=>{
