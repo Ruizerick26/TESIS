@@ -16,9 +16,9 @@ router.get('/publicaciones',publicacionesGlobales)
 
 
 //rutas privadas
-router.post('/publicar',publicar)
-router.put('/publicar/:id',actualizarPublicacion)
-router.get('/publicar/:id', publicacionUnica)
-router.delete('/publicar/eliminar',BorrarPublicacion)
+router.post('/publicar',verificarAutentication,publicar)
+router.put('/publicar/:id',verificarAutentication,actualizarPublicacion)
+router.get('/publicar/:id',verificarAutentication, publicacionUnica)
+router.delete('/publicar/eliminar',verificarAutentication,BorrarPublicacion)
 
 export default router

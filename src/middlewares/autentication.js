@@ -8,6 +8,7 @@ const verificarAutentication = async (req,res,next)=>{
     
     try{
         const{id,rol} = jwt.verify(authorization.split(' ')[1], process.env.JWT_SECRET)
+        
         if(rol === "usuario"){
             req.usuarioBDD = await Usuario.findById(id).lean().select("-password")
             next()

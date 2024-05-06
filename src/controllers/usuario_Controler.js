@@ -43,7 +43,7 @@ const login = async (req,res)=>{
     const VerificarPassword = await UsuarioBDD.matchPassword(password)
     if(!VerificarPassword) return res.status(404).json({msg:"Contraseña incorrecta"})
 
-    const token = generarJWT(UsuarioBDD._id,"Usuario")
+    const token = generarJWT(UsuarioBDD._id,"usuario")
     const {nombre,apellido,_id,genero,fechaNacimiento} = UsuarioBDD
 
     res.status(200).json({
