@@ -44,14 +44,13 @@ const login = async (req,res)=>{
     if(!VerificarPassword) return res.status(404).json({msg:"Contraseña incorrecta"})
 
     const token = generarJWT(UsuarioBDD._id,"usuario")
-    const {nombre,apellido,_id,genero,fechaNacimiento} = UsuarioBDD
+    const {nombre,apellido,_id,fechaNacimiento} = UsuarioBDD
 
     res.status(200).json({
         token,
         _id,
         nombre,
         apellido,
-        genero,
         fechaNacimiento,
         email: UsuarioBDD.email
     })
@@ -163,7 +162,6 @@ const actualizarPerfil = async(req,res)=>{
 	UsuarioBDD.nombre = req.body.nombre || UsuarioBDD?.nombre
     UsuarioBDD.apellido = req.body.apellido  || UsuarioBDD?.apellido
     UsuarioBDD.fechaNacimiento = req.body.fechaNacimiento ||  UsuarioBDD?.fechaNacimiento
-    UsuarioBDD.genero = req.body.genero || UsuarioBDD?.genero
     await UsuarioBDD.save()
 
     res.status(200).json({msg:"Perfil actualizado correctamente"})

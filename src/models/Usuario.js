@@ -43,6 +43,14 @@ const usuarioSchema = new Schema({
     restriccion:{
         type: Boolean,
         default: false
+    },
+    fotoperfil:{
+        public_id: String,
+        secure_url: String
+    },
+    descripcion:{
+        type: String,
+        maxlength: 150
     }
 
 },{
