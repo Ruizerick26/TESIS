@@ -135,7 +135,7 @@ const actualizarPassword = async(req,res)=>{
 const perfil = async(req,res)=>{
     
     const {id} = req.params
-    if( !mongoose.Types.ObjectId.isValid(id) ) return res.status(404).json({msg:`Lo sentimos, no existe el veterinario ${id}`});
+    if( !mongoose.Types.ObjectId.isValid(id) ) return res.status(404).json({msg:`Lo sentimos, no existe el moderador ${id}`});
 
     const UsuarioBDD = await Usuario.findById(id).select("-createdAt -updatedAt -__v -token -confirmar -email")
     

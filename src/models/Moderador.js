@@ -62,3 +62,6 @@ moderadorSchema.methods.crearToken = function(){
     const tokenGenerado = this.token = Math.random().toString(36).slice(2) 
     return tokenGenerado  
 }
+
+
+export default model('Moderador',moderadorSchema)
