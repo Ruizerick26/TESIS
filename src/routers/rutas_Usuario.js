@@ -8,7 +8,8 @@ import {
     nuevaContraseña,
     actualizarPassword,
     perfil,
-    actualizarPerfil
+    actualizarPerfil,
+    actualizarFoto
 } from '../controllers/usuario_Controler.js'
 import verificarAutentication  from '../middlewares/autentication.js'
 
@@ -28,6 +29,7 @@ router.post('/nuevopasword', nuevaContraseña)
 router.put('/usuario/actualizarPassword',verificarAutentication, actualizarPassword)
 router.get('/usuario/:id',verificarAutentication, perfil)
 router.put('/usuario/:id',verificarAutentication, actualizarPerfil)
+router.put('/usuario/foto/:id',actualizarFoto)
 
 
 export default router

@@ -17,7 +17,7 @@ let transporter = nodemailer.createTransport({
 const sendMailToUser = (userMail, token) => {
 
     let mailOptions = {
-        from: process.env.USER_MAILTRAP,
+        from: 'admin@ropdat.com',
         to: userMail,
         subject: "Verifica tu cuenta",
         html: `
@@ -43,7 +43,7 @@ const sendMailToUser = (userMail, token) => {
 // send mail with defined transport object
 const sendMailToRecoveryPassword = async(userMail,token)=>{
     let info = await transporter.sendMail({
-    from: 'admin@vet.com',
+    from: 'admin@ropdat.com',
     to: userMail,
     subject: "Correo para reestablecer tu contraseña",
     html: `
@@ -57,9 +57,30 @@ const sendMailToRecoveryPassword = async(userMail,token)=>{
     console.log("Mensaje enviado satisfactoriamente: ", info.messageId);
 }
 
+const sendMailtoNewModer = async(userMail,moderadorN) =>{
+    let info =await transporter.sendMail({
+        from: 'Adminmoderador@ropdat.com',
+        to: userMail,
+        subject: "Cuenta moderador registrada",
+        html:`
+        <div style="border: solid  #66CCCC ; width:500px; border-radius:15px; background-color: #99FFCC;">
+        <h1><font color="#660000">Gracias por trabajar con nosotros</font></h1>
+        <p>Aqui te enviamos tus credenciales de inicio de sesión</p>
+        <p>Contraseña: ${moderadorN.password}<br>Código Único: ${moderadorN.codigo}</p>
+        <p>El email es el mismo que nos entregaste</p>
+        <p>Recuerda mantenar a salvo tus datos, podras cambiar tu contraseña una vez ingreses</p>
+        <p>El código único no se puede cambiar asi que no lo pierdas</p>
+        </div>
+        <footer>ROPDAT TE AGRADECE POR FORMAR PARTE DE NUESTROS MODERADORES</footer>
+        `
+    });
+    console.log("correo enviado con exito: ", info.messageId)
+}
+
 
 
 export {
     sendMailToUser,
-    sendMailToRecoveryPassword
+    sendMailToRecoveryPassword,
+    sendMailtoNewModer
 }

@@ -50,7 +50,8 @@ const usuarioSchema = new Schema({
     },
     descripcion:{
         type: String,
-        maxlength: 150
+        maxlength: 150,
+        default: "Describe tu perfil"
     }
 
 },{

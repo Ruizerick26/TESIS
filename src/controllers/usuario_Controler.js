@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 import { sendMailToUser, sendMailToRecoveryPassword } from '../config/nodemailer.js'
 import moment from 'moment'
 import Publicacion from '../models/Publicacion.js'
+import {deleteImage, uploadImageP} from '../config/cloudinary.js'
  
 moment.suppressDeprecationWarnings = true
 
@@ -22,8 +23,18 @@ const register = async(req,res)=>{
     const nuevoUsuario = await Usuario(req.body)
     nuevoUsuario.password = await nuevoUsuario.encrypPassword(password)
 
+
     const token = nuevoUsuario.crearToken()
     await sendMailToUser(email,token)
+    
+    
+    const fotoperfil = await uploadImageP('./src/assets/fotoDefault.png')
+   
+    nuevoUsuario.fotoperfil = {
+        public_id: fotoperfil.public_id,
+        secure_url: fotoperfil.secure_url
+    }
+
     await nuevoUsuario.save()
 
     res.status(200).json({msg:"Revisa tu correo electronico"})
@@ -135,15 +146,17 @@ const actualizarPassword = async(req,res)=>{
 const perfil = async(req,res)=>{
     
     const {id} = req.params
-    if( !mongoose.Types.ObjectId.isValid(id) ) return res.status(404).json({msg:`Lo sentimos, no existe el moderador ${id}`});
+    if( !mongoose.Types.ObjectId.isValid(id) ) return res.status(404).json({msg:`Lo sentimos, no existe el usuario ${id}`});
 
     const UsuarioBDD = await Usuario.findById(id).select("-createdAt -updatedAt -__v -token -confirmar -email")
     
     if(!UsuarioBDD) return res.status(404).json({msg:"Error al buscar el usuario"})
 
     const publicacionBDD = await Publicacion.find({}).where('usuarioID').equals(id)
+
+    const conteo = publicacionBDD.length
     
-    res.status(200).json({UsuarioBDD,publicacionBDD})
+    res.status(200).json({UsuarioBDD,publicacionBDD,"Cantidad":conteo})
 }
 const actualizarPerfil = async(req,res)=>{
     const {id} = req.params
@@ -158,13 +171,40 @@ const actualizarPerfil = async(req,res)=>{
     const UsuarioBDD = await Usuario.findById(id)
     if(!UsuarioBDD) return res.status(404).json({msg:`Lo sentimos, no existe el Usuario ${id}`})
     
-
 	UsuarioBDD.nombre = req.body.nombre || UsuarioBDD?.nombre
     UsuarioBDD.apellido = req.body.apellido  || UsuarioBDD?.apellido
-    UsuarioBDD.fechaNacimiento = req.body.fechaNacimiento ||  UsuarioBDD?.fechaNacimiento
+    UsuarioBDD.descripcion = req.body.descripcion || UsuarioBDD?.descripcion
+
     await UsuarioBDD.save()
 
     res.status(200).json({msg:"Perfil actualizado correctamente"})
+}
+const actualizarFoto = async(req,res) =>{
+    const {id} = req.params
+    
+    const usuarioBDD = await Usuario.findById(id)
+    if(!usuarioBDD) return res.status(404).json({msg:"Usuario no encontrado"})
+
+    if(!(req.files?.image)) return res.status(404).json({msg:"Debes subir una imagen"})
+   
+    const fotoActual = await Usuario.findById(id).select('fotoperfil')
+
+    console.log(fotoActual.fotoperfil.public_id)
+    await deleteImage(fotoActual.fotoperfil.public_id)
+
+    const fotonueva = await uploadImageP(req.files.image.tempFilePath)
+
+    const datos = {
+        fotoperfil:{
+            public_id: fotonueva.public_id,
+            secure_url: fotonueva.secure_url
+        }
+    }
+
+    await Usuario.findByIdAndUpdate(id,datos)
+
+    res.status(200).json({msg:"Foto de perfil actualizada"})
+
 }
 
 export {
@@ -176,5 +216,6 @@ export {
     nuevaContraseña,
     actualizarPassword,
     perfil,
-    actualizarPerfil
+    actualizarPerfil,
+    actualizarFoto
 }

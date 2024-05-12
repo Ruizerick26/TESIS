@@ -13,6 +13,9 @@ cloudinary.config({
 const uploadImage = async(filePath) => {
     return await cloudinary.uploader.upload(filePath,{folder:'aplicacionMovil'})
 }
+const uploadImageP = async(filePath) => {
+    return await cloudinary.uploader.upload(filePath,{folder:'aplicacionMovil/UPerfil'})
+}
 
 //Crear metodo para eliminar las imagenes de cloudinary
 const deleteImage = async (publicId)=>{   
@@ -21,5 +24,6 @@ const deleteImage = async (publicId)=>{
 
 export{
     uploadImage,
-    deleteImage
+    deleteImage,
+    uploadImageP
 }
