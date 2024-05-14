@@ -184,15 +184,21 @@ const actualizarFoto = async(req,res) =>{
     
     const usuarioBDD = await Usuario.findById(id)
     if(!usuarioBDD) return res.status(404).json({msg:"Usuario no encontrado"})
+    console.log("/////////////////////////////")
+    console.log(req.Files)
+    console.log("/////////////////////////////")
+    console.log(req.files?.image) 
+    console.log("/////////////////////////////")
 
     if(!(req.files?.image)) return res.status(404).json({msg:"Debes subir una imagen"})
    
     const fotoActual = await Usuario.findById(id).select('fotoperfil')
 
-    console.log(fotoActual.fotoperfil.public_id)
+    //console.log(fotoActual.fotoperfil.public_id)
     await deleteImage(fotoActual.fotoperfil.public_id)
 
     const fotonueva = await uploadImageP(req.files.image.tempFilePath)
+    
 
     const datos = {
         fotoperfil:{
