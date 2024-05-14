@@ -2,6 +2,7 @@ import Usuario from "../models/Usuario.js"
 import Moderador from '../models/Moderador.js'
 import mongoose from "mongoose"
 import generarJWT from "../helpers/crearJWT.js"
+import {sendMailtoNewModer, sendMailToRecoveryPassword} from '../config/nodemailer.js'
 
 
 const registrar = async(req,res) =>{
@@ -30,7 +31,7 @@ const registrar = async(req,res) =>{
         moderadorN.password = await moderadorN.encrypPassword(password)
         moderadorN.codigo = await moderadorN.encrypCode(codigo)
 
-
+        await sendMailtoNewModer(Bemail,moderadorN)
         await moderadorN.save()
         return res.status(200).json({msg:"Registrado el moderador"})    
     }
@@ -76,8 +77,64 @@ const notificacionesReportes = (req,res) =>{
 const usuarios = (req,res) =>{
     res.status(200).json({msg:"Mostrar usuarios"})
 }
-const actualizarC = (req,res) =>{
-    res.status(200).json({msg:"Actualizar contraseña"})
+const actualizarC = async (req,res) =>{
+    const {passwordactual,passwordnuevo} = req.body
+
+    const moderadorBDD = await Moderador.findById(req.moderadorBDD._id)
+    if(!moderadorBDD) return res.status(404).json({msg:`Lo sentimos, no existe el Moderador ${id}`})
+
+    const verificarPassword = await moderadorBDD.matchPassword(passwordactual)
+    if(!verificarPassword) return res.status(404).json({msg:"Lo sentimos, el password actual no es el correcto"})
+
+    moderadorBDD.password = await moderadorBDD.encrypPassword(passwordnuevo)
+    await moderadorBDD.save()
+    res.status(200).json({msg:"Password actualizado correctamente"})
+}
+const recuperaCon = async (req,res)=>{
+    const {email} = req.body
+
+    Object.entries(Object.values(req.body)).length ===0 ? console.log("esta vacio"):console.log("esta lleno")
+    if (Object.entries(Object.values(req.body)).length ===0) return res.status(404).json({msg:"Lo sentimos, debes llenar todos los campos"})
+
+    const moderadorBDD =Moderador.findOne({email})
+    if(!moderadorBDD) return res.status(404).json({msg:"Lo sentimos, Correo no registrado"})
+    
+    const token = moderadorBDD.crearToken()
+    moderadorBDD.token = token
+
+    await sendMailToRecoveryPassword(email,token)
+    await moderadorBDD.save()
+
+    res.status(200).json({msg:"Revisa tu correo para restablecer tu contraseña"})
+}
+
+
+const comprobarRecuperacion = async(req,res)=>{
+
+    if(!(req.params.token)) return res.status(404).json({msg:"Lo sentimos, no se puede validar la cuenta"})
+    const moderadorBDD = await Moderador.findOne({token:req.params.token})
+    if(moderadorBDD?.token !== req.params.token) return res.status(404).json({msg:"Lo sentimos, no se puede validar la cuenta"})
+    await moderadorBDD.save()
+    res.status(200).json({msg:"Token confirmado, ya puedes crear tu nuevo password"}) 
+}
+
+
+const nuevaContraseña = async(req,res)=>{
+    const{password,confirmpassword} = req.body
+
+    Object.entries(Object.values(req.body)).length ===0 ? console.log("esta vacio"):console.log("esta lleno")
+    if (Object.entries(Object.values(req.body)).length ===0) return res.status(404).json({msg:"Lo sentimos, debes llenar todos los campos"})
+
+    if(password != confirmpassword) return res.status(404).json({msg:"Lo sentimos, los passwords no coinciden"})
+    
+    const moderadorBDD = await Moderador.findOne({token:req.params.token})
+    if(moderadorBDD?.token !== req.params.token) return res.status(404).json({msg:"Lo sentimos, no se puede validar la cuenta"})
+    
+    moderadorBDD.token = null
+    moderadorBDD.password = await moderadorBDD.encrypPassword(password)
+    await moderadorBDD.save()
+    
+    res.status(200).json({msg:"Felicitaciones, ya puedes iniciar sesión con tu nuevo password"}) 
 }
 export{
     registrar,
@@ -86,5 +143,8 @@ export{
     eliminarPublicacion,
     notificacionesReportes,
     usuarios,
-    actualizarC
+    actualizarC,
+    recuperaCon,
+    comprobarRecuperacion,
+    nuevaContraseña
 }

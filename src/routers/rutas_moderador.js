@@ -5,7 +5,10 @@ import {registrar,
         eliminarPublicacion,
         notificacionesReportes,
         usuarios,
-        actualizarC
+        actualizarC,
+        recuperaCon,
+        comprobarRecuperacion,
+        nuevaContraseña
 } from '../controllers/moderador_Controler.js'
 import verificarAutentication from '../middlewares/autentication.js'
 
@@ -13,6 +16,9 @@ const router = Router()
 
 //Rutas publicas
 router.post('/login/moderador',login)
+router.post('/moderador/recuperar', recuperaCon)
+router.get('/moderador/recuperar/:token', comprobarRecuperacion)
+router.post('/moderador/nuevopasword', nuevaContraseña)
 
 //Rutas privadas
 router.put('/actualizar/moderador/:id',verificarAutentication,actualizarC)

@@ -25,6 +25,10 @@ const moderadorSchema = new Schema({
     codigo:{
         type: String,
         trim: true
+    },
+    token:{
+        type: String,
+        default: null
     }
 },{
     timestamps: true
