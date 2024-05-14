@@ -5,6 +5,7 @@ import { sendMailToUser, sendMailToRecoveryPassword } from '../config/nodemailer
 import moment from 'moment'
 import Publicacion from '../models/Publicacion.js'
 import {deleteImage, uploadImageP} from '../config/cloudinary.js'
+import fs from 'fs-extra'
  
 moment.suppressDeprecationWarnings = true
 
@@ -184,30 +185,23 @@ const actualizarFoto = async(req,res) =>{
     
     const usuarioBDD = await Usuario.findById(id)
     if(!usuarioBDD) return res.status(404).json({msg:"Usuario no encontrado"})
-    console.log("/////////////////////////////")
-    console.log(req.Files)
-    console.log("/////////////////////////////")
-    console.log(req.files?.image) 
-    console.log("/////////////////////////////")
+    
+   
 
-    if(!(req.files?.image)) return res.status(404).json({msg:"Debes subir una imagen"})
+    if(!(req.file?.path)) return res.status(404).json({msg:"Debes subir una imagen"})
    
     const fotoActual = await Usuario.findById(id).select('fotoperfil')
 
-    //console.log(fotoActual.fotoperfil.public_id)
     await deleteImage(fotoActual.fotoperfil.public_id)
 
-    const fotonueva = await uploadImageP(req.files.image.tempFilePath)
+    const fotonueva = await uploadImageP(req.file.path)
     
-
-    const datos = {
-        fotoperfil:{
-            public_id: fotonueva.public_id,
-            secure_url: fotonueva.secure_url
-        }
-    }
-
-    await Usuario.findByIdAndUpdate(id,datos)
+    usuarioBDD.fotoperfil.public_id = fotonueva.public_id
+    usuarioBDD.fotoperfil.secure_url = fotonueva.secure_url
+    
+    await fs.unlink(req.file.path)
+    await usuarioBDD.save()
+    
 
     res.status(200).json({msg:"Foto de perfil actualizada"})
 

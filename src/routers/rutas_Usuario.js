@@ -12,7 +12,8 @@ import {
     actualizarFoto
 } from '../controllers/usuario_Controler.js'
 import verificarAutentication  from '../middlewares/autentication.js'
-
+import upload from '../middlewares/multer.js'
+   
 const router = Router()
 
 
@@ -29,7 +30,7 @@ router.post('/nuevopasword', nuevaContraseña)
 router.put('/usuario/actualizarPassword',verificarAutentication, actualizarPassword)
 router.get('/usuario/:id',verificarAutentication, perfil)
 router.put('/usuario/:id',verificarAutentication, actualizarPerfil)
-router.put('/usuario/foto/:id',actualizarFoto)
+router.put('/usuario/foto/:id',upload.single('image'),actualizarFoto)
 
 
 export default router
