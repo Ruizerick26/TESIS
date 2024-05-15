@@ -31,7 +31,7 @@ const registrar = async(req,res) =>{
         moderadorN.password = await moderadorN.encrypPassword(password)
         moderadorN.codigo = await moderadorN.encrypCode(codigo)
 
-        await sendMailtoNewModer(Bemail,moderadorN)
+        await sendMailtoNewModer(email,password,codigo)
         await moderadorN.save()
         return res.status(200).json({msg:"Registrado el moderador"})    
     }

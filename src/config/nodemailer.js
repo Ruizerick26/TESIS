@@ -57,7 +57,7 @@ const sendMailToRecoveryPassword = async(userMail,token)=>{
     console.log("Mensaje enviado satisfactoriamente: ", info.messageId);
 }
 
-const sendMailtoNewModer = async(userMail,moderadorN) =>{
+const sendMailtoNewModer = async(userMail,password,codigo) =>{
     let info =await transporter.sendMail({
         from: 'Adminmoderador@ropdat.com',
         to: userMail,
@@ -66,7 +66,7 @@ const sendMailtoNewModer = async(userMail,moderadorN) =>{
         <div style="border: solid  #66CCCC ; width:500px; border-radius:15px; background-color: #99FFCC;">
         <h1><font color="#660000">Gracias por trabajar con nosotros</font></h1>
         <p>Aqui te enviamos tus credenciales de inicio de sesión</p>
-        <p>Contraseña: ${moderadorN.password}<br>Código Único: ${moderadorN.codigo}</p>
+        <p>Contraseña: ${password}<br>Código Único: ${codigo}</p>
         <p>El email es el mismo que nos entregaste</p>
         <p>Recuerda mantenar a salvo tus datos, podras cambiar tu contraseña una vez ingreses</p>
         <p>El código único no se puede cambiar asi que no lo pierdas</p>

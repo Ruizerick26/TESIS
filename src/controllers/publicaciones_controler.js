@@ -5,8 +5,10 @@ import {uploadImage, deleteImage} from '../config/cloudinary.js'
 
 const publicacionesGlobales = async(req,res)=>{
     const publicacionBDD = await Publicacion.find({}).select("imagen descripcion usuarioID")
+    const nombre = await Usuario.find({}).where("_id").equals(publicacionBDD.usuarioID)
+    console.log(nombre)
     res.status(200).json(publicacionBDD)
-}
+} 
 const publicar = async(req,res)=>{
 
     const {descripcion, estilos} = req.body
