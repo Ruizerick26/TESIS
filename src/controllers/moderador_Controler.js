@@ -96,7 +96,7 @@ const recuperaCon = async (req,res)=>{
     Object.entries(Object.values(req.body)).length ===0 ? console.log("esta vacio"):console.log("esta lleno")
     if (Object.entries(Object.values(req.body)).length ===0) return res.status(404).json({msg:"Lo sentimos, debes llenar todos los campos"})
 
-    const moderadorBDD =Moderador.findOne({email})
+    const moderadorBDD = await Moderador.findOne({email})
     if(!moderadorBDD) return res.status(404).json({msg:"Lo sentimos, Correo no registrado"})
     
     const token = moderadorBDD.crearToken()
