@@ -11,18 +11,21 @@ const publicacionesGlobales = async(req,res)=>{
 } 
 const publicar = async(req,res)=>{
 
-    const {descripcion, estilos} = req.body
+    const {descripcion, temporada, anio, genero,estilo} = req.body
 
     Object.entries(Object.values(req.body)).length ===0 ? console.log("esta vacio"):console.log("esta lleno")
     if (Object.entries(Object.values(req.body)).length ===0) return res.status(404).json({msg:"Lo sentimos, debes llenar todos los campos"})
 
     const publicacion = new Publicacion
     publicacion.descripcion = descripcion
-    publicacion.estilo = estilos
-    publicacion.usuarioID = req.user._id
+    publicacion.usuarioID = req.usuarioBDD._id
+    publicacion.estilo.temporada = temporada
+    publicacion.estilo.anio = anio
+    publicacion.estilo.genero = genero
+    publicacion.estilo.estilo = estilo
 
-    if(!(req.files?.image)) return res.status(404).json({msg:"Debes subir una imagen"})
-    const imagenUpload = await uploadImage(req.files.image.tempFilePath)
+    if(!(req.files?.path)) return res.status(404).json({msg:"Debes subir una imagen"})
+    const imagenUpload = await uploadImage(req.file.path)
 
     publicacion.imagen = {
         public_id: imagenUpload.public_id,
