@@ -18,7 +18,7 @@ const Publicicacion = new Schema({
         default: 0
     },
     estilo:{
-        estilo: String,
+        estiloG: String,
         temporada: String,
         epoca: String,
         genero: String
