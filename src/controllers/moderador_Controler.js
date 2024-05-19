@@ -74,8 +74,9 @@ const eliminarPublicacion = (req,res) =>{
 const notificacionesReportes = (req,res) =>{
     res.status(200).json({msg:"Notificaciones Reportes"})
 }
-const usuarios = (req,res) =>{
-    res.status(200).json({msg:"Mostrar usuarios"})
+const usuarios = async (req,res) =>{
+    const usuarios = await Usuario.find({}).where('confirmar').equals(true)
+    res.status(200).json(usuarios)
 }
 const actualizarC = async (req,res) =>{
     const {passwordactual,passwordnuevo} = req.body
