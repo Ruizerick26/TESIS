@@ -117,7 +117,7 @@ const eliminarLike = async (req,res)=>{
 
     res.status(200).json({msg:"Diste like"})
 }
-const ElimarDislike = async (req,res)=>{
+const EliminarDislike = async (req,res)=>{
     const {id} = req.params
 
     const publicacion = await Publicacion.findById(id)
@@ -192,5 +192,13 @@ export {
     publicar,
     actualizarPublicacion,
     publicacionUnica,
-    BorrarPublicacion
+    BorrarPublicacion,
+    AgregarLike,
+    AgregarDislike,
+    agregarFavorito,
+    eliminarLike,
+    EliminarDislike,
+    EliminarFavorito,
+    reporte,
+    verFavoritos
 }
