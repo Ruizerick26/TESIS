@@ -40,7 +40,7 @@ const registrar = async(req,res) =>{
 }
 const login = async(req,res) =>{
 
-    const {email,password,codigo} = req.body
+    const {email,password} = req.body
 
     Object.entries(Object.values(req.body)).length ===0 ? console.log("esta vacio"):console.log("esta lleno")
     if (Object.entries(Object.values(req.body)).length ===0) return res.status(404).json({msg:"Lo sentimos, debes llenar todos los campos"})
@@ -48,11 +48,13 @@ const login = async(req,res) =>{
     const moderadorBDD = await Moderador.findOne({email}).select("-status -__v -token -updatedAt -createdAt")
     if(!moderadorBDD) return res.status(404).json({msg:"Moderador no registrado"})
 
+    if(moderadorBDD.codigo != null) {
+        res.redirect(process.env.URL_BACKEND + "/moderador/contraseñaInicial")
+    }
+
     const verificarPassword = await moderadorBDD.matchPassword(password)
     if(!verificarPassword) return res.status(404).json({msg:"Contraseña incorrecta"})
     
-    const verificarCodigo = await moderadorBDD.matchCode(codigo)
-    if(!verificarCodigo) return res.status(404).json({msg:"Codigo incorrecto"})
 
     const token = generarJWT(moderadorBDD._id,"moderador")
     const {nombre,apellido,_id} = moderadorBDD
@@ -63,6 +65,28 @@ const login = async(req,res) =>{
         apellido,
         _id
     })
+}
+const contraNuevaI = async(req,res) =>{
+    const {email,password, passwordNuevo, codigo} = req.body
+
+    Object.entries(Object.values(req.body)).length ===0 ? console.log("esta vacio"):console.log("esta lleno")
+    if (Object.entries(Object.values(req.body)).length ===0) return res.status(404).json({msg:"Lo sentimos, debes llenar todos los campos"})
+
+    const moderadorBDD = await Moderador.findOne({email}).select("-status -__v -token -updatedAt -createdAt")
+    if(!moderadorBDD) return res.status(404).json({msg:"Moderador no registrado"})
+
+    
+    const verificarCodigo = await moderadorBDD.matchCode(codigo)
+    if(!verificarCodigo) return res.status(404).json({msg:"Lo sentimos, el código es incorrecto"})
+    
+    const verificarPassword = await moderadorBDD.matchPassword(password)
+    if(!verificarPassword) return res.status(404).json({msg:"Lo sentimos, el password antiguo no es el correcto"})
+
+    moderadorBDD.password = await moderadorBDD.encrypPassword(passwordNuevo)
+    moderadorBDD.codigo = null
+    await moderadorBDD.save()
+
+    res.status(200).json({msg: "Contraseña actualizada"})
 }
 
 const bloquearU = (req,res) =>{
@@ -147,5 +171,6 @@ export{
     actualizarC,
     recuperaCon,
     comprobarRecuperacion,
-    nuevaContraseña
+    nuevaContraseña,
+    contraNuevaI
 }

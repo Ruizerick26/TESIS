@@ -8,7 +8,8 @@ import {registrar,
         actualizarC,
         recuperaCon,
         comprobarRecuperacion,
-        nuevaContraseña
+        nuevaContraseña,
+        contraNuevaI
 } from '../controllers/moderador_Controler.js'
 import verificarAutentication from '../middlewares/autentication.js'
 
@@ -19,6 +20,7 @@ router.post('/login/moderador',login)
 router.post('/moderador/recuperar', recuperaCon)
 router.get('/moderador/recuperar/:token', comprobarRecuperacion)
 router.post('/moderador/nuevopasword/:token', nuevaContraseña)
+router.put('/moderador/contraseñaInicial',contraNuevaI)
 
 //Rutas privadas
 router.put('/actualizar/moderador/:id',verificarAutentication,actualizarC)
