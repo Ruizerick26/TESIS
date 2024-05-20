@@ -46,11 +46,8 @@ const login = async(req,res) =>{
     if (Object.entries(Object.values(req.body)).length ===0) return res.status(404).json({msg:"Lo sentimos, debes llenar todos los campos"})
 
     const moderadorBDD = await Moderador.findOne({email}).select("-status -__v -token -updatedAt -createdAt")
-    if(!moderadorBDD) return res.status(404).json({msg:"Moderador no registrado"})
-
-    if(moderadorBDD.codigo != null) {
-        res.redirect(process.env.URL_BACKEND + "/moderador/contraseñaInicial")
-    }
+    if(moderadorBDD.codigo != null) return res.status(200).json({msg:"Es necesario cambiar su contraseña por primera vez"})
+    
 
     const verificarPassword = await moderadorBDD.matchPassword(password)
     if(!verificarPassword) return res.status(404).json({msg:"Contraseña incorrecta"})
