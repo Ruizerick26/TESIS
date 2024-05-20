@@ -20,7 +20,7 @@ router.post('/login/moderador',login)
 router.post('/moderador/recuperar', recuperaCon)
 router.get('/moderador/recuperar/:token', comprobarRecuperacion)
 router.post('/moderador/nuevopasword/:token', nuevaContraseña)
-router.put('/moderador/contraseñaInicial',contraNuevaI)
+router.put('/moderador/password/inicial',contraNuevaI)
 
 //Rutas privadas
 router.put('/actualizar/moderador/:id',verificarAutentication,actualizarC)
