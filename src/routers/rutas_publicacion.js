@@ -28,7 +28,7 @@ router.get('/publicaciones',publicacionesGlobales)
 router.post('/publicar',upload.single('image'),verificarAutentication,publicar)
 router.put('/publicar/actualizar/:id',verificarAutentication,actualizarPublicacion)
 router.get('/publicar/:id',verificarAutentication, publicacionUnica)
-router.delete('/publicar/eliminar',verificarAutentication,BorrarPublicacion)
+router.delete('/publicar/eliminar/:id',verificarAutentication,BorrarPublicacion)
 //Reacciones
 router.put('/publicacion/like/:id',verificarAutentication,AgregarLike)
 router.put('/publicacion/dilike/:id',verificarAutentication,AgregarDislike)
