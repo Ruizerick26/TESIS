@@ -26,9 +26,9 @@ const publicar = async(req,res)=>{
     publicacion.estilo.temporada = temporada
     publicacion.estilo.anio = anio
     publicacion.estilo.genero = genero
-    publicacion.estilo.estiloG = estiloG
+    publicacion.estilo.estiloG = estiloG    
 
-    if(!(req.files?.path)) return res.status(404).json({msg:"Debes subir una imagen"})
+    if(!(req.file?.path)) return res.status(404).json({msg:"Debes subir una imagen"})
     const imagenUpload = await uploadImage(req.file.path)
 
     publicacion.imagen = {
