@@ -32,7 +32,7 @@ router.delete('/publicar/eliminar/:id',verificarAutentication,BorrarPublicacion)
 //Reacciones
 router.put('/publicacion/like/:id',verificarAutentication,AgregarLike)
 router.put('/publicacion/dilike/:id',verificarAutentication,AgregarDislike)
-router.put('/publicacion/favoritos/:id',verificarAutentication,agregarFavorito)
+router.post('/publicacion/favoritos/:id',verificarAutentication,agregarFavorito)
 router.put('/publicacion/likeEliminar/:id',verificarAutentication,eliminarLike)
 router.put('/publicacion/dislikeEliminar/:id',verificarAutentication,EliminarDislike)
 router.delete('/publicacion/eliminarFavoritos/:id',verificarAutentication,EliminarFavorito)

@@ -29,6 +29,10 @@ const moderadorSchema = new Schema({
     token:{
         type: String,
         default: null
+    },
+    super:{
+        type: Boolean,
+        default: false
     }
 },{
     timestamps: true

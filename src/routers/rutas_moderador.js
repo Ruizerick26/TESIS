@@ -12,6 +12,7 @@ import {registrar,
         contraNuevaI
 } from '../controllers/moderador_Controler.js'
 import verificarAutentication from '../middlewares/autentication.js'
+import verificarModerador from '../middlewares/moderadorSuper.js'
 
 const router = Router()
 
@@ -30,7 +31,7 @@ router.get('/notificaciones/moderador/:id',verificarAutentication,notificaciones
 router.get('/listar/usuarios',verificarAutentication,usuarios)
 
 //Ruta Moderador para registrar
-router.post('/registrar/moderador/:id',verificarAutentication,registrar)
+router.post('/registrar/moderador',verificarAutentication,verificarModerador,registrar)
 
 
 export default router

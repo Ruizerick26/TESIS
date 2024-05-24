@@ -7,35 +7,31 @@ import {sendMailtoNewModer, sendMailToRecoveryPassword} from '../config/nodemail
 
 const registrar = async(req,res) =>{
 
-    const {id} = req.params
-
     const {email} = req.body
 
     Object.entries(Object.values(req.body)).length ===0 ? console.log("esta vacio"):console.log("esta lleno")
     if (Object.entries(Object.values(req.body)).length ===0) return res.status(404).json({msg:"Lo sentimos, debes llenar todos los campos"}) 
 
-    if(id === '663d5da0af5dba7ccf1384f1') {
-        const Bemail = await Moderador.findOne({email})
-        if(Bemail) return res.status(404).json({msg:"moderador registrado"})
+    const Bemail = await Moderador.findOne({email})
+    if(Bemail) return res.status(404).json({msg:"moderador registrado"})
+    
+    const Uemail = await Usuario.findOne({email})
+    if(Uemail) return res.status(404).json({msg:"Email registrado en la aplicación"})
+    
+    const password = Math.random().toString(36).substring(2,12)
+    const codigo = Math.random().toString(36).substring(2,12)
 
-        const Uemail = await Usuario.findOne({email})
-        if(Uemail) return res.status(404).json({msg:"Email registrado en la aplicación"})
-        
-        const password = Math.random().toString(36).substring(2,12)
-        const codigo = Math.random().toString(36).substring(2,12)
+    console.log(password)
+    console.log(codigo)
 
-        console.log(password)
-        console.log(codigo)
+    const moderadorN = await Moderador(req.body)
+    moderadorN.password = await moderadorN.encrypPassword(password)
+    moderadorN.codigo = await moderadorN.encrypCode(codigo)
 
-        const moderadorN = await Moderador(req.body)
-        moderadorN.password = await moderadorN.encrypPassword(password)
-        moderadorN.codigo = await moderadorN.encrypCode(codigo)
+    await sendMailtoNewModer(email,password,codigo)
+    await moderadorN.save()
+    return res.status(200).json({msg:"Registrado el moderador"})    
 
-        await sendMailtoNewModer(email,password,codigo)
-        await moderadorN.save()
-        return res.status(200).json({msg:"Registrado el moderador"})    
-    }
-    else return res.status(404).json({msg:"No puede ingresar a este ENDPOINT"})
     
 }
 const login = async(req,res) =>{
@@ -44,10 +40,13 @@ const login = async(req,res) =>{
 
     Object.entries(Object.values(req.body)).length ===0 ? console.log("esta vacio"):console.log("esta lleno")
     if (Object.entries(Object.values(req.body)).length ===0) return res.status(404).json({msg:"Lo sentimos, debes llenar todos los campos"})
+    
+    const verificarM = await Moderador.findOne({email})
+    if(!verificarM) return res.status(404).json({msg:"Lo sentimos, Correo no registrado"})
 
     const moderadorBDD = await Moderador.findOne({email}).select("-status -__v -token -updatedAt -createdAt")
     if(moderadorBDD.codigo != null) return res.status(200).json({msg:"Es necesario cambiar su contraseña por primera vez"})
-    
+      
 
     const verificarPassword = await moderadorBDD.matchPassword(password)
     if(!verificarPassword) return res.status(404).json({msg:"Contraseña incorrecta"})

@@ -136,11 +136,17 @@ const EliminarDislike = async (req,res)=>{
 const agregarFavorito = async (req,res)=>{
     const {id} = req.params
 
-    const nuevoFavorito = Favoritos
+    const ComprobarF = await Favoritos.find({$and : 
+        [ {idPublicacion: {$eq :id}}, 
+        {idUsuario: {$eq: req.usuarioBDD._id}}]
+    })
+    if(ComprobarF) return res.status(200).json({msg:"Ya tienes agregado a favoritos"})
+
+    const nuevoFavorito = new Favoritos
     nuevoFavorito.idPublicacion = id
     nuevoFavorito.idUsuario = req.usuarioBDD._id
 
-    await nuevoFavorito.saved()
+    await nuevoFavorito.save()
     res.status(200).json({msg:"Publicacion agregada a favoritos"})
 }
 const EliminarFavorito = async (req,res) =>{

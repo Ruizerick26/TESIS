@@ -1,6 +1,6 @@
 import { mongoose, Schema, model } from "mongoose"
 
-const Favorito = new Schema ({
+const FavoritoSchema = new Schema ({
     idUsuario:{
         type: mongoose.Schema.Types.ObjectID,
         ref: 'Usuario'
@@ -14,4 +14,4 @@ const Favorito = new Schema ({
     timestamps: true
 })
 
-export default model("Favorito",Favorito)
+export default model("Favorito",FavoritoSchema)
