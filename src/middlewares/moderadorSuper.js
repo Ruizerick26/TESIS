@@ -5,7 +5,6 @@ const verificarSuper = async(req,res,next) =>{
 
     try{
     const moderador = await Moderador.findById(req.moderadorBDD._id).select("-status -__v -token -updatedAt -createdAt")
-    console.log(moderador)
 
     if(moderador.super === true) return next()
 

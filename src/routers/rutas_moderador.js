@@ -9,7 +9,9 @@ import {registrar,
         recuperaCon,
         comprobarRecuperacion,
         nuevaContraseña,
-        contraNuevaI
+        contraNuevaI,
+        moderadores,
+        moderadoresEliminar
 } from '../controllers/moderador_Controler.js'
 import verificarAutentication from '../middlewares/autentication.js'
 import verificarModerador from '../middlewares/moderadorSuper.js'
@@ -30,8 +32,10 @@ router.put('/bloquear/usuario/:id',verificarAutentication,bloquearU)
 router.get('/notificaciones/moderador/:id',verificarAutentication,notificacionesReportes)
 router.get('/listar/usuarios',verificarAutentication,usuarios)
 
-//Ruta Moderador para registrar
+//Rutas de moderador super
 router.post('/registrar/moderador',verificarAutentication,verificarModerador,registrar)
+router.get('/moderadores',verificarAutentication,verificarModerador,moderadores)
+router.delete('/moderador/eliminar/:id',verificarAutentication,verificarModerador,moderadoresEliminar)
 
 
 export default router

@@ -89,7 +89,7 @@ const bloquearU = (req,res) =>{
     res.status(200).json({msg:"Bloquear"})
 }
 const eliminarPublicacion = (req,res) =>{
-    res.status(200).json({msg:"Eliminar publicacion"})
+    res.status(200).json({msg:"Eliminar moderador"})
 }
 const notificacionesReportes = (req,res) =>{
     res.status(200).json({msg:"Notificaciones Reportes"})
@@ -98,6 +98,22 @@ const usuarios = async (req,res) =>{
     const usuarios = await Usuario.find({}).where('confirmar').equals(true)
     res.status(200).json(usuarios)
 }
+
+const moderadores = async(req,res) =>{
+    const moderadores = await Moderador.find({}).where('codigo').equals(null)
+    res.status(200).json(moderadores)
+}
+
+const moderadoresEliminar = async(req,res) =>{
+    const {id} = req.params
+
+    const moderador = await Moderador.findById(id)
+    if(!moderador) return res.status(404).json({msg:"No se a encontrado el moderador"})
+
+    await Moderador.findByIdAndDelete(id)
+    res.status(200).json({msg:"Moderadore eliminado"})
+}
+
 const actualizarC = async (req,res) =>{
     const {passwordactual,passwordnuevo} = req.body
 
@@ -168,5 +184,7 @@ export{
     recuperaCon,
     comprobarRecuperacion,
     nuevaContraseña,
-    contraNuevaI
+    contraNuevaI,
+    moderadores,
+    moderadoresEliminar
 }
