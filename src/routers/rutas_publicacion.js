@@ -16,6 +16,7 @@ import {
 } from '../controllers/publicaciones_controler.js'
 import verificarAutentication from "../middlewares/autentication.js"
 import upload from '../middlewares/multer.js'
+import {validacionPublicacion} from '../middlewares/validacionFormularios.js'
 
 
 const router = Router()
@@ -25,7 +26,7 @@ router.get('/publicaciones',publicacionesGlobales)
 
 
 //rutas privadas
-router.post('/publicar',upload.single('image'),verificarAutentication,publicar)
+router.post('/publicar',upload.single('image'),verificarAutentication,validacionPublicacion,publicar)
 router.put('/publicar/actualizar/:id',verificarAutentication,actualizarPublicacion)
 router.get('/publicar/:id',verificarAutentication, publicacionUnica)
 router.delete('/publicar/eliminar/:id',verificarAutentication,BorrarPublicacion)
@@ -37,6 +38,7 @@ router.put('/publicacion/likeEliminar/:id',verificarAutentication,eliminarLike)
 router.put('/publicacion/dislikeEliminar/:id',verificarAutentication,EliminarDislike)
 router.delete('/publicacion/eliminarFavoritos/:id',verificarAutentication,EliminarFavorito)
 router.get('/publicaciones/misFavoritos/:id',verificarAutentication,verFavoritos)
+router.post('/publicaciones/reporte/:id',verificarAutentication,reporte)
 
 
 export default router

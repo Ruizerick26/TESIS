@@ -3,7 +3,9 @@ import { mongoose, Schema, model } from "mongoose"
 const Publicicacion = new Schema({
     descripcion:{
         type: String,
-        require: true
+        maxlength: 150,
+        require: true,
+        trim: true
     },
     usuarioID:{
         type: mongoose.Schema.Types.ObjectID,

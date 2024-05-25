@@ -63,7 +63,7 @@ const login = async(req,res) =>{
     })
 }
 const contraNuevaI = async(req,res) =>{
-    const {email,password, passwordNuevo, codigo} = req.body
+    const {email,password, passwordnuevo, codigo} = req.body
 
     Object.entries(Object.values(req.body)).length ===0 ? console.log("esta vacio"):console.log("esta lleno")
     if (Object.entries(Object.values(req.body)).length ===0) return res.status(404).json({msg:"Lo sentimos, debes llenar todos los campos"})
@@ -78,7 +78,7 @@ const contraNuevaI = async(req,res) =>{
     const verificarPassword = await moderadorBDD.matchPassword(password)
     if(!verificarPassword) return res.status(404).json({msg:"Lo sentimos, el password antiguo no es el correcto"})
 
-    moderadorBDD.password = await moderadorBDD.encrypPassword(passwordNuevo)
+    moderadorBDD.password = await moderadorBDD.encrypPassword(passwordnuevo)
     moderadorBDD.codigo = null
     await moderadorBDD.save()
 
@@ -111,7 +111,7 @@ const moderadoresEliminar = async(req,res) =>{
     if(!moderador) return res.status(404).json({msg:"No se a encontrado el moderador"})
 
     await Moderador.findByIdAndDelete(id)
-    res.status(200).json({msg:"Moderadore eliminado"})
+    res.status(200).json({msg:"Moderador eliminado"})
 }
 
 const actualizarC = async (req,res) =>{
