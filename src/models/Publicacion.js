@@ -28,7 +28,12 @@ const Publicicacion = new Schema({
     imagen:{
         public_id: String,
         secure_url:String
+    },
+    nombre:{
+        type: String,
+        trim: true
     }
+
 },
 {
     timestamps: true

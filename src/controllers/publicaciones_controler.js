@@ -13,7 +13,7 @@ const publicacionesGlobales = async(req,res)=>{
 } 
 const publicar = async(req,res)=>{
 
-    const {descripcion, temporada, epoca, genero,estiloG} = req.body
+    const {descripcion, temporada, epoca, genero,estiloG, nombre} = req.body
 
     Object.entries(Object.values(req.body)).length ===0 ? console.log("esta vacio"):console.log("esta lleno")
     if (Object.entries(Object.values(req.body)).length ===0) return res.status(404).json({msg:"Lo sentimos, debes llenar todos los campos"})
@@ -21,6 +21,7 @@ const publicar = async(req,res)=>{
     const publicacion = new Publicacion
     publicacion.descripcion = descripcion
     publicacion.usuarioID = req.usuarioBDD._id
+    publicacion.nombre = nombre
     publicacion.estilo.temporada = temporada
     publicacion.estilo.epoca = epoca
     publicacion.estilo.genero = genero
@@ -107,7 +108,7 @@ const eliminarLike = async (req,res)=>{
     if(!publicacion) return res.status(404).json({msg:"No se econtro la publicación"})
     
     if(publicacion.likes == 0){
-        res.status(404).json({msg:"Error al quitar el like"})
+        return res.status(404).json({msg:"Error al quitar el like"})
     }else{
         publicacion.likes = publicacion.likes - 1;
     }
@@ -122,7 +123,7 @@ const EliminarDislike = async (req,res)=>{
     if(!publicacion) return res.status(404).json({msg:"No se econtro la publicación"})
     
     if(publicacion.dislike == 0){
-        res.status(404).json({msg:"Error al quitar el like"})
+        return res.status(404).json({msg:"Error al quitar el like"})
     }else{
         publicacion.dislike = publicacion.dislike - 1;
     }
@@ -134,11 +135,10 @@ const EliminarDislike = async (req,res)=>{
 const agregarFavorito = async (req,res)=>{
     const {id} = req.params
 
-    const ComprobarF = await Favoritos.find({$and : 
-        [ {idPublicacion: {$eq :id}}, 
-        {idUsuario: {$eq: req.usuarioBDD._id}}]
-    })
-    if(ComprobarF) return res.status(200).json({msg:"Ya tienes agregado a favoritos"})
+    const ComprobarF = await Favoritos.find({"idUsuario":req.usuarioBDD._id}).where("idPublicacion").equals(id)
+    console.log(Object.keys(ComprobarF).length === 0)
+    const valor = Object.keys(ComprobarF).length === 0
+    if(valor === false) return res.status(404).json({msg:"Ya tienes agregado a favoritos"})
 
     const nuevoFavorito = new Favoritos
     nuevoFavorito.idPublicacion = id
