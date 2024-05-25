@@ -4,6 +4,7 @@ import Reportes from "../models/Reportes.js"
 import mongoose from "mongoose"
 import generarJWT from "../helpers/crearJWT.js"
 import {sendMailtoNewModer, sendMailToRecoveryPassword} from '../config/nodemailer.js'
+import Publicacion from "../models/Publicacion.js"
 
 
 const registrar = async(req,res) =>{
@@ -86,11 +87,68 @@ const contraNuevaI = async(req,res) =>{
     res.status(200).json({msg: "Contraseña actualizada"})
 }
 
-const bloquearU = (req,res) =>{
-    res.status(200).json({msg:"Bloquear"})
+const bloquearU = async(req,res) =>{
+
+    const {id} = req.params
+
+    const usuario = await Usuario.findById(id).select("-status -__v -token -updatedAt -createdAt")
+    if(!usuario) return res.status(200).json({msg:"usuario no encontrado"})
+
+    usuario.bloqueo = true
+    await usuario.save()
+
+    res.status(200).json({msg:"Usuario Bloqueado"})
 }
-const eliminarPublicacion = (req,res) =>{
-    res.status(200).json({msg:"Eliminar moderador"})
+const RestrinU = async(req,res) =>{
+
+    const {id} = req.params
+
+    const usuario = await Usuario.findById(id).select("-status -__v -token -updatedAt -createdAt")
+    if(!usuario) return res.status(200).json({msg:"usuario no encontrado"})
+
+    usuario.restriccion = true
+    await usuario.save()
+
+    res.status(200).json({msg:"Usuario restringido"})
+}
+
+const eliminarPublicacion = async(req,res) =>{
+
+    const {id} = req.params
+
+    const reporte = await Reportes.findById(id).select("-status -__v -token -updatedAt -createdAt")
+    if(!reporte) return res.status(404).json({msg:"no se encontro el reporte"})
+
+    const idP = await Publicacion.findById(reporte.idPublicacion).select("_id")
+
+    await Publicacion.findByIdAndDelete(idP)
+
+    reporte.estado = "Resuelto"
+
+    await reporte.save()
+    res.status(200).json({msg:"Publicación Bloqueada"})
+}
+const falsoReporte = async(req,res) =>{
+    const {id} = req.params
+
+    const reporte = await Reportes.findById(id).select("-status -__v -token -updatedAt -createdAt")
+    if(!reporte) return res.status(404).json({msg:"no se encontro el reporte"})
+
+    reporte.estado = "Resuelto"
+
+    await reporte.save()
+    res.status(200).json({msg:"Publicación Bloqueada"})
+}
+
+const reporte = async(req,res) =>{
+    const {id} = req.params
+
+    const reporte = await Reportes.findById(id).select("-status -__v -token -updatedAt -createdAt")
+    if(!reporte) return res.status(404).json({msg:"no se encontro el reporte"})
+    const publicacion = await Publicacion.findById(reporte.usuarioId).select("-status -__v -token -updatedAt -createdAt") 
+    if(!publicacion) return res.status(404).json({msg:"No se encontro la publicación"})
+
+    res.status(200).json({reporte,publicacion})
 }
 const usuarioReportes = async (req,res) =>{
     
@@ -107,8 +165,8 @@ const usuarioReportes = async (req,res) =>{
 }
 const notificacionesReportes = async(req,res) =>{
     const reportes = await Reportes.find({})
-    res.status(200).json(reportes)}
-
+    res.status(200).json(reportes)
+}
 
 const usuarios = async (req,res) =>{
     const usuarios = await Usuario.find({}).where('confirmar').equals(true)
@@ -154,6 +212,7 @@ const recuperaCon = async (req,res)=>{
     
     const token = moderadorBDD.crearToken()
     moderadorBDD.token = token
+    console.log(token)
 
     await sendMailToRecoveryPassword(email,token)
     await moderadorBDD.save()
@@ -203,5 +262,8 @@ export{
     contraNuevaI,
     moderadores,
     moderadoresEliminar,
-    usuarioReportes
+    usuarioReportes,
+    reporte,
+    RestrinU,
+    falsoReporte
 }

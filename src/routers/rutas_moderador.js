@@ -12,7 +12,10 @@ import {registrar,
         contraNuevaI,
         moderadores,
         moderadoresEliminar,
-        usuarioReportes
+        usuarioReportes,
+        reporte,
+        falsoReporte,
+        RestrinU
 } from '../controllers/moderador_Controler.js'
 import verificarAutentication from '../middlewares/autentication.js'
 import verificarModerador from '../middlewares/moderadorSuper.js'
@@ -30,11 +33,16 @@ router.put('/moderador/password/inicial',validacionContra,contraNuevaI)
 
 //Rutas privadas
 router.put('/actualizar/moderador/:id',verificarAutentication,validacionContra,actualizarC)
-router.delete('/eliminar/publicacion/:id',verificarAutentication,eliminarPublicacion) //sin hacer
-router.put('/bloquear/usuario/:id',verificarAutentication,bloquearU) //sin hacer
 router.get('/moderador/reportes',verificarAutentication,usuarioReportes)
-router.get('/notificaciones/moderador/:id',verificarAutentication,notificacionesReportes) //sin hacer
+router.get('/reporte/unico/:id',verificarAutentication,reporte)
 router.get('/listar/usuarios',verificarAutentication,usuarios)
+
+router.get('/notificaciones/moderador/:id',verificarAutentication,notificacionesReportes) 
+
+router.put('/bloquear/usuario/:id',verificarAutentication,bloquearU) 
+router.put('/restringir/usuario/:id',verificarAutentication,RestrinU)
+router.delete('/eliminar/publicacion/:id',verificarAutentication,eliminarPublicacion) 
+router.put('/falso/usuario/:id',verificarAutentication,falsoReporte)
 
 //Rutas de moderador super
 router.post('/registrar/moderador',verificarAutentication,verificarModerador,validacionModerador,registrar)
