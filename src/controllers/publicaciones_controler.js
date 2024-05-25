@@ -8,7 +8,7 @@ import Reportes from "../models/Reportes.js";
 
 
 const publicacionesGlobales = async(req,res)=>{
-    const publicacionBDD = await Publicacion.find({}).select("imagen descripcion usuarioID likes dislike estilo")
+    const publicacionBDD = await Publicacion.find({}).select("imagen descripcion usuarioID likes dislike estilo nombre")
     res.status(200).json(publicacionBDD)
 } 
 const publicar = async(req,res)=>{
