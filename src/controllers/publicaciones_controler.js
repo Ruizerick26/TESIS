@@ -13,15 +13,17 @@ const publicacionesGlobales = async(req,res)=>{
 } 
 const publicar = async(req,res)=>{
 
-    const {descripcion, temporada, epoca, genero,estiloG, nombre} = req.body
+    const {descripcion, temporada, epoca, genero,estiloG} = req.body
 
     Object.entries(Object.values(req.body)).length ===0 ? console.log("esta vacio"):console.log("esta lleno")
     if (Object.entries(Object.values(req.body)).length ===0) return res.status(404).json({msg:"Lo sentimos, debes llenar todos los campos"})
 
+    const usuario = await Usuario.findById(req.usuarioBDD._id)
+    
     const publicacion = new Publicacion
     publicacion.descripcion = descripcion
     publicacion.usuarioID = req.usuarioBDD._id
-    publicacion.nombre = nombre
+    publicacion.nombre = usuario.nombre
     publicacion.estilo.temporada = temporada
     publicacion.estilo.epoca = epoca
     publicacion.estilo.genero = genero
