@@ -15,7 +15,7 @@ const publicacionesGlobales = async(req,res)=>{
 } 
 const publicar = async(req,res)=>{
 
-    const {descripcion, temporada, anio, genero,estiloG} = req.body
+    const {descripcion, temporada, epoca, genero,estiloG} = req.body
 
     Object.entries(Object.values(req.body)).length ===0 ? console.log("esta vacio"):console.log("esta lleno")
     if (Object.entries(Object.values(req.body)).length ===0) return res.status(404).json({msg:"Lo sentimos, debes llenar todos los campos"})
@@ -24,7 +24,7 @@ const publicar = async(req,res)=>{
     publicacion.descripcion = descripcion
     publicacion.usuarioID = req.usuarioBDD._id
     publicacion.estilo.temporada = temporada
-    publicacion.estilo.anio = anio
+    publicacion.estilo.epoca = epoca
     publicacion.estilo.genero = genero
     publicacion.estilo.estiloG = estiloG    
 
@@ -52,7 +52,7 @@ const actualizarPublicacion = async (req,res)=>{
     
     publicacionBDD.descripcion = req.body.descripcion || publicacionBDD?.descripcion
     publicacionBDD.estilo.temporada = req.body.temporada || publicacionBDD?.estilo.temporada
-    publicacionBDD.estilo.anio = req.body.anio || publicacionBDD?.estilo.anio
+    publicacionBDD.estilo.epoca = req.body.epoca || publicacionBDD?.estilo.epoca
     publicacionBDD.estilo.genero = req.body.genero || publicacionBDD?.estilo.genero
     publicacionBDD.estilo.estiloG = req.body.estiloG || publicacionBDD?.estilo.estiloG
 

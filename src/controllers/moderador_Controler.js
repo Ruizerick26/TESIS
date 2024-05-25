@@ -1,5 +1,6 @@
 import Usuario from "../models/Usuario.js"
 import Moderador from '../models/Moderador.js'
+import Reportes from "../models/Reportes.js"
 import mongoose from "mongoose"
 import generarJWT from "../helpers/crearJWT.js"
 import {sendMailtoNewModer, sendMailToRecoveryPassword} from '../config/nodemailer.js'
@@ -91,9 +92,24 @@ const bloquearU = (req,res) =>{
 const eliminarPublicacion = (req,res) =>{
     res.status(200).json({msg:"Eliminar moderador"})
 }
-const notificacionesReportes = (req,res) =>{
-    res.status(200).json({msg:"Notificaciones Reportes"})
+const usuarioReportes = async (req,res) =>{
+    
+    const {id} = req.params
+
+    if( !mongoose.Types.ObjectId.isValid(id) ) return res.status(404).json({msg:`Lo sentimos, debe ser un id válido`});
+
+    const usuario = await Usuario.findById(id)
+    if(!usuario) return res.status(200).json({msg:"usuario no encontrado"})
+    
+    const usuarioReportes = await Reportes.find({}).where("usuarioId").equals(id)
+
+    res.status(200).json({usuarioReportes})
 }
+const notificacionesReportes = async(req,res) =>{
+    const reportes = await Reportes.find({})
+    res.status(200).json(reportes)}
+
+
 const usuarios = async (req,res) =>{
     const usuarios = await Usuario.find({}).where('confirmar').equals(true)
     res.status(200).json(usuarios)
@@ -186,5 +202,6 @@ export{
     nuevaContraseña,
     contraNuevaI,
     moderadores,
-    moderadoresEliminar
+    moderadoresEliminar,
+    usuarioReportes
 }

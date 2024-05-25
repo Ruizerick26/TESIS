@@ -27,7 +27,7 @@ router.get('/publicaciones',publicacionesGlobales)
 
 //rutas privadas
 router.post('/publicar',upload.single('image'),verificarAutentication,validacionPublicacion,publicar)
-router.put('/publicar/actualizar/:id',verificarAutentication,actualizarPublicacion)
+router.put('/publicar/actualizar/:id',verificarAutentication,validacionPublicacion,actualizarPublicacion)
 router.get('/publicar/:id',verificarAutentication, publicacionUnica)
 router.delete('/publicar/eliminar/:id',verificarAutentication,BorrarPublicacion)
 //Reacciones
