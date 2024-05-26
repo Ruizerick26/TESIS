@@ -192,6 +192,31 @@ const reporte = async(req,res) =>{
     res.status(200).json({msg:"Reporte enviado"})
 }
 
+const buscar = async (req,res) =>{
+    const {cadena} = req.body
+
+    const nuevacadena = cadena.split(" ")
+    let array = new Array
+
+    for(let i =0; i<nuevacadena.length; i++){
+        const busqueda = await Publicacion.find({}).where("estilo.temporada").equals(nuevacadena[i])
+        if(busqueda.length != 0){ array.push(busqueda)}
+    }
+    for(let i =0; i<nuevacadena.length; i++){
+        const busqueda = await Publicacion.find({}).where("estilo.genero").equals(nuevacadena[i])
+        if(busqueda.length != 0){ array.push(busqueda)}
+    }
+    for(let i =0; i<nuevacadena.length; i++){
+        const busqueda = await Publicacion.find({}).where("estilo.estiloG").equals(nuevacadena[i])
+        if(busqueda.length != 0){ array.push(busqueda)}
+    }
+    for(let i =0; i<nuevacadena.length; i++){
+        const busqueda = await Publicacion.find({}).where("estilo.epoca").equals(nuevacadena[i])
+        if(busqueda.length != 0){ array.push(busqueda)}
+    }
+    const busquedaFinal = array.filter(aux => aux != [])
+    res.status(200).json(busquedaFinal)
+}
 
 export {
     publicacionesGlobales,
@@ -206,5 +231,6 @@ export {
     EliminarDislike,
     EliminarFavorito,
     reporte,
-    verFavoritos
+    verFavoritos,
+    buscar
 }

@@ -12,7 +12,8 @@ import {
     EliminarDislike,
     EliminarFavorito,
     reporte,
-    verFavoritos
+    verFavoritos,
+    buscar
 } from '../controllers/publicaciones_controler.js'
 import verificarAutentication from "../middlewares/autentication.js"
 import upload from '../middlewares/multer.js'
@@ -39,6 +40,9 @@ router.put('/publicacion/dislikeEliminar/:id',verificarAutentication,EliminarDis
 router.delete('/publicacion/eliminarFavoritos/:id',verificarAutentication,EliminarFavorito)
 router.get('/publicaciones/misFavoritos/:id',verificarAutentication,verFavoritos)
 router.post('/publicaciones/reporte/:id',verificarAutentication,reporte)
+
+//Busqueda
+router.get('/busqueda', buscar)
 
 
 export default router
