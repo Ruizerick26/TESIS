@@ -76,6 +76,8 @@ const BorrarPublicacion = async(req,res)=>{
     await Publicacion.findByIdAndDelete(id)
     await deleteImage(publicacion.imagen.public_id)
 
+    
+
     res.status(200).json({msg:"Publicación borrada"})
 }
 
@@ -142,9 +144,21 @@ const agregarFavorito = async (req,res)=>{
     const valor = Object.keys(ComprobarF).length === 0
     if(valor === false) return res.status(404).json({msg:"Ya tienes agregado a favoritos"})
 
+    const publicacionN = await Publicacion.findById(id).select("imagen descripcion usuarioID likes dislike estilo nombre")
+
     const nuevoFavorito = new Favoritos
     nuevoFavorito.idPublicacion = id
     nuevoFavorito.idUsuario = req.usuarioBDD._id
+ 
+    console.log(publicacionN)
+     
+    nuevoFavorito.descripcion = publicacionN.descripcion
+    nuevoFavorito.imagen.public_id = publicacionN.imagen.public_id
+    nuevoFavorito.imagen.secure_url = publicacionN.imagen.secure_url
+    nuevoFavorito.estilo.epoca = publicacionN.estilo.epoca
+    nuevoFavorito.estilo.temporada = publicacionN.estilo.temporada
+    nuevoFavorito.estilo.estiloG = publicacionN.estilo.estiloG
+    nuevoFavorito.estilo.genero = publicacionN.estilo.genero
 
     await nuevoFavorito.save()
     res.status(200).json({msg:"Publicacion agregada a favoritos"})
@@ -165,15 +179,7 @@ const verFavoritos = async (req,res) =>{
 
     const buscarF = await Favoritos.find({}).where('idUsuario').equals(id)
 
-    let array = new Array
-    for(let i = 0; i<buscarF.length;i++){
-        const publicacion = await Publicacion.findById(buscarF[i].idPublicacion).select("imagen descripcion usuarioID likes dislike estilo nombre")
-        array.push(publicacion)
-    }
-
-    //console.log(array)
-
-    res.status(200).json(array)
+    res.status(200).json(buscarF)
 }
 
 const reporte = async(req,res) =>{

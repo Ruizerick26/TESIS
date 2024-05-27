@@ -8,6 +8,22 @@ const FavoritoSchema = new Schema ({
     idPublicacion:{
         type: mongoose.Schema.Types.ObjectID,
         ref: 'Publicacion'
+    },
+    imagen:{
+        public_id: String,
+        secure_url:String
+    },
+    descripcion:{
+        type: String,
+        maxlength: 150,
+        require: true,
+        trim: true
+    },
+    estilo:{
+        estiloG: String,
+        temporada: String,
+        epoca: String,
+        genero: String
     }
 },
 {
