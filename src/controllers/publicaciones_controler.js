@@ -165,7 +165,15 @@ const verFavoritos = async (req,res) =>{
 
     const buscarF = await Favoritos.find({}).where('idUsuario').equals(id)
 
-    res.status(200).json(buscarF)
+    let array = new Array
+    for(let i = 0; i<buscarF.length;i++){
+        const publicacion = await Publicacion.findById(buscarF[i].idPublicacion).select("imagen descripcion usuarioID likes dislike estilo nombre")
+        array.push(publicacion)
+    }
+
+    //console.log(array)
+
+    res.status(200).json(array)
 }
 
 const reporte = async(req,res) =>{
