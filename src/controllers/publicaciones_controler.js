@@ -196,12 +196,12 @@ const reporte = async(req,res) =>{
 
     const idUser = await Publicacion.findById(id).select("usuarioID")
 
-
     const nuevoReporte = await Reportes(req.body)
 
     nuevoReporte.idPublicacion = id
-    nuevoReporte.idUsuario = idUser
+    nuevoReporte.usuarioId = idUser.usuarioID
 
+    console.log(nuevoReporte)
     await nuevoReporte.save()
     res.status(200).json({msg:"Reporte enviado"})
 }
