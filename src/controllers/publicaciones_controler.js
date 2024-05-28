@@ -168,7 +168,7 @@ const EliminarFavorito = async (req,res) =>{
 
     const buscarF = await Favoritos.findById(id)
     if(!buscarF) return res.status(404).json({msg:"No se a encontrado la publicación"})
-
+         
     await Favoritos.findByIdAndDelete(id)
     res.status(200).json({msg:"Eliminaste de favoritos"})
 }
@@ -202,7 +202,7 @@ const reporte = async(req,res) =>{
     nuevoReporte.idPublicacion = id
     nuevoReporte.idUsuario = idUser
 
-    await nuevoReporte.saved()
+    await nuevoReporte.save()
     res.status(200).json({msg:"Reporte enviado"})
 }
 
