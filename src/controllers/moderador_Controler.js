@@ -145,7 +145,7 @@ const reporte = async(req,res) =>{
 
     const reporte = await Reportes.findById(id).select("-status -__v -token -updatedAt -createdAt")
     if(!reporte) return res.status(404).json({msg:"no se encontro el reporte"})
-    const publicacion = await Publicacion.findById(reporte.usuarioId).select("-status -__v -token -updatedAt -createdAt") 
+    const publicacion = await Publicacion.findById(reporte.idPublicacion).select("-status -__v -token -updatedAt -createdAt") 
     if(!publicacion) return res.status(404).json({msg:"No se encontro la publicación"})
 
     res.status(200).json({reporte,publicacion})
@@ -161,7 +161,7 @@ const usuarioReportes = async (req,res) =>{
     
     const usuarioReportes = await Reportes.find({}).where("usuarioId").equals(id)
 
-    res.status(200).json({usuarioReportes})
+    res.status(200).json(usuarioReportes)
 }
 const notificacionesReportes = async(req,res) =>{
     const reportes = await Reportes.find({})
@@ -180,8 +180,11 @@ const moderadores = async(req,res) =>{
 
 const moderadoresEliminar = async(req,res) =>{
     const {id} = req.params
-
+    
     const moderador = await Moderador.findById(id)
+
+    if(moderador.super === true) return res.status(200).json({msg:"Este moderador no puede ser eliminado"})
+
     if(!moderador) return res.status(404).json({msg:"No se a encontrado el moderador"})
 
     await Moderador.findByIdAndDelete(id)
