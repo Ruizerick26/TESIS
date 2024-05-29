@@ -33,7 +33,7 @@ router.put('/moderador/password/inicial',validacionContra,contraNuevaI)
 
 //Rutas privadas
 router.put('/actualizar/moderador/:id',verificarAutentication,validacionContra,actualizarC)
-router.get('/moderador/reportes',verificarAutentication,usuarioReportes)
+router.get('/moderador/reportes/:id',verificarAutentication,usuarioReportes)
 router.get('/reporte/unico/:id',verificarAutentication,reporte)
 router.get('/listar/usuarios',verificarAutentication,usuarios)
 
