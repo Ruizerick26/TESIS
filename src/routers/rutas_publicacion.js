@@ -32,14 +32,19 @@ router.put('/publicar/actualizar/:id',verificarAutentication,validacionPublicaci
 router.get('/publicar/:id',verificarAutentication, publicacionUnica)
 router.delete('/publicar/eliminar/:id',verificarAutentication,BorrarPublicacion)
 //Reacciones
+//agregar like,dislike y reporte
 router.put('/publicacion/like/:id',verificarAutentication,AgregarLike)
 router.put('/publicacion/dilike/:id',verificarAutentication,AgregarDislike)
 router.post('/publicacion/favoritos/:id',verificarAutentication,agregarFavorito)
+router.post('/publicaciones/reporte/:id',verificarAutentication,reporte)
+
+//eliminar like dislike y favorito
 router.put('/publicacion/likeEliminar/:id',verificarAutentication,eliminarLike)
 router.put('/publicacion/dislikeEliminar/:id',verificarAutentication,EliminarDislike)
 router.delete('/publicacion/eliminarFavoritos/:id',verificarAutentication,EliminarFavorito)
+
+//ver favoritos
 router.get('/publicaciones/misFavoritos/:id',verificarAutentication,verFavoritos)
-router.post('/publicaciones/reporte/:id',verificarAutentication,reporte)
 
 //Busqueda
 router.get('/busqueda', buscar)

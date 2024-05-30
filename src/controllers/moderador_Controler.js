@@ -112,6 +112,7 @@ const RestrinU = async(req,res) =>{
     res.status(200).json({msg:"Usuario restringido"})
 }
 
+//------------------------PROCESO DE RESOLVER REPORTES---------------------------
 const eliminarPublicacion = async(req,res) =>{
 
     const {id} = req.params
@@ -139,6 +140,15 @@ const falsoReporte = async(req,res) =>{
     await reporte.save()
     res.status(200).json({msg:"Publicación Bloqueada"})
 }
+const cambio = async(req,res) =>{
+    const {id} = req.params
+
+    const reporte = await Reportes.findById(id).select("-status -__v -token -updatedAt -createdAt")
+    reporte.estado = "Borrado"
+
+    await reporte.save()
+    res.status(200).json({msg:"cambiado de estado por eliminación"})
+}
 
 const reporte = async(req,res) =>{
     const {id} = req.params
@@ -146,9 +156,11 @@ const reporte = async(req,res) =>{
     const reporte = await Reportes.findById(id).select("-status -__v -token -updatedAt -createdAt")
     if(!reporte) return res.status(404).json({msg:"no se encontro el reporte"})
     const publicacion = await Publicacion.findById(reporte.idPublicacion).select("-status -__v -token -updatedAt -createdAt") 
-    if(!publicacion) return res.status(404).json({msg:"No se encontro la publicación"})
-
-    res.status(200).json({reporte,publicacion})
+    if(!publicacion){
+        res.status(200).json({reporte, msg : "La publicación a sido borrada"})
+    }else{
+        res.status(200).json({reporte,publicacion})
+    }
 }
 const usuarioReportes = async (req,res) =>{
     
@@ -163,7 +175,7 @@ const usuarioReportes = async (req,res) =>{
 
     res.status(200).json(usuarioReportes)
 }
-const notificacionesReportes = async(req,res) =>{
+const nReportes = async(req,res) =>{
     const reportes = await Reportes.find({})
     res.status(200).json(reportes)
 }
@@ -172,6 +184,9 @@ const usuarios = async (req,res) =>{
     const usuarios = await Usuario.find({}).where('confirmar').equals(true)
     res.status(200).json(usuarios)
 }
+
+
+//-----------------------------------FIN------------------------------------------
 
 const moderadores = async(req,res) =>{
     const moderadores = await Moderador.find({}).where('codigo').equals(null)
@@ -256,7 +271,7 @@ export{
     login,
     bloquearU,
     eliminarPublicacion,
-    notificacionesReportes,
+    nReportes,
     usuarios,
     actualizarC,
     recuperaCon,
@@ -268,5 +283,6 @@ export{
     usuarioReportes,
     reporte,
     RestrinU,
-    falsoReporte
+    falsoReporte,
+    cambio
 }
