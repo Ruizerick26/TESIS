@@ -86,7 +86,7 @@ const sendMailtoRecoveryModer = async(userMail,token) =>{
         <div style="border: solid  #66CCCC ; width:500px; border-radius:15px; background-color: #99FFCC;">
         <h1><font color="#660000">Gracias por trabajar con nosotros</font></h1>
         <p>Este correo te permitirá recuperar tu contraseña</p>
-        <a href=${process.env.URL_BACKEND}recuperarmoder/${token}>Clic para reestablecer tu contraseña</a>
+        <a href=${process.env.URL_FRONTEND}moderador/recuperar/${token}>Clic para reestablecer tu contraseña</a>
         </div>
         <footer>ROPDAT TE AGRADECE POR FORMAR PARTE DE NUESTROS MODERADORES</footer>
         `
