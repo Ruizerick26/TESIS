@@ -13,7 +13,7 @@ import {
 } from '../controllers/usuario_Controler.js'
 import verificarAutentication  from '../middlewares/autentication.js'
 import upload from '../middlewares/multer.js'
-import {validacionFormulario,validacionPublicacion,validacionContraU} from '../middlewares/validacionFormularios.js'
+import {validacionFormulario,validacionPublicacion,validacionContraU,validacionActualizar} from '../middlewares/validacionFormularios.js'
 
 
    
@@ -31,7 +31,7 @@ router.post('/nuevopasword',validacionContraU, nuevaContraseña)
 //rutas PRIVADAS
 router.put('/usuario/actualizarPassword',verificarAutentication,validacionContraU, actualizarPassword)
 router.get('/usuario/:id',verificarAutentication, perfil)
-router.put('/usuario/:id',verificarAutentication, actualizarPerfil)
+router.put('/usuario/:id',verificarAutentication, validacionActualizar, actualizarPerfil)
 router.put('/usuario/foto/:id',upload.single('image'),validacionPublicacion,actualizarFoto)
 
 
