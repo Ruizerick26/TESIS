@@ -14,14 +14,14 @@ import {
 import verificarAutentication  from '../middlewares/autentication.js'
 import upload from '../middlewares/multer.js'
 import {validacionFormulario,validacionPublicacion,validacionContraU,validacionActualizar} from '../middlewares/validacionFormularios.js'
-
+import {verificarBloqueo} from '../middlewares/bloqueosUsuarios.js'
 
    
 const router = Router()
 
 
 //rutas publicas
-router.post('/login', login)
+router.post('/login', verificarBloqueo, login)
 router.post('/register',validacionFormulario, register)
 router.get('/confirmar/:token', confirmemail)
 router.post('/recuperar', recuperaCon)

@@ -50,6 +50,20 @@ const validacionPublicacion =[
         }
     }
 ]
+const validacionReporte =[
+    check("detalle")
+        .isLength({max: 75 })
+            .withMessage('El campo "Detalle" debe tener un máximo de 75 caracteres')
+        .customSanitizer(value => value?.trim()),
+    (req,res,next)=>{
+        const errors = validationResult(req);
+        if (errors.isEmpty()) {
+            return next();
+        } else {
+            return res.status(400).send({ errors: errors.array() });
+        }
+    }
+]
 
 const validacionFormulario =[
     check(["nombre","apellido"])
@@ -133,5 +147,6 @@ export {
     validacionFormulario,
     validacionPublicacion,
     validacionModerador,
-    validacionActualizar
+    validacionActualizar,
+    validacionReporte
 }

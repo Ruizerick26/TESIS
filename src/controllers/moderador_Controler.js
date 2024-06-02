@@ -112,6 +112,31 @@ const RestrinU = async(req,res) =>{
     res.status(200).json({msg:"Usuario restringido"})
 }
 
+const desbloquearU = async(req,res) =>{
+
+    const {id} = req.params
+
+    const usuario = await Usuario.findById(id).select("-status -__v -token -updatedAt -createdAt")
+    if(!usuario) return res.status(200).json({msg:"usuario no encontrado"})
+
+    usuario.bloqueo = false
+    await usuario.save()
+
+    res.status(200).json({msg:"Usuario Desbloqueado"})
+}
+const desRestrinU = async(req,res) =>{
+
+    const {id} = req.params
+
+    const usuario = await Usuario.findById(id).select("-status -__v -token -updatedAt -createdAt")
+    if(!usuario) return res.status(200).json({msg:"usuario no encontrado"})
+
+    usuario.restriccion = false
+    await usuario.save()
+
+    res.status(200).json({msg:"Usuario sin renstricción"})
+}
+
 //------------------------PROCESO DE RESOLVER REPORTES---------------------------
 const eliminarPublicacion = async(req,res) =>{
 
@@ -284,5 +309,7 @@ export{
     reporte,
     RestrinU,
     falsoReporte,
-    cambio
+    cambio,
+    desbloquearU,
+    desRestrinU
 }

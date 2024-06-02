@@ -16,7 +16,9 @@ import {registrar,
         reporte,
         falsoReporte,
         RestrinU,
-        cambio
+        cambio,
+        desbloquearU,
+        desRestrinU
 } from '../controllers/moderador_Controler.js'
 import verificarAutentication from '../middlewares/autentication.js'
 import verificarModerador from '../middlewares/moderadorSuper.js'
@@ -45,6 +47,8 @@ router.get('/reporte/unico/:id',verificarAutentication,reporte)
 //rutas para sancionar al usuario 
 router.put('/bloquear/usuario/:id',verificarAutentication,bloquearU) 
 router.put('/restringir/usuario/:id',verificarAutentication,RestrinU)
+router.put('/desbloquear/usuario/:id',verificarAutentication,desbloquearU) 
+router.put('/desrestringir/usuario/:id',verificarAutentication,desRestrinU)
 
 //rutas para solucionar reportes
 router.delete('/eliminar/publicacion/:id',verificarAutentication,eliminarPublicacion) 

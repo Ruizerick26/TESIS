@@ -17,7 +17,8 @@ import {
 } from '../controllers/publicaciones_controler.js'
 import verificarAutentication from "../middlewares/autentication.js"
 import upload from '../middlewares/multer.js'
-import {validacionPublicacion} from '../middlewares/validacionFormularios.js'
+import {validacionPublicacion, validacionReporte} from '../middlewares/validacionFormularios.js'
+import {verificarRestrin} from '../middlewares/bloqueosUsuarios.js'
 
 
 const router = Router()
@@ -27,21 +28,23 @@ router.get('/publicaciones',publicacionesGlobales)
 
 
 //rutas privadas
-router.post('/publicar',upload.single('image'),verificarAutentication,validacionPublicacion,publicar)
-router.put('/publicar/actualizar/:id',verificarAutentication,validacionPublicacion,actualizarPublicacion)
+//ya restringido
+router.post('/publicar',verificarRestrin,upload.single('image'),verificarAutentication,validacionPublicacion,publicar)
+router.put('/publicar/actualizar/:id',verificarRestrin,verificarAutentication,validacionPublicacion,actualizarPublicacion)
+//sin restringir no necesario
 router.get('/publicar/:id',verificarAutentication, publicacionUnica)
 router.delete('/publicar/eliminar/:id',verificarAutentication,BorrarPublicacion)
 //Reacciones
 //agregar like,dislike y reporte
-router.put('/publicacion/like/:id',verificarAutentication,AgregarLike)
-router.put('/publicacion/dilike/:id',verificarAutentication,AgregarDislike)
-router.post('/publicacion/favoritos/:id',verificarAutentication,agregarFavorito)
-router.post('/publicaciones/reporte/:id',verificarAutentication,reporte)
+router.put('/publicacion/like/:id',verificarRestrin,verificarAutentication,AgregarLike)
+router.put('/publicacion/dilike/:id',verificarRestrin,verificarAutentication,AgregarDislike)
+router.post('/publicacion/favoritos/:id',verificarRestrin,verificarAutentication,agregarFavorito)
+router.post('/publicaciones/reporte/:id',verificarRestrin,verificarAutentication, validacionReporte,reporte)
 
 //eliminar like dislike y favorito
-router.put('/publicacion/likeEliminar/:id',verificarAutentication,eliminarLike)
-router.put('/publicacion/dislikeEliminar/:id',verificarAutentication,EliminarDislike)
-router.delete('/publicacion/eliminarFavoritos/:id',verificarAutentication,EliminarFavorito)
+router.put('/publicacion/likeEliminar/:id',verificarRestrin,verificarAutentication,eliminarLike)
+router.put('/publicacion/dislikeEliminar/:id',verificarRestrin,verificarAutentication,EliminarDislike)
+router.delete('/publicacion/eliminarFavoritos/:id',verificarRestrin,verificarAutentication,EliminarFavorito)
 
 //ver favoritos
 router.get('/publicaciones/misFavoritos/:id',verificarAutentication,verFavoritos)
