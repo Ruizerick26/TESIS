@@ -3,7 +3,7 @@ import Usuario from "../models/Usuario.js";
 const verificarRestrin = async(req,res) =>{
 
     try{
-        const usuarioV = await Usuario.findById(req.UsuarioBDD._id).select('-createdAt -updatedAt -__v')
+        const usuarioV = await Usuario.findById(req.usuarioBDD._id).select('-createdAt -updatedAt -__v')
 
         if(usuarioV.restriccion === true) return res.status(200).json({msg:"Su cuenta esta restringida"})
 
