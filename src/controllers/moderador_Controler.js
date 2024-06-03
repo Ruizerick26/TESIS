@@ -3,7 +3,7 @@ import Moderador from '../models/Moderador.js'
 import Reportes from "../models/Reportes.js"
 import mongoose from "mongoose"
 import generarJWT from "../helpers/crearJWT.js"
-import {sendMailtoNewModer, sendMailToRecoveryPassword} from '../config/nodemailer.js'
+import {sendMailtoNewModer, sendMailToRecoveryPassword, sendMailtoBloqueo,sendMailtoRestring} from '../config/nodemailer.js'
 import Publicacion from "../models/Publicacion.js"
 
 
@@ -95,6 +95,7 @@ const bloquearU = async(req,res) =>{
     if(!usuario) return res.status(200).json({msg:"usuario no encontrado"})
 
     usuario.bloqueo = true
+    await sendMailtoBloqueo(usuario.email)
     await usuario.save()
 
     res.status(200).json({msg:"Usuario Bloqueado"})
@@ -107,6 +108,7 @@ const RestrinU = async(req,res) =>{
     if(!usuario) return res.status(200).json({msg:"usuario no encontrado"})
 
     usuario.restriccion = true
+    await sendMailtoRestring(usuario.email)
     await usuario.save()
 
     res.status(200).json({msg:"Usuario restringido"})

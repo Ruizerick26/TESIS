@@ -185,11 +185,73 @@ const sendMailtoRecoveryModer = async(userMail,token) =>{
     console.log("correo enviado con exito: ", info.messageId)
 }
 
+const sendMailtoBloqueo = async(userMail) =>{
+    let info =await transporter.sendMail({
+        from: 'Adminmoderador@ropdat.com',
+        to: userMail,
+        subject: "Cuenta BLOQUEADA",
+        html:`
+        <!DOCTYPE html>
+        <html lang: "en">
+        <body>
+        <center>
+        <div style="
+            border: 1px dashed #000; 
+            border-radius: 20px;  
+            width: auto;">
+        <h1 style="font-family: Merriweather, serif;">FashionGEC</h1>
+        <img src= "https://res.cloudinary.com/dscr8kr95/image/upload/v1717376783/wmbcpenc67vp4msrouzb.jpg" loading="lazy" width = "150" sizes = "150px" alt = ""  style= "border-radius: 100px; ">
+            <div style="width: auto;">
+                <p class = "paragraph" style="text-align: center;">CUENTA BLOQUEADA <br><br> Has cometido diversas infracciones <br> dentro del aplicativo. <br> Tu cuenta estara bloqueda <br> indefinidamente </p>
+                <br>
+            </div>
+            </div>
+        </body>
+        </html>
+        `
+    });
+    console.log("correo enviado con exito: ", info.messageId)
+}
+
+const sendMailtoRestring = async(userMail) =>{
+    let info =await transporter.sendMail({
+        from: 'Adminmoderador@ropdat.com',
+        to: userMail,
+        subject: "Cuenta RESTRINGIDA",
+        html:`
+        <!DOCTYPE html>
+        <html lang: "en">
+        <body>
+        <center>
+        <div style="
+            border: 1px dashed #000; 
+            border-radius: 20px;  
+            width: auto;">
+        <h1 style="font-family: Merriweather, serif;">FashionGEC</h1>
+        <img src= "https://res.cloudinary.com/dscr8kr95/image/upload/v1717376783/wmbcpenc67vp4msrouzb.jpg" loading="lazy" width = "150" sizes = "150px" alt = ""  style= "border-radius: 100px; ">
+            <div style="width: auto;">
+                <p class = "paragraph" style="text-align: center;">CUENTA RESTRINGIDA <br><br> 
+                Una publicación infringe los terminos <br> y condiciones de nuesta app.</p>
+                <p>Tu cuenta estara restingida <br> por cierto tiempo </p>
+                <p>Revisa tus notificaciones para <br> ver el tiempo de restricción </p>
+                <p>No podras interactuar con las publicaciones</p>
+                <p>No podras publicar, ni reportar </p>
+                <br>
+            </div>
+            </div>
+        </body>
+        </html>
+        `
+    });
+    console.log("correo enviado con exito: ", info.messageId)
+}
 
 
 export {
     sendMailToUser,
     sendMailToRecoveryPassword,
     sendMailtoNewModer,
-    sendMailtoRecoveryModer
+    sendMailtoRecoveryModer,
+    sendMailtoBloqueo,
+    sendMailtoRestring
 }
