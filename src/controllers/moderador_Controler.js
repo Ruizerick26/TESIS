@@ -5,6 +5,7 @@ import mongoose from "mongoose"
 import generarJWT from "../helpers/crearJWT.js"
 import {sendMailtoNewModer, sendMailToRecoveryPassword, sendMailtoBloqueo,sendMailtoRestring} from '../config/nodemailer.js'
 import Publicacion from "../models/Publicacion.js"
+import {deleteImage} from "../config/cloudinary.js"
 
 
 const registrar = async(req,res) =>{
@@ -150,6 +151,7 @@ const eliminarPublicacion = async(req,res) =>{
     const idP = await Publicacion.findById(reporte.idPublicacion).select("_id")
 
     await Publicacion.findByIdAndDelete(idP)
+    await deleteImage(idP.imagen.public_id)
 
     reporte.estado = "Resuelto"
 
