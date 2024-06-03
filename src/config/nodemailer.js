@@ -15,18 +15,53 @@ let transporter = nodemailer.createTransport({
 
 
 const sendMailToUser = (userMail, token) => {
-
     let mailOptions = {
         from: 'admin@ropdat.com',
         to: userMail,
         subject: "Verifica tu cuenta",
         html: `
-        <h1> 👗👕👖 APP TE DA LA BIENVENIDA 🙌👍🙌</h1>
-        <hr>
-        <a href=${process.env.URL_BACKEND}confirmar/${token}>Clic para confirmar tu cuenta</a>
-        <hr>
-        <footer>GRACIAS POR UNIRTE!</footer>
-        `
+        <!DOCTYPE html>
+        <html lang: "en">
+        <body>
+        
+        <div class= "w-layout-vflex flex-block" 
+        style="flex-direction: column;
+            align-items: center; 
+            display: flex; border: 1px dashed #000; 
+            border-radius: 20px; 
+            justify-content: center; 
+            align-items: center; 
+            width: 400px;">
+        <h1 class= "heading" style="font-family: Merriweather, serif;">FashionGEC</h1>
+        <img src= "assets/logo.jpg" loading="lazy" width = "150" sizes = "150px" alt = "" srcset = "assets/logo.jpg 500w, assets/logo.jpg 609w" class = "image" style= "border-radius: 100px; ">
+            <div 
+                style="flex-direction: column;
+                align-items: center; 
+                display: flex; 
+                justify-content: center; 
+                align-items: center; 
+                width: 400px;">
+                <p class = "paragraph" style="text-align: center;">BIENVENIDO A NUESTRA APP <br><br> Gracias por registrate en nuetro <br><br> aplicativo, esperamos que la experiencia <br><br> aqu&#237 sea la mejor.</p>
+                <br>
+                <a href="${process.env.URL_FRONTEND}/confirmar/${token}" class = "w-botton" style="display: inline-block;
+                        padding: 9px 15px;
+                        background-color: #3898EC;
+                        color: white;
+                        line-height: inherit;
+                        text-decoration: none;
+                        border-radius: 15px;">Confimar cuenta</a>
+            </div>
+        </div>
+        </body>
+        </html>
+        `,
+        attachments:[
+            {
+                filename: 'logo.jpg',
+                path:'./src/assets/logo.jpg',
+                cid:'logo'
+            }
+        ]
     };
     
 

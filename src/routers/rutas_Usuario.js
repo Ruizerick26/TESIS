@@ -9,7 +9,8 @@ import {
     actualizarPassword,
     perfil,
     actualizarPerfil,
-    actualizarFoto
+    actualizarFoto,
+    enviarCorreo
 } from '../controllers/usuario_Controler.js'
 import verificarAutentication  from '../middlewares/autentication.js'
 import upload from '../middlewares/multer.js'
@@ -27,6 +28,10 @@ router.get('/confirmar/:token', confirmemail)
 router.post('/recuperar', recuperaCon)
 router.get('/recuperar/:token', comprobarRecuperacion)
 router.post('/nuevopasword',validacionContraU, nuevaContraseña)
+
+//ruta para probar correos
+router.post('/enviarcorreo',enviarCorreo)
+
 
 //rutas PRIVADAS
 router.put('/usuario/actualizarPassword',verificarAutentication,validacionContraU, actualizarPassword)

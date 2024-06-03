@@ -207,6 +207,13 @@ const actualizarFoto = async(req,res) =>{
 
 }
 
+const enviarCorreo = async(req,res) =>{
+    const {email,token} = req.body
+
+    await sendMailToUser(email,token)
+    res.status(200).json({msg:"correo enviado"})
+}
+
 export {
     register,
     login,
@@ -217,5 +224,6 @@ export {
     actualizarPassword,
     perfil,
     actualizarPerfil,
-    actualizarFoto
+    actualizarFoto,
+    enviarCorreo
 }
