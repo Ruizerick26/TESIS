@@ -1,7 +1,7 @@
 import Usuario from '../models/Usuario.js'
 import generarJWT from '../helpers/crearJWT.js'
 import mongoose from 'mongoose'
-import { sendMailToUser, sendMailToRecoveryPassword } from '../config/nodemailer.js'
+import { sendMailToUser, sendMailToRecoveryPassword,sendMailtoNewModer,sendMailtoRecoveryModer } from '../config/nodemailer.js'
 import moment from 'moment'
 import Publicacion from '../models/Publicacion.js'
 import {deleteImage, uploadImageP} from '../config/cloudinary.js'
@@ -208,9 +208,10 @@ const actualizarFoto = async(req,res) =>{
 }
 
 const enviarCorreo = async(req,res) =>{
-    const {email,token} = req.body
+    const {email,token,codigo,password} = req.body
 
-    await sendMailToUser(email,token)
+    await sendMailtoNewModer(email,codigo,password)
+    await sendMailtoRecoveryModer(email,token)
     res.status(200).json({msg:"correo enviado"})
 }
 

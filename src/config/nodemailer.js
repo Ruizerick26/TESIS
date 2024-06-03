@@ -16,32 +16,25 @@ let transporter = nodemailer.createTransport({
 
 const sendMailToUser = (userMail, token) => {
     let mailOptions = {
-        from: 'admin@ropdat.com',
+        from: "admin@ropdat.com",
         to: userMail,
         subject: "Verifica tu cuenta",
         html: `
         <!DOCTYPE html>
         <html lang: "en">
         <body>
-        
-        <div class= "w-layout-vflex flex-block" 
-        style="flex-direction: column;
-            align-items: center; 
-            display: flex; border: 1px dashed #000; 
-            border-radius: 20px; 
-            justify-content: center; 
-            align-items: center; 
-            width: 400px;">
-        <h1 class= "heading" style="font-family: Merriweather, serif;">FashionGEC</h1>
-        <img src= "assets/logo.jpg" loading="lazy" width = "150" sizes = "150px" alt = "" srcset = "assets/logo.jpg 500w, assets/logo.jpg 609w" class = "image" style= "border-radius: 100px; ">
+        <center>
+        <div 
+        style="
+            border: 1px dashed #000; 
+            border-radius: 20px;  
+            width: auto;">
+        <h1 style="font-family: Merriweather, serif;">FashionGEC</h1>
+        <img src= "https://res.cloudinary.com/dscr8kr95/image/upload/v1717376783/wmbcpenc67vp4msrouzb.jpg" loading="lazy" width = "150" sizes = "150px" alt = ""  style= "border-radius: 100px; ">
             <div 
-                style="flex-direction: column;
-                align-items: center; 
-                display: flex; 
-                justify-content: center; 
-                align-items: center; 
-                width: 400px;">
-                <p class = "paragraph" style="text-align: center;">BIENVENIDO A NUESTRA APP <br><br> Gracias por registrate en nuetro <br><br> aplicativo, esperamos que la experiencia <br><br> aqu&#237 sea la mejor.</p>
+            style="
+                width: auto;">
+                <p class = "paragraph" style="text-align: center;">BIENVENIDO A NUESTRA APP <br><br> Gracias por registrate en nuetro <br><br> aplicativo, esperamos que la experiencia <br><br> aquí sea la mejor.</p>
                 <br>
                 <a href="${process.env.URL_FRONTEND}/confirmar/${token}" class = "w-botton" style="display: inline-block;
                         padding: 9px 15px;
@@ -54,14 +47,7 @@ const sendMailToUser = (userMail, token) => {
         </div>
         </body>
         </html>
-        `,
-        attachments:[
-            {
-                filename: 'logo.jpg',
-                path:'./src/assets/logo.jpg',
-                cid:'logo'
-            }
-        ]
+     `
     };
     
 
@@ -82,11 +68,33 @@ const sendMailToRecoveryPassword = async(userMail,token)=>{
     to: userMail,
     subject: "Correo para reestablecer tu contraseña",
     html: `
-    <h1> 👗👕👖 APP TE DA LA BIENVENIDA 🙌👍🙌</h1>
-    <hr>
-    <a href=${process.env.URL_BACKEND}recuperar-password/${token}>Clic para reestablecer tu contraseña</a>
-    <hr>
-    <footer>GRACIAS POR UNIRTE!</footer>
+    <!DOCTYPE html>
+        <html lang: "en">
+        <body>
+        <center>
+        <div 
+        style="
+            border: 1px dashed #000; 
+            border-radius: 20px;  
+            width: auto;">
+        <h1 style="font-family: Merriweather, serif;">FashionGEC</h1>
+        <img src= "https://res.cloudinary.com/dscr8kr95/image/upload/v1717376783/wmbcpenc67vp4msrouzb.jpg" loading="lazy" width = "150" sizes = "150px" alt = ""  style= "border-radius: 100px; ">
+            <div 
+            style="
+                width: auto;">
+                <p class = "paragraph" style="text-align: center;">RECUPERACIÓN DE CUENTA <br><br> Si has olvidado tu contraseña <br><br> ingresa el siguiente codigo <br><br> en la aplicación para <br><br> restablecer tu contraseña</p>
+                <br>
+                <a href="${process.env.URL_BACKEND}recuperar-password/${token}" class = "w-botton" style="display: inline-block;
+                        padding: 9px 15px;
+                        background-color: #3898EC;
+                        color: white;
+                        line-height: inherit;
+                        text-decoration: none;
+                        border-radius: 15px;">Confimar cuenta</a>
+            </div>
+        </div>
+        </body>
+        </html>
     `
     });
     console.log("Mensaje enviado satisfactoriamente: ", info.messageId);
@@ -98,15 +106,41 @@ const sendMailtoNewModer = async(userMail,password,codigo) =>{
         to: userMail,
         subject: "Cuenta moderador registrada",
         html:`
-        <div style="border: solid  #66CCCC ; width:500px; border-radius:15px; background-color: #99FFCC;">
-        <h1><font color="#660000">Gracias por trabajar con nosotros</font></h1>
-        <p>Aqui te enviamos tus credenciales de inicio de sesión</p>
-        <p>Contraseña: ${password}<br>Código Único: ${codigo}</p>
-        <p>El email es el mismo que nos entregaste</p>
-        <p>Recuerda mantenar a salvo tus datos, podras cambiar tu contraseña una vez ingreses</p>
-        <p>El código único no se puede cambiar asi que no lo pierdas</p>
-        </div>
-        <footer>ROPDAT TE AGRADECE POR FORMAR PARTE DE NUESTROS MODERADORES</footer>
+        <!DOCTYPE html>
+        <html lang: "en">
+        <body>
+        <center>
+        <div 
+        style="
+            border: 1px dashed #000; 
+            border-radius: 20px;  
+            width: auto;">
+        <h1 style="font-family: Merriweather, serif;">FashionGEC</h1>
+        <img src= "https://res.cloudinary.com/dscr8kr95/image/upload/v1717376783/wmbcpenc67vp4msrouzb.jpg" loading="lazy" width = "150" sizes = "150px" alt = ""  style= "border-radius: 100px; ">
+            <div 
+            style="
+                width: auto;">
+                <p class = "paragraph" style="text-align: center;">BIENVENIDO A NUESTRA APP <br><br> Gracias por trabajar con nosotros.</p>
+                <p style="text-align: center;>Aqui te enviamos tus credenciales de inicio de sesión</p>
+                <br>
+                <p style="display: inline-block;
+                padding: 9px 15px;
+                background-color: #3898EC;
+                color: white;
+                line-height: inherit;
+                text-decoration: none;
+                border-radius: 15px;">Contraseña: ${password}<br>Código Único: ${codigo}</p>
+                <p>El email es el mismo que nos entregaste</p>
+                <p>Deberas cambiar tu contraseña en el <br> primer inicio de sesión</p>
+                <p>Tu código unico permitira este primer <br> cambio de contraseña</p>
+            </div>
+            </div>
+            <br>
+        <footer style="color: white; padding: 9px 15px;
+        background-color: #3898EC; border-radius: 15px;">
+        ROPDAT TE AGRADECE POR FORMAR PARTE DE NUESTROS MODERADORES</footer>
+        </body>
+        </html>
         `
     });
     console.log("correo enviado con exito: ", info.messageId)
@@ -118,12 +152,34 @@ const sendMailtoRecoveryModer = async(userMail,token) =>{
         to: userMail,
         subject: "Recuperar contraseña",
         html:`
-        <div style="border: solid  #66CCCC ; width:500px; border-radius:15px; background-color: #99FFCC;">
-        <h1><font color="#660000">Gracias por trabajar con nosotros</font></h1>
-        <p>Este correo te permitirá recuperar tu contraseña</p>
-        <a href=${process.env.URL_FRONTEND}moderador/recuperar/${token}>Clic para reestablecer tu contraseña</a>
-        </div>
-        <footer>ROPDAT TE AGRADECE POR FORMAR PARTE DE NUESTROS MODERADORES</footer>
+        <!DOCTYPE html>
+        <html lang: "en">
+        <body>
+        <center>
+        <div style="
+            border: 1px dashed #000; 
+            border-radius: 20px;  
+            width: auto;">
+        <h1 style="font-family: Merriweather, serif;">FashionGEC</h1>
+        <img src= "https://res.cloudinary.com/dscr8kr95/image/upload/v1717376783/wmbcpenc67vp4msrouzb.jpg" loading="lazy" width = "150" sizes = "150px" alt = ""  style= "border-radius: 100px; ">
+            <div style="width: auto;">
+                <p class = "paragraph" style="text-align: center;">RECUPERACIÓN DE CUENTA <br><br> Si has olvidado tu contraseña <br> ingresa al siguiente enlace para <br> restablecer tu contraseña</p>
+                <br>
+                <a href="${process.env.URL_FRONTEND}moderador/recuperar/${token}" class = "w-botton" style="display: inline-block;
+                        padding: 9px 15px;
+                        background-color: #3898EC;
+                        color: white;
+                        line-height: inherit;
+                        text-decoration: none;
+                        border-radius: 15px;">Clic para reestablecer tu contraseña</a>
+            </div>
+            </div>
+            <br>
+            <footer style="color: white; padding: 9px 15px;
+        background-color: #3898EC; border-radius: 15px;">
+        ROPDAT TE AGRADECE POR FORMAR PARTE DE NUESTROS MODERADORES</footer>
+        </body>
+        </html>
         `
     });
     console.log("correo enviado con exito: ", info.messageId)

@@ -240,12 +240,12 @@ const buscar = async (req,res) =>{
             return res.status(200).json(busqueda)
         }
         if(epoca === "" && genero === "" && temporada != "" && estiloG != ""){
-            const busqueda = await Publicacion.find({"estilo.temporada": temporada, "estilo.etiloG": estiloG})
+            const busqueda = await Publicacion.find({"estilo.temporada": temporada, "estilo.estiloG": estiloG})
             return res.status(200).json(busqueda)
         }
         //segunda busqueda 
         if(temporada === "" && genero != "" && estiloG != "" && epoca != ""){
-            const busqueda = await Publicacion.find({"estilo.etiloG": estiloG, "estilo.genero": genero, "estilo.epoca": epoca})
+            const busqueda = await Publicacion.find({"estilo.estiloG": estiloG, "estilo.genero": genero, "estilo.epoca": epoca})
             return res.status(200).json(busqueda)
         }
         if(epoca === "" && genero != "" && temporada != "" && estiloG != ""){
@@ -257,7 +257,7 @@ const buscar = async (req,res) =>{
             return res.status(200).json(busqueda)
         }
         if(genero === "" && temporada != "" && estiloG != "" && epoca != ""){
-            const busqueda = await Publicacion.find({"estilo.etiloG": estiloG, "estilo.temporada": temporada, "estilo.epoca": epoca})
+            const busqueda = await Publicacion.find({"estilo.estiloG": estiloG, "estilo.temporada": temporada, "estilo.epoca": epoca})
             return res.status(200).json(busqueda)
         }
         //Tercera busqueda
