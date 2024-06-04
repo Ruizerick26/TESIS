@@ -72,11 +72,15 @@ const BorrarPublicacion = async(req,res)=>{
 
     const publicacion = await Publicacion.findById(id)
     if(!publicacion) return res.status(404).json({msg:"No se a encontrado la publicación"})
+
+    const favoritos = await Favoritos.find({idPublicacion:id})
+
+    for(let i=0; i< favoritos.length; i++){
+        await Favoritos.findByIdAndDelete(favoritos[i]._id)
+    }
     
     await Publicacion.findByIdAndDelete(id)
     await deleteImage(publicacion.imagen.public_id)
-
-    
 
     res.status(200).json({msg:"Publicación borrada"})
 }
