@@ -50,7 +50,7 @@ router.delete('/publicacion/eliminarFavoritos/:id',verificarAutentication,verifi
 router.get('/publicaciones/misFavoritos/:id',verificarAutentication,verFavoritos)
 
 //Busqueda
-router.get('/busqueda', buscar)
+router.post('/busqueda', buscar)
 
 
 export default router
