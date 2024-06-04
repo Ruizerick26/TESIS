@@ -3,7 +3,7 @@ import Moderador from '../models/Moderador.js'
 import Reportes from "../models/Reportes.js"
 import mongoose from "mongoose"
 import generarJWT from "../helpers/crearJWT.js"
-import {sendMailtoNewModer, sendMailToRecoveryPassword, sendMailtoBloqueo,sendMailtoRestring, sendMailtoDeletePublic} from '../config/nodemailer.js'
+import {sendMailtoNewModer, sendMailToRecoveryPassword, sendMailtoBloqueo,sendMailtoRestring, sendMailtoDeletePublic, sendMailtoDesbloq, sendMailtoDesReg} from '../config/nodemailer.js'
 import Publicacion from "../models/Publicacion.js"
 import {deleteImage} from "../config/cloudinary.js"
 
@@ -123,6 +123,8 @@ const desbloquearU = async(req,res) =>{
     if(!usuario) return res.status(200).json({msg:"usuario no encontrado"})
 
     usuario.bloqueo = false
+    
+    await sendMailtoDesbloq(usuario.email)
     await usuario.save()
 
     res.status(200).json({msg:"Usuario Desbloqueado"})
@@ -135,6 +137,7 @@ const desRestrinU = async(req,res) =>{
     if(!usuario) return res.status(200).json({msg:"usuario no encontrado"})
 
     usuario.restriccion = false
+    await sendMailtoDesReg(usuario.email)
     await usuario.save()
 
     res.status(200).json({msg:"Usuario sin renstricción"})
@@ -148,13 +151,13 @@ const eliminarPublicacion = async(req,res) =>{
     const reporte = await Reportes.findById(id).select("-status -__v -token -updatedAt -createdAt")
     if(!reporte) return res.status(404).json({msg:"no se encontro el reporte"})
 
-    const idP = await Publicacion.findById(reporte.idPublicacion).select("_id")
+    const idP = await Publicacion.findById(reporte.idPublicacion)
     const user = await Usuario.findById(idP.usuarioID)
+
     const email = user.email
-    const url = idP.imagen.secure_url
     const motivo = reporte.motivo
 
-    await sendMailtoDeletePublic(email,url,motivo)
+    await sendMailtoDeletePublic(email,motivo)
     await Publicacion.findByIdAndDelete(idP)
     await deleteImage(idP.imagen.public_id)
 

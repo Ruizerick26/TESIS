@@ -246,7 +246,7 @@ const sendMailtoRestring = async(userMail) =>{
     console.log("correo enviado con exito: ", info.messageId)
 }
 
-const sendMailtoDeletePublic = async(userMail,img, motivo) =>{
+const sendMailtoDeletePublic = async(userMail, motivo) =>{
     let info =await transporter.sendMail({
         from: 'Adminmoderador@ropdat.com',
         to: userMail,
@@ -265,11 +265,72 @@ const sendMailtoDeletePublic = async(userMail,img, motivo) =>{
             <div style="width: auto;">
                 <p class = "paragraph" style="text-align: center;">PUBLICACIÓN BORRADA <br><br> 
                 Una publicación infringe los terminos <br> y condiciones de nuesta app.</p>
-                <img src="${img}" width="60%">
                 <p><b>MOTIVO: ${motivo}</b></p>
                 <p>Dado lo sucedido dicha publicación sera borrada.</p>
                 <p>Le informaremos de su sanción en un próximo correo</p>
                 <p>Esperamos que no vuelva a reincidir en estas conductas</p>
+                <br>
+            </div>
+            </div>
+        </body>
+        </html>
+        `
+    });
+    console.log("correo enviado con exito: ", info.messageId)
+}
+const sendMailtoDesbloq = async(userMail) =>{
+    let info =await transporter.sendMail({
+        from: 'Adminmoderador@ropdat.com',
+        to: userMail,
+        subject: "Cuenta Desbloqueda",
+        html:`
+        <!DOCTYPE html>
+        <html lang: "en">
+        <body>
+        <center>
+        <div style="
+            border: 1px dashed #000; 
+            border-radius: 20px;  
+            width: auto;">
+        <h1 style="font-family: Merriweather, serif;">FashionGEC</h1>
+        <img src= "https://res.cloudinary.com/dscr8kr95/image/upload/v1717376783/wmbcpenc67vp4msrouzb.jpg" loading="lazy" width = "150" sizes = "150px" alt = ""  style= "border-radius: 100px; ">
+            <div style="width: auto;">
+                <p class = "paragraph" style="text-align: center;">CUENTA DESBLOQUEADA <br><br> 
+                Felicidades, despues de analizar su caso hemos decidido<br>
+                desbloquear su cuenta.</p>
+                <pSu cuenta funcionara normal despues de 1 día de desbloqueada</p>
+                <p>Durante ese día su cuenta estara en modo restringido</p>
+                <p>Recuerde no volver a infringir nuestros terminos y condiciones</p>
+                <br>
+            </div>
+            </div>
+        </body>
+        </html>
+        `
+    });
+    console.log("correo enviado con exito: ", info.messageId)
+}
+const sendMailtoDesReg = async(userMail) =>{
+    let info =await transporter.sendMail({
+        from: 'Adminmoderador@ropdat.com',
+        to: userMail,
+        subject: "Su cuenta ya no esta restringida",
+        html:`
+        <!DOCTYPE html>
+        <html lang: "en">
+        <body>
+        <center>
+        <div style="
+            border: 1px dashed #000; 
+            border-radius: 20px;  
+            width: auto;">
+        <h1 style="font-family: Merriweather, serif;">FashionGEC</h1>
+        <img src= "https://res.cloudinary.com/dscr8kr95/image/upload/v1717376783/wmbcpenc67vp4msrouzb.jpg" loading="lazy" width = "150" sizes = "150px" alt = ""  style= "border-radius: 100px; ">
+            <div style="width: auto;">
+                <p class = "paragraph" style="text-align: center;">CUENTA sin restricciones<br><br> 
+                Felicidades, el tiempo de restrincción de su cuenta a finalizado</p>
+                <pYa puede usar su cuenta de forma normal</p>
+                <p>Recuerde no volver a infringir nuestros terminos y condiciones</p>
                 <br>
             </div>
             </div>
@@ -288,5 +349,7 @@ export {
     sendMailtoRecoveryModer,
     sendMailtoBloqueo,
     sendMailtoRestring,
-    sendMailtoDeletePublic
+    sendMailtoDeletePublic,
+    sendMailtoDesbloq,
+    sendMailtoDesReg
 }
