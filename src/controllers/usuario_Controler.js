@@ -1,7 +1,7 @@
 import Usuario from '../models/Usuario.js'
 import generarJWT from '../helpers/crearJWT.js'
 import mongoose from 'mongoose'
-import { sendMailToUser, sendMailToRecoveryPassword, sendMailtoBloqueo,sendMailtoRestring } from '../config/nodemailer.js'
+import { sendMailToUser, sendMailToRecoveryPassword,sendMailtoDeletePublic } from '../config/nodemailer.js'
 import moment from 'moment'
 import Publicacion from '../models/Publicacion.js'
 import {deleteImage, uploadImageP} from '../config/cloudinary.js'
@@ -92,7 +92,7 @@ const recuperaCon = async (req,res)=>{
     const UsuarioBDD = await Usuario.findOne({email})
     if(!UsuarioBDD) return res.status(404).json({msg:"Lo sentimos, Correo no registrado"})
     
-    const token = UsuarioBDD.crearToken()
+    const token = Math.random().toString(36).substring(2,8)
     UsuarioBDD.token = token
 
     await sendMailToRecoveryPassword(email,token)
@@ -102,27 +102,23 @@ const recuperaCon = async (req,res)=>{
 }
 
 
-const comprobarRecuperacion = async(req,res)=>{
-
-    if(!(req.params.token)) return res.status(404).json({msg:"Lo sentimos, no se puede validar la cuenta"})
-    const UsuarioBDD = await Usuario.findOne({token:req.params.token})
-    if(UsuarioBDD?.token !== req.params.token) return res.status(404).json({msg:"Lo sentimos, no se puede validar la cuenta"})
-    await UsuarioBDD.save()
-    res.status(200).json({msg:"Token confirmado, ya puedes crear tu nuevo password"}) 
-}
-
 
 const nuevaContraseña = async(req,res)=>{
-    const{password,confirmpassword} = req.body
+    const{codigo,password,confirmpassword} = req.body
 
     Object.entries(Object.values(req.body)).length ===0 ? console.log("esta vacio"):console.log("esta lleno")
     if (Object.entries(Object.values(req.body)).length ===0) return res.status(404).json({msg:"Lo sentimos, debes llenar todos los campos"})
 
+        
+    const UsuarioBDD = await Usuario.findOne({token:codigo})
+
+    console.log(UsuarioBDD)
+   
+    if(!UsuarioBDD.token === codigo) return res.status(404).json({msg:"Lo sentimos el codigo, es incorrecto"})
+    
+    
     if(password != confirmpassword) return res.status(404).json({msg:"Lo sentimos, los passwords no coinciden"})
-    
-    const UsuarioBDD = await Usuario.findOne({token:req.params.token})
-    if(UsuarioBDD?.token !== req.params.token) return res.status(404).json({msg:"Lo sentimos, no se puede validar la cuenta"})
-    
+            
     UsuarioBDD.token = null
     UsuarioBDD.password = await UsuarioBDD.encrypPassword(password)
     await UsuarioBDD.save()
@@ -210,7 +206,7 @@ const actualizarFoto = async(req,res) =>{
 const enviarCorreo = async(req,res) =>{
     const {email,url,motivo} = req.body
     
-    await sendMailtoRestring(email,url,motivo)
+    await sendMailtoDeletePublic(email,url,motivo)
     res.status(200).json({msg:"correo enviado"})
 }
 
@@ -219,7 +215,6 @@ export {
     login,
     confirmemail,
     recuperaCon,
-    comprobarRecuperacion,
     nuevaContraseña,
     actualizarPassword,
     perfil,

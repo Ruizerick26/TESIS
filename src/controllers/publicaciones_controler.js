@@ -210,72 +210,77 @@ const buscar = async (req,res) =>{
     const {temporada, genero, estiloG, epoca} = req.body
 
     console.log(genero)
+    console.log(temporada)
+    console.log(estiloG)
+    console.log(epoca)
     if(temporada === "" && genero === "" && estiloG === "" && epoca === "" ){
         const busqueda = await Publicacion.find({})
         return res.status(200).json(busqueda)
     }else{
         if(temporada != "" && genero != "" && estiloG != "" && epoca != ""){
             const busqueda = await Publicacion.find({"estilo.temporada": temporada, "estilo.genero": genero, "estilo.estiloG":estiloG, "estilo.epoca":epoca})
-            return res.status(200).json(busqueda)
+            console.log("ENTRO")
+            console.log(busqueda)
+            return res.status(200).json({busqueda})
         }
         //primero busqueda
         if(temporada === "" && genero === "" && estiloG != "" && epoca != ""){
             const busqueda = await Publicacion.find({"estilo.estiloG":estiloG, "estilo.epoca":epoca})
-            return res.status(200).json(busqueda)
+            return res.status(200).json({busqueda})
         }
         if(estiloG === "" && epoca === "" && temporada != "" && genero != ""){
             const busqueda = await Publicacion.find({"estilo.temporada": temporada, "estilo.genero": genero})
-            return res.status(200).json(busqueda)
+            return res.status(200).json({busqueda})
         }
         if(temporada === "" && epoca === "" && estiloG != "" && genero != ""){
             const busqueda = await Publicacion.find({"estilo.estiloG": estiloG, "estilo.genero": genero})
-            return res.status(200).json(busqueda)
+            return res.status(200).json({busqueda})
         }
         if(estiloG === "" && genero === "" && temporada != "" && epoca != ""){
             const busqueda = await Publicacion.find({"estilo.temporada": temporada, "estilo.epoca": epoca})
-            return res.status(200).json(busqueda)
+            return res.status(200).json({busqueda})
         }
         if(temporada === "" && estiloG === "" && epoca != "" && genero != ""){
             const busqueda = await Publicacion.find({"estilo.epoca": epoca, "estilo.genero": genero})
-            return res.status(200).json(busqueda)
+            return res.status(200).json({busqueda})
         }
         if(epoca === "" && genero === "" && temporada != "" && estiloG != ""){
             const busqueda = await Publicacion.find({"estilo.temporada": temporada, "estilo.estiloG": estiloG})
-            return res.status(200).json(busqueda)
+            return res.status(200).json({busqueda})
         }
         //segunda busqueda 
         if(temporada === "" && genero != "" && estiloG != "" && epoca != ""){
             const busqueda = await Publicacion.find({"estilo.estiloG": estiloG, "estilo.genero": genero, "estilo.epoca": epoca})
-            return res.status(200).json(busqueda)
+            return res.status(200).json({busqueda})
         }
         if(epoca === "" && genero != "" && temporada != "" && estiloG != ""){
             const busqueda = await Publicacion.find({"estilo.temporada": temporada, "estilo.genero": genero, "estilo.estiloG": estiloG})
-            return res.status(200).json(busqueda)
+            return res.status(200).json({busqueda})
         }
         if(estiloG === "" && genero != "" && temporada != "" && epoca != ""){
             const busqueda = await Publicacion.find({"estilo.temporada": temporada, "estilo.genero": genero, "estilo.epoca": epoca})
-            return res.status(200).json(busqueda)
+            return res.status(200).json({busqueda})
         }
         if(genero === "" && temporada != "" && estiloG != "" && epoca != ""){
             const busqueda = await Publicacion.find({"estilo.estiloG": estiloG, "estilo.temporada": temporada, "estilo.epoca": epoca})
-            return res.status(200).json(busqueda)
+            return res.status(200).json({busqueda})
         }
         //Tercera busqueda
         if(temporada != "" && epoca === "" && estiloG === "" && genero === ""){
             const busqueda = await Publicacion.find({"estilo.temporada":temporada})
-            return res.status(200).json(busqueda)
+            return res.status(200).json({busqueda})
         }
         if(temporada === "" && epoca != "" && estiloG === "" && genero === ""){
             const busqueda = await Publicacion.find({"estilo.epoca": epoca})
-            return res.status(200).json(busqueda)
+            return res.status(200).json({busqueda})
         }
         if(temporada === "" && epoca === "" && estiloG != "" && genero === ""){
             const busqueda = await Publicacion.find({"estilo.estiloG":estiloG})
-            return res.status(200).json(busqueda)
+            return res.status(200).json({busqueda})
         }
         if(temporada === "" && epoca === "" && estiloG === "" && genero != ""){
             const busqueda = await Publicacion.find({"estilo.genero" :genero})
-            return res.status(200).json(busqueda)
+            return res.status(200).json({busqueda})
         }
     }
 }

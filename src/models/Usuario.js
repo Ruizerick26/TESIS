@@ -71,6 +71,19 @@ usuarioSchema.methods.matchPassword = async function(password){
     const response = await bcrypt.compare(password,this.password)
     return response
 }
+//encriptar token
+
+usuarioSchema.methods.encrypToken = async function(token){
+    const salt = await bcrypt.genSalt(10)
+    const passwordEncryp = await bcrypt.hash(token,salt)
+    return passwordEncryp
+}
+
+//comparar el token con la base
+usuarioSchema.methods.matchToken = async function(token){
+    const response = await bcrypt.compare(token,this.token)
+    return response
+}
 
 //crear token
 usuarioSchema.methods.crearToken = function(){

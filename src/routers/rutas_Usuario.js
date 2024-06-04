@@ -4,7 +4,6 @@ import {
     login,
     confirmemail,
     recuperaCon,
-    comprobarRecuperacion,
     nuevaContraseña,
     actualizarPassword,
     perfil,
@@ -26,8 +25,8 @@ router.post('/login', verificarBloqueo, login)
 router.post('/register',validacionFormulario, register)
 router.get('/confirmar/:token', confirmemail)
 router.post('/recuperar', recuperaCon)
-router.get('/recuperar/:token', comprobarRecuperacion)
-router.post('/nuevopasword',validacionContraU, nuevaContraseña)
+//router.get('/recuperar/:token', comprobarRecuperacion)
+router.post('/nuevopassword',validacionContraU, nuevaContraseña)
 
 //ruta para probar correos
 router.post('/enviarcorreo',enviarCorreo)

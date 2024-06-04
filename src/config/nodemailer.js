@@ -84,13 +84,13 @@ const sendMailToRecoveryPassword = async(userMail,token)=>{
                 width: auto;">
                 <p class = "paragraph" style="text-align: center;">RECUPERACIÓN DE CUENTA <br><br> Si has olvidado tu contraseña <br><br> ingresa el siguiente codigo <br><br> en la aplicación para <br><br> restablecer tu contraseña</p>
                 <br>
-                <a href="${process.env.URL_BACKEND}recuperar-password/${token}" class = "w-botton" style="display: inline-block;
+                <p class = "w-botton" style="display: inline-block;
                         padding: 9px 15px;
                         background-color: #3898EC;
                         color: white;
                         line-height: inherit;
                         text-decoration: none;
-                        border-radius: 15px;">Confimar cuenta</a>
+                        border-radius: 15px;">${token}</p>
             </div>
         </div>
         </body>
@@ -231,11 +231,45 @@ const sendMailtoRestring = async(userMail) =>{
         <img src= "https://res.cloudinary.com/dscr8kr95/image/upload/v1717376783/wmbcpenc67vp4msrouzb.jpg" loading="lazy" width = "150" sizes = "150px" alt = ""  style= "border-radius: 100px; ">
             <div style="width: auto;">
                 <p class = "paragraph" style="text-align: center;">CUENTA RESTRINGIDA <br><br> 
-                Una publicación infringe los terminos <br> y condiciones de nuesta app.</p>
+                Has infringido en los terminos y condiciones de nuesta app.</p>
                 <p>Tu cuenta estara restingida <br> por cierto tiempo </p>
                 <p>Revisa tus notificaciones para <br> ver el tiempo de restricción </p>
                 <p>No podras interactuar con las publicaciones</p>
                 <p>No podras publicar, ni reportar </p>
+                <br>
+            </div>
+            </div>
+        </body>
+        </html>
+        `
+    });
+    console.log("correo enviado con exito: ", info.messageId)
+}
+
+const sendMailtoDeletePublic = async(userMail,img, motivo) =>{
+    let info =await transporter.sendMail({
+        from: 'Adminmoderador@ropdat.com',
+        to: userMail,
+        subject: "Publicación Borrada",
+        html:`
+        <!DOCTYPE html>
+        <html lang: "en">
+        <body>
+        <center>
+        <div style="
+            border: 1px dashed #000; 
+            border-radius: 20px;  
+            width: auto;">
+        <h1 style="font-family: Merriweather, serif;">FashionGEC</h1>
+        <img src= "https://res.cloudinary.com/dscr8kr95/image/upload/v1717376783/wmbcpenc67vp4msrouzb.jpg" loading="lazy" width = "150" sizes = "150px" alt = ""  style= "border-radius: 100px; ">
+            <div style="width: auto;">
+                <p class = "paragraph" style="text-align: center;">PUBLICACIÓN BORRADA <br><br> 
+                Una publicación infringe los terminos <br> y condiciones de nuesta app.</p>
+                <img src="${img}" width="60%">
+                <p><b>MOTIVO: ${motivo}</b></p>
+                <p>Dado lo sucedido dicha publicación sera borrada.</p>
+                <p>Le informaremos de su sanción en un próximo correo</p>
+                <p>Esperamos que no vuelva a reincidir en estas conductas</p>
                 <br>
             </div>
             </div>
@@ -253,5 +287,6 @@ export {
     sendMailtoNewModer,
     sendMailtoRecoveryModer,
     sendMailtoBloqueo,
-    sendMailtoRestring
+    sendMailtoRestring,
+    sendMailtoDeletePublic
 }
