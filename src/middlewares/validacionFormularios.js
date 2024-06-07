@@ -103,7 +103,7 @@ const validacionActualizar =[
         .customSanitizer(value => value?.trim()),
 
     check("descripcion")
-    .isLength({ min: 10,max: 150 })
+    .isLength({ max: 150 })
         .withMessage('El campo "Descripcion" debe tener un máximo de 150 caracteres')
     .customSanitizer(value => value?.trim()),
 
