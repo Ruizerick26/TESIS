@@ -219,7 +219,7 @@ const buscar = async (req,res) =>{
     console.log(epoca)
     if(temporada === null && genero === null && estiloG === null && epoca === null ){
         const busqueda = await Publicacion.find({})
-        return res.status(200).json(busqueda)
+        return res.status(200).json({busqueda})
     }else{
         if(temporada != null && genero != null && estiloG != null && epoca != null){
             const busqueda = await Publicacion.find({"estilo.temporada": temporada, "estilo.genero": genero, "estilo.estiloG":estiloG, "estilo.epoca":epoca})
