@@ -6,7 +6,7 @@ import generarJWT from "../helpers/crearJWT.js"
 import {sendMailtoNewModer, sendMailToRecoveryPassword, sendMailtoBloqueo,sendMailtoRestring, sendMailtoDeletePublic, sendMailtoDesbloq, sendMailtoDesReg} from '../config/nodemailer.js'
 import Publicacion from "../models/Publicacion.js"
 import {deleteImage} from "../config/cloudinary.js"
-
+import Favoritos from "../models/Favoritos.js"
 
 const registrar = async(req,res) =>{
 
@@ -157,6 +157,12 @@ const eliminarPublicacion = async(req,res) =>{
     const email = user.email
     const motivo = reporte.motivo
 
+    const favoritos = await Favoritos.find({idPublicacion:idP._id})
+
+    for(let i=0; i< favoritos.length; i++){
+        await Favoritos.findByIdAndDelete(favoritos[i]._id)
+    }
+
     await sendMailtoDeletePublic(email,motivo)
     await Publicacion.findByIdAndDelete(idP)
     await deleteImage(idP.imagen.public_id)
@@ -164,7 +170,7 @@ const eliminarPublicacion = async(req,res) =>{
     reporte.estado = "Resuelto"
 
     await reporte.save()
-    res.status(200).json({msg:"Publicación Bloqueada"})
+    res.status(200).json({msg:"Publicación Eliminada"})
 }
 const falsoReporte = async(req,res) =>{
     const {id} = req.params
