@@ -23,6 +23,7 @@ import {registrar,
 import verificarAutentication from '../middlewares/autentication.js'
 import verificarModerador from '../middlewares/moderadorSuper.js'
 import {validacionModerador,validacionContra,validacionContraU} from '../middlewares/validacionFormularios.js'
+import {verNotificacionM} from '../controllers/notificacion_controler.js'
 
 
 const router = Router()
@@ -39,6 +40,7 @@ router.put('/actualizar/moderador/:id',verificarAutentication,validacionContra,a
 //rutas para ver todos los usaurios y todos los reportes
 router.get('/listar/usuarios',verificarAutentication,usuarios)
 router.get('/moderador/reportes',verificarAutentication,nReportes) 
+router.get('/moderador/notificaciones',verificarAutentication,verNotificacionM)
 
 //rutas para ver los reportes de un usuario o un reporte en concreto
 router.get('/moderador/reportes/:id',verificarAutentication,usuarioReportes)

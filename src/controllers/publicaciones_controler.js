@@ -5,7 +5,7 @@ import {uploadImage, deleteImage} from '../config/cloudinary.js'
 import fs from "fs-extra";
 import Favoritos from "../models/Favoritos.js";
 import Reportes from "../models/Reportes.js";
-
+import {crearNotifiacionL,crearNotifiacionDL,crearNotifiacionReporte, crearNotifiacionModerador} from '../config/notificacio.js'
 
 const publicacionesGlobales = async(req,res)=>{
     const publicacionBDD = await Publicacion.find({}).select("imagen descripcion usuarioID likes dislike estilo nombre")
@@ -93,6 +93,8 @@ const AgregarLike = async (req,res)=>{
     
     publicacion.likes = publicacion.likes + 1;
 
+    await crearNotifiacionL(publicacion.usuarioID)
+
     await publicacion.save()
 
     res.status(200).json({msg:"Diste like"})
@@ -104,6 +106,7 @@ const AgregarDislike = async (req,res)=>{
     if(!publicacion) return res.status(404).json({msg:"No se econtro la publicación"})
     
     publicacion.dislike = publicacion.dislike + 1;
+    await crearNotifiacionDL(publicacion.usuarioID)
 
     await publicacion.save()
 
@@ -204,6 +207,9 @@ const reporte = async(req,res) =>{
 
     nuevoReporte.idPublicacion = id
     nuevoReporte.usuarioId = idUser.usuarioID
+
+    await crearNotifiacionReporte(idUser.usuarioID)
+    await crearNotifiacionModerador()
 
     console.log(nuevoReporte)
     await nuevoReporte.save()

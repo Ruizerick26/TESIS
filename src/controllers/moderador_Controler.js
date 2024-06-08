@@ -7,6 +7,7 @@ import {sendMailtoNewModer, sendMailToRecoveryPassword, sendMailtoBloqueo,sendMa
 import Publicacion from "../models/Publicacion.js"
 import {deleteImage} from "../config/cloudinary.js"
 import Favoritos from "../models/Favoritos.js"
+import {crearNotifiacionRes} from '../config/notificacio.js'
 
 const registrar = async(req,res) =>{
 
@@ -104,11 +105,14 @@ const bloquearU = async(req,res) =>{
 const RestrinU = async(req,res) =>{
 
     const {id} = req.params
+    const {tiempo} = req.body
 
     const usuario = await Usuario.findById(id).select("-status -__v -token -updatedAt -createdAt")
     if(!usuario) return res.status(200).json({msg:"usuario no encontrado"})
 
     usuario.restriccion = true
+
+    await crearNotifiacionRes(id,tiempo)
     await sendMailtoRestring(usuario.email)
     await usuario.save()
 

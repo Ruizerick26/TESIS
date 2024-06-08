@@ -15,6 +15,7 @@ import verificarAutentication  from '../middlewares/autentication.js'
 import upload from '../middlewares/multer.js'
 import {validacionFormulario,validacionPublicacion,validacionContraU,validacionActualizar} from '../middlewares/validacionFormularios.js'
 import {verificarBloqueo} from '../middlewares/bloqueosUsuarios.js'
+import {verNotifiacionU} from '../controllers/notificacion_controler.js'  
 
    
 const router = Router()
@@ -37,6 +38,6 @@ router.put('/usuario/actualizarPassword',verificarAutentication,validacionContra
 router.get('/usuario/:id',verificarAutentication, perfil)
 router.put('/usuario/:id',verificarAutentication, validacionActualizar, actualizarPerfil)
 router.put('/usuario/foto/:id',upload.single('image'),validacionPublicacion,actualizarFoto)
-
+router.get('/usuario/notificaciones/:id',verificarAutentication,verNotifiacionU)
 
 export default router
