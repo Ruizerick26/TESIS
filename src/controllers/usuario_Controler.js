@@ -130,14 +130,14 @@ const nuevaContraseña = async(req,res)=>{
 const actualizarPassword = async(req,res)=>{
     const {passwordactual,password} = req.body
 
-    const UsuarioBDD = await Usuario.findById(req.UsuarioBDD._id)
-    if(!UsuarioBDD) return res.status(404).json({msg:`Lo sentimos, no existe el Usuario ${id}`})
+    const usuarioBDD = await Usuario.findById(req.usuarioBDD._id)
+    if(!usuarioBDD) return res.status(404).json({msg:`Lo sentimos, no existe el Usuario ${id}`})
 
-    const verificarPassword = await UsuarioBDD.matchPassword(passwordactual)
+    const verificarPassword = await usuarioBDD.matchPassword(passwordactual)
     if(!verificarPassword) return res.status(404).json({msg:"Lo sentimos, el password actual no es el correcto"})
 
-    UsuarioBDD.password = await UsuarioBDD.encrypPassword(password)
-    await UsuarioBDD.save()
+    usuarioBDD.password = await usuarioBDD.encrypPassword(password)
+    await usuarioBDD.save()
     res.status(200).json({msg:"Password actualizado correctamente"})
 }
 const perfil = async(req,res)=>{
