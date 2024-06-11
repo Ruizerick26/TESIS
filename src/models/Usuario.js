@@ -52,6 +52,9 @@ const usuarioSchema = new Schema({
         type: String,
         maxlength: 150,
         default: "Describe tu perfil"
+    },
+    fechaCodigo:{
+        type: Date
     }
 
 },{

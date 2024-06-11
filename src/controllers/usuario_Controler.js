@@ -92,8 +92,13 @@ const recuperaCon = async (req,res)=>{
     const UsuarioBDD = await Usuario.findOne({email})
     if(!UsuarioBDD) return res.status(404).json({msg:"Lo sentimos, Correo no registrado"})
     
+    if(UsuarioBDD.token != null) return res.status(404).json({msg:"Ya tienes un código de recuperacion en tu correo"})
+    
     const token = Math.random().toString(36).substring(2,8)
     UsuarioBDD.token = token
+    const fechaN = moment(Date.now())
+    UsuarioBDD.fechaCodigo = fechaN
+    console.log(moment(fechaN).format('LLL'))
 
     await sendMailToRecoveryPassword(email,token)
     await UsuarioBDD.save()
@@ -112,8 +117,18 @@ const nuevaContraseña = async(req,res)=>{
         
     const UsuarioBDD = await Usuario.findOne({token:codigo})
 
-    console.log(UsuarioBDD)
-   
+    if(UsuarioBDD === null) return res.status(404).json({msg:"Este código en invalido"})
+
+    const verfecha = moment(UsuarioBDD.fechaCodigo).add(24,"hours").format('LLL')
+    const fechab = moment(Date.now()).format('LLL')
+
+
+    if(verfecha < fechab){
+        UsuarioBDD.token = null
+        UsuarioBDD.save()
+        return res.status(404).json({msg:"Lo sentimos el código a caducado, vuelve a enviar tu correo para restablecer tu contraseña"})
+    }
+
     if(!UsuarioBDD.token === codigo) return res.status(404).json({msg:"Lo sentimos el codigo, es incorrecto"})
     
     

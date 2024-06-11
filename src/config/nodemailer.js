@@ -91,6 +91,7 @@ const sendMailToRecoveryPassword = async(userMail,token)=>{
                         line-height: inherit;
                         text-decoration: none;
                         border-radius: 15px;">${token}</p>
+                <p>Este código es valido por 24 horas</p>
             </div>
         </div>
         </body>
