@@ -5,7 +5,7 @@ import {uploadImage, deleteImage} from '../config/cloudinary.js'
 import fs from "fs-extra";
 import Favoritos from "../models/Favoritos.js";
 import Reportes from "../models/Reportes.js";
-import {crearNotifiacionL,crearNotifiacionDL,crearNotifiacionReporte, crearNotifiacionModerador} from '../config/notificacio.js'
+import {crearNotifiacionL,crearNotifiacionDL, crearNotifiacionModerador} from '../config/notificacio.js'
 
 const publicacionesGlobales = async(req,res)=>{
     const publicacionBDD = await Publicacion.find({}).select("imagen descripcion usuarioID likes dislike estilo nombre")
@@ -93,7 +93,9 @@ const AgregarLike = async (req,res)=>{
     
     publicacion.likes = publicacion.likes + 1;
 
-    await crearNotifiacionL(publicacion.usuarioID)
+    const usuarioA = await Usuario.findById(req.usuarioBDD._id) 
+
+    await crearNotifiacionL(usuarioA.nombre,publicacion.imagen.secure_url,publicacion.usuarioID)
 
     await publicacion.save()
 
@@ -106,7 +108,10 @@ const AgregarDislike = async (req,res)=>{
     if(!publicacion) return res.status(404).json({msg:"No se econtro la publicación"})
     
     publicacion.dislike = publicacion.dislike + 1;
-    await crearNotifiacionDL(publicacion.usuarioID)
+
+    const usuarioA = await Usuario.findById(req.usuarioBDD._id) 
+
+    await crearNotifiacionDL(usuarioA.nombre,publicacion.imagen.secure_url,publicacion.usuarioID)
 
     await publicacion.save()
 
@@ -191,7 +196,6 @@ const verFavoritos = async (req,res) =>{
 
 const reporte = async(req,res) =>{
     const {id} = req.params
-    const {motivo,detalle} = req.body
 
     if( !mongoose.Types.ObjectId.isValid(id) ) return res.status(404).json({msg:`Lo sentimos, debe ser un id válido`});
     
@@ -201,15 +205,17 @@ const reporte = async(req,res) =>{
     const buscarP = await Publicacion.findById(id)
     if(!buscarP) return res.status(404).json({msg:"No se a encontrado la publicación"})
 
-    const idUser = await Publicacion.findById(id).select("usuarioID")
+    const idUser = await Publicacion.findById(id)
 
     const nuevoReporte = await Reportes(req.body)
+
+    const Reportante = await Usuario.findById(req.usuarioBDD._id)
 
     nuevoReporte.idPublicacion = id
     nuevoReporte.usuarioId = idUser.usuarioID
 
-    await crearNotifiacionReporte(idUser.usuarioID)
-    await crearNotifiacionModerador()
+    //enviar notifiacion a moderadores
+    await crearNotifiacionModerador(idUser.nombre, Reportante.nombre)
 
     console.log(nuevoReporte)
     await nuevoReporte.save()

@@ -9,6 +9,12 @@ const NotiSchema = new Schema({
         type: String,
         trim: true
     },
+    nombreE:{
+        type: String
+    },
+    urlPu:{
+        type: String
+    },
     usuarioID:{
         type: mongoose.Schema.Types.ObjectId,
         ref: "usuario"
@@ -18,4 +24,4 @@ const NotiSchema = new Schema({
     timestamps: true
 })
 
-export default model("Notificacion", NotiSchema )
+export default model("NotificacionU", NotiSchema )

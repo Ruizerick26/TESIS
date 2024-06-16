@@ -18,7 +18,9 @@ import {registrar,
         RestrinU,
         cambio,
         desbloquearU,
-        desRestrinU
+        desRestrinU,
+        verUsuarioNoC,
+        borrarUsuarioN
 } from '../controllers/moderador_Controler.js'
 import verificarAutentication from '../middlewares/autentication.js'
 import verificarModerador from '../middlewares/moderadorSuper.js'
@@ -41,11 +43,13 @@ router.put('/actualizar/moderador/:id',verificarAutentication,validacionContra,a
 router.get('/listar/usuarios',verificarAutentication,usuarios)
 router.get('/moderador/reportes',verificarAutentication,nReportes) 
 router.get('/moderador/notificaciones',verificarAutentication,verNotificacionM)
+router.get('/listar/usuario/noconfirmado',verificarAutentication,verUsuarioNoC)
+router.delete('/borrar/usuario/No',verificarAutentication,borrarUsuarioN)
 
 //rutas para ver los reportes de un usuario o un reporte en concreto
 router.get('/moderador/reportes/:id',verificarAutentication,usuarioReportes)
 router.get('/reporte/unico/:id',verificarAutentication,reporte)
-
+ 
 //rutas para sancionar al usuario 
 router.put('/bloquear/usuario/:id',verificarAutentication,bloquearU) 
 router.put('/restringir/usuario/:id',verificarAutentication,RestrinU)

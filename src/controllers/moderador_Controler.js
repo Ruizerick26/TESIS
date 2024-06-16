@@ -313,6 +313,24 @@ const nuevaContraseña = async(req,res)=>{
     
     res.status(200).json({msg:"Felicitaciones, ya puedes iniciar sesión con tu nuevo password"}) 
 }
+
+const verUsuarioNoC= async(req,res)=>{
+    const usuarioN = await Usuario.find({}).where('confirmar').equals(false)
+    res.status(200).json(usuarioN)
+}
+const borrarUsuarioN = async(req,res) =>{
+    const {id} = req.params
+
+    if( !mongoose.Types.ObjectId.isValid(id) ) return res.status(404).json({msg:`Lo sentimos, debe ser un id válido`});
+
+    const user = await Usuario.findByIdAndDelete(id)
+    if(!user) return res.status(404).json({msg:"Usuario no encontrado"})
+
+    res.status(200).json({msg:"Usuario borrado"})
+
+}
+
+
 export{
     registrar,
     login,
@@ -333,5 +351,7 @@ export{
     falsoReporte,
     cambio,
     desbloquearU,
-    desRestrinU
+    desRestrinU,
+    verUsuarioNoC,
+    borrarUsuarioN
 }
