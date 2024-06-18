@@ -3,7 +3,7 @@ import Moderador from '../models/Moderador.js'
 import Reportes from "../models/Reportes.js"
 import mongoose from "mongoose"
 import generarJWT from "../helpers/crearJWT.js"
-import {sendMailtoNewModer, sendMailToRecoveryPassword, sendMailtoBloqueo,sendMailtoRestring, sendMailtoDeletePublic, sendMailtoDesbloq, sendMailtoDesReg} from '../config/nodemailer.js'
+import {sendMailtoNewModer,sendMailtoRecoveryModer, sendMailToRecoveryPassword, sendMailtoBloqueo,sendMailtoRestring, sendMailtoDeletePublic, sendMailtoDesbloq, sendMailtoDesReg} from '../config/nodemailer.js'
 import Publicacion from "../models/Publicacion.js"
 import {deleteImage} from "../config/cloudinary.js"
 import Favoritos from "../models/Favoritos.js"
@@ -277,9 +277,8 @@ const recuperaCon = async (req,res)=>{
     
     const token = moderadorBDD.crearToken()
     moderadorBDD.token = token
-    console.log(token)
 
-    await sendMailToRecoveryPassword(email,token)
+    await sendMailtoRecoveryModer(email,token)
     await moderadorBDD.save()
 
     res.status(200).json({msg:"Revisa tu correo para restablecer tu contraseña"})

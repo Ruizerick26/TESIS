@@ -44,7 +44,7 @@ router.get('/listar/usuarios',verificarAutentication,usuarios)
 router.get('/moderador/reportes',verificarAutentication,nReportes) 
 router.get('/moderador/notificaciones',verificarAutentication,verNotificacionM)
 router.get('/listar/usuario/noconfirmado',verificarAutentication,verUsuarioNoC)
-router.delete('/borrar/usuario/No',verificarAutentication,borrarUsuarioN)
+router.delete('/borrar/usuario/No/:id',verificarAutentication,borrarUsuarioN)
 
 //rutas para ver los reportes de un usuario o un reporte en concreto
 router.get('/moderador/reportes/:id',verificarAutentication,usuarioReportes)
