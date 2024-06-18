@@ -11,6 +11,10 @@ const publicacionesGlobales = async(req,res)=>{
     const publicacionBDD = await Publicacion.find({}).select("imagen descripcion usuarioID likes dislike estilo nombre")
     res.status(200).json(publicacionBDD)
 } 
+const publicacionesGlobalesF = async(req,res)=>{
+    const publicacionBDD = await Publicacion.find({}).select("imagen descripcion usuarioID likes dislike estilo nombre")
+    res.status(200).json(publicacionBDD)
+} 
 const publicar = async(req,res)=>{
 
     const {descripcion, temporada, epoca, genero,estiloG} = req.body
@@ -309,6 +313,7 @@ const buscar = async (req,res) =>{
 
 export {
     publicacionesGlobales,
+    publicacionesGlobalesF,
     publicar,
     actualizarPublicacion,
     publicacionUnica,

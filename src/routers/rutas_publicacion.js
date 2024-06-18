@@ -13,7 +13,8 @@ import {
     EliminarFavorito,
     reporte,
     verFavoritos,
-    buscar
+    buscar,
+    publicacionesGlobalesF
 } from '../controllers/publicaciones_controler.js'
 import verificarAutentication from "../middlewares/autentication.js"
 import upload from '../middlewares/multer.js'
@@ -25,6 +26,7 @@ const router = Router()
 
 //Rutas publicas
 router.get('/publicaciones',verificarAutentication, verificarB,publicacionesGlobales)
+router.get('/publicacionesF',publicacionesGlobalesF)
 
 
 //rutas privadas
