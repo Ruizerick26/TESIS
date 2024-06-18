@@ -14,8 +14,9 @@ import {
 import verificarAutentication  from '../middlewares/autentication.js'
 import upload from '../middlewares/multer.js'
 import {validacionFormulario,validacionPublicacion,validacionContraU,validacionActualizar} from '../middlewares/validacionFormularios.js'
-import {verificarBloqueo} from '../middlewares/bloqueosUsuarios.js'
-import {verNotifiacionU} from '../controllers/notificacion_controler.js'  
+import {verificarBloqueo, verificarB} from '../middlewares/bloqueosUsuarios.js'
+import {verNotifiacionU} from '../controllers/notificacion_controler.js'
+  
 
    
 const router = Router()
@@ -35,9 +36,9 @@ router.post('/enviarcorreo',enviarCorreo)
 
 //rutas PRIVADAS
 router.put('/usuario/actualizarPassword',verificarAutentication,validacionContraU, actualizarPassword)
-router.get('/usuario/:id',verificarAutentication, perfil)
+router.get('/usuario/:id',verificarAutentication,verificarB, perfil)
 router.put('/usuario/:id',verificarAutentication, validacionActualizar, actualizarPerfil)
 router.put('/usuario/foto/:id',upload.single('image'),validacionPublicacion,actualizarFoto)
-router.get('/usuario/notificaciones/:id',verificarAutentication,verNotifiacionU)
+router.get('/usuario/notificaciones/:id',verificarAutentication,verificarB,verNotifiacionU)
 
 export default router

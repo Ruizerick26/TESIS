@@ -18,18 +18,18 @@ import {
 import verificarAutentication from "../middlewares/autentication.js"
 import upload from '../middlewares/multer.js'
 import {validacionPublicacion, validacionReporte} from '../middlewares/validacionFormularios.js'
-import {verificarRestrin} from '../middlewares/bloqueosUsuarios.js'
+import {verificarRestrin, verificarB} from '../middlewares/bloqueosUsuarios.js'
 
 
 const router = Router()
 
 //Rutas publicas
-router.get('/publicaciones',publicacionesGlobales)
+router.get('/publicaciones',verificarAutentication, verificarB,publicacionesGlobales)
 
 
 //rutas privadas
 //ya restringido
-router.post('/publicar',upload.single('image'),verificarAutentication,verificarRestrin,validacionPublicacion,publicar)
+router.post('/publicar',upload.single('image'),verificarAutentication,verificarB,verificarRestrin,validacionPublicacion,publicar)
 router.put('/publicar/actualizar/:id',verificarAutentication,verificarRestrin,validacionPublicacion,actualizarPublicacion)
 //sin restringir no necesario
 router.get('/publicar/:id',verificarAutentication, publicacionUnica)
