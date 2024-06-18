@@ -50,6 +50,9 @@ const login = async (req,res)=>{
     const UsuarioBDD = await Usuario.findOne({email}).select("-status -__v -token -updatedAt -createdAt")
     if(!UsuarioBDD) return res.status(404).json({msg:"Usuario no registrado"})
 
+    UsuarioBDD.token = null
+    UsuarioBDD.fechaCodigo = null
+
     if(UsuarioBDD?.confirmar === false) return res.status(404).json({msg:"Debes confirmar tu cuenta primero"})
 
     const VerificarPassword = await UsuarioBDD.matchPassword(password)
@@ -57,6 +60,8 @@ const login = async (req,res)=>{
 
     const token = generarJWT(UsuarioBDD._id,"usuario")
     const {nombre,apellido,_id,fechaNacimiento} = UsuarioBDD
+
+    UsuarioBDD.save()
 
     res.status(200).json({
         token,
@@ -135,6 +140,7 @@ const nuevaContraseña = async(req,res)=>{
     if(password != confirmpassword) return res.status(404).json({msg:"Lo sentimos, los passwords no coinciden"})
             
     UsuarioBDD.token = null
+    UsuarioBDD.fechaCodigo = null
     UsuarioBDD.password = await UsuarioBDD.encrypPassword(password)
     await UsuarioBDD.save()
     
