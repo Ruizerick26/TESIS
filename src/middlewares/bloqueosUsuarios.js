@@ -31,7 +31,7 @@ const verificarBloqueo = async (req,res,next) => {
 const verificarB = async (req,res,next)=>{
     try{
         const usuario = await Usuario.findById(req.usuarioBDD._id)
-        if(usuario.bloqueo === true) return res.status(404).json({msg:"Usuario Bloqueado"})
+        if(usuario.bloqueo === true) return res.status(200).json({msg:"Usuario Bloqueado"})
         if(usuario.bloqueo === false) return next()
     }catch(error){
         console.log(error)
