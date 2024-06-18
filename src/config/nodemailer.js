@@ -22,7 +22,7 @@ const sendMailToUser = (userMail, token) => {
         html: `
         <!DOCTYPE html>
         <html lang: "en">
-        <body>
+        <body style="background-color: #d8e1fe;">
         <center>
         <div 
         style="
@@ -30,7 +30,7 @@ const sendMailToUser = (userMail, token) => {
             border-radius: 20px;  
             width: auto;">
         <h1 style="font-family: Merriweather, serif;">FashionGEC</h1>
-        <img src= "https://res.cloudinary.com/dscr8kr95/image/upload/v1717376783/wmbcpenc67vp4msrouzb.jpg" loading="lazy" width = "150" sizes = "150px" alt = ""  style= "border-radius: 100px; ">
+        <img src= "https://res.cloudinary.com/dscr8kr95/image/upload/v1718677464/fcoz58o1vldauxokmjyl.jpg" loading="lazy" width = "150" sizes = "150px" alt = ""  style= "border-radius: 100px; ">
             <div 
             style="
                 width: auto;">
@@ -70,7 +70,7 @@ const sendMailToRecoveryPassword = async(userMail,token)=>{
     html: `
     <!DOCTYPE html>
         <html lang: "en">
-        <body>
+        <body style="background-color: #d8e1fe;">
         <center>
         <div 
         style="
@@ -78,7 +78,7 @@ const sendMailToRecoveryPassword = async(userMail,token)=>{
             border-radius: 20px;  
             width: auto;">
         <h1 style="font-family: Merriweather, serif;">FashionGEC</h1>
-        <img src= "https://res.cloudinary.com/dscr8kr95/image/upload/v1717376783/wmbcpenc67vp4msrouzb.jpg" loading="lazy" width = "150" sizes = "150px" alt = ""  style= "border-radius: 100px; ">
+        <img src= "https://res.cloudinary.com/dscr8kr95/image/upload/v1718677464/fcoz58o1vldauxokmjyl.jpg" loading="lazy" width = "150" sizes = "150px" alt = ""  style= "border-radius: 100px; ">
             <div 
             style="
                 width: auto;">
@@ -109,7 +109,7 @@ const sendMailtoNewModer = async(userMail,password,codigo) =>{
         html:`
         <!DOCTYPE html>
         <html lang: "en">
-        <body>
+        <body style="background-color: #d8e1fe;">
         <center>
         <div 
         style="
@@ -117,7 +117,7 @@ const sendMailtoNewModer = async(userMail,password,codigo) =>{
             border-radius: 20px;  
             width: auto;">
         <h1 style="font-family: Merriweather, serif;">FashionGEC</h1>
-        <img src= "https://res.cloudinary.com/dscr8kr95/image/upload/v1717376783/wmbcpenc67vp4msrouzb.jpg" loading="lazy" width = "150" sizes = "150px" alt = ""  style= "border-radius: 100px; ">
+        <img src= "https://res.cloudinary.com/dscr8kr95/image/upload/v1718677464/fcoz58o1vldauxokmjyl.jpg" loading="lazy" width = "150" sizes = "150px" alt = ""  style= "border-radius: 100px; ">
             <div 
             style="
                 width: auto;">
@@ -155,14 +155,14 @@ const sendMailtoRecoveryModer = async(userMail,token) =>{
         html:`
         <!DOCTYPE html>
         <html lang: "en">
-        <body>
+        <body style="background-color: #d8e1fe;">
         <center>
         <div style="
             border: 1px dashed #000; 
             border-radius: 20px;  
             width: auto;">
         <h1 style="font-family: Merriweather, serif;">FashionGEC</h1>
-        <img src= "https://res.cloudinary.com/dscr8kr95/image/upload/v1717376783/wmbcpenc67vp4msrouzb.jpg" loading="lazy" width = "150" sizes = "150px" alt = ""  style= "border-radius: 100px; ">
+        <img src= "https://res.cloudinary.com/dscr8kr95/image/upload/v1718677464/fcoz58o1vldauxokmjyl.jpg" loading="lazy" width = "150" sizes = "150px" alt = ""  style= "border-radius: 100px; ">
             <div style="width: auto;">
                 <p class = "paragraph" style="text-align: center;">RECUPERACIÓN DE CUENTA <br><br> Si has olvidado tu contraseña <br> ingresa al siguiente enlace para <br> restablecer tu contraseña</p>
                 <br>
@@ -194,14 +194,14 @@ const sendMailtoBloqueo = async(userMail) =>{
         html:`
         <!DOCTYPE html>
         <html lang: "en">
-        <body>
+        <body style="background-color: #d8e1fe;">
         <center>
         <div style="
             border: 1px dashed #000; 
             border-radius: 20px;  
             width: auto;">
         <h1 style="font-family: Merriweather, serif;">FashionGEC</h1>
-        <img src= "https://res.cloudinary.com/dscr8kr95/image/upload/v1717376783/wmbcpenc67vp4msrouzb.jpg" loading="lazy" width = "150" sizes = "150px" alt = ""  style= "border-radius: 100px; ">
+        <img src= "https://res.cloudinary.com/dscr8kr95/image/upload/v1718677464/fcoz58o1vldauxokmjyl.jpg" loading="lazy" width = "150" sizes = "150px" alt = ""  style= "border-radius: 100px; ">
             <div style="width: auto;">
                 <p class = "paragraph" style="text-align: center;">CUENTA BLOQUEADA <br><br> Has cometido diversas infracciones <br> dentro del aplicativo. <br> Tu cuenta estara bloqueda <br> indefinidamente </p>
                 <br>
@@ -222,14 +222,14 @@ const sendMailtoRestring = async(userMail) =>{
         html:`
         <!DOCTYPE html>
         <html lang: "en">
-        <body>
+        <body style="background-color: #d8e1fe;">
         <center>
         <div style="
             border: 1px dashed #000; 
             border-radius: 20px;  
             width: auto;">
         <h1 style="font-family: Merriweather, serif;">FashionGEC</h1>
-        <img src= "https://res.cloudinary.com/dscr8kr95/image/upload/v1717376783/wmbcpenc67vp4msrouzb.jpg" loading="lazy" width = "150" sizes = "150px" alt = ""  style= "border-radius: 100px; ">
+        <img src= "https://res.cloudinary.com/dscr8kr95/image/upload/v1718677464/fcoz58o1vldauxokmjyl.jpg" loading="lazy" width = "150" sizes = "150px" alt = ""  style= "border-radius: 100px; ">
             <div style="width: auto;">
                 <p class = "paragraph" style="text-align: center;">CUENTA RESTRINGIDA <br><br> 
                 Has infringido en los terminos y condiciones de nuesta app.</p>
@@ -255,14 +255,14 @@ const sendMailtoDeletePublic = async(userMail, motivo) =>{
         html:`
         <!DOCTYPE html>
         <html lang: "en">
-        <body>
+        <body style="background-color: #d8e1fe;">
         <center>
         <div style="
             border: 1px dashed #000; 
             border-radius: 20px;  
             width: auto;">
         <h1 style="font-family: Merriweather, serif;">FashionGEC</h1>
-        <img src= "https://res.cloudinary.com/dscr8kr95/image/upload/v1717376783/wmbcpenc67vp4msrouzb.jpg" loading="lazy" width = "150" sizes = "150px" alt = ""  style= "border-radius: 100px; ">
+        <img src= "https://res.cloudinary.com/dscr8kr95/image/upload/v1718677464/fcoz58o1vldauxokmjyl.jpg" loading="lazy" width = "150" sizes = "150px" alt = ""  style= "border-radius: 100px; ">
             <div style="width: auto;">
                 <p class = "paragraph" style="text-align: center;">PUBLICACIÓN BORRADA <br><br> 
                 Una publicación infringe los terminos <br> y condiciones de nuesta app.</p>
@@ -287,14 +287,14 @@ const sendMailtoDesbloq = async(userMail) =>{
         html:`
         <!DOCTYPE html>
         <html lang: "en">
-        <body>
+        <body style="background-color: #d8e1fe;">
         <center>
         <div style="
             border: 1px dashed #000; 
             border-radius: 20px;  
             width: auto;">
         <h1 style="font-family: Merriweather, serif;">FashionGEC</h1>
-        <img src= "https://res.cloudinary.com/dscr8kr95/image/upload/v1717376783/wmbcpenc67vp4msrouzb.jpg" loading="lazy" width = "150" sizes = "150px" alt = ""  style= "border-radius: 100px; ">
+        <img src= "https://res.cloudinary.com/dscr8kr95/image/upload/v1718677464/fcoz58o1vldauxokmjyl.jpg" loading="lazy" width = "150" sizes = "150px" alt = ""  style= "border-radius: 100px; ">
             <div style="width: auto;">
                 <p class = "paragraph" style="text-align: center;">CUENTA DESBLOQUEADA <br><br> 
                 Felicidades, despues de analizar su caso hemos decidido<br>
@@ -319,14 +319,14 @@ const sendMailtoDesReg = async(userMail) =>{
         html:`
         <!DOCTYPE html>
         <html lang: "en">
-        <body>
+        <body style="background-color: #d8e1fe;">
         <center>
         <div style="
             border: 1px dashed #000; 
             border-radius: 20px;  
             width: auto;">
         <h1 style="font-family: Merriweather, serif;">FashionGEC</h1>
-        <img src= "https://res.cloudinary.com/dscr8kr95/image/upload/v1717376783/wmbcpenc67vp4msrouzb.jpg" loading="lazy" width = "150" sizes = "150px" alt = ""  style= "border-radius: 100px; ">
+        <img src= "https://res.cloudinary.com/dscr8kr95/image/upload/v1718677464/fcoz58o1vldauxokmjyl.jpg" loading="lazy" width = "150" sizes = "150px" alt = ""  style= "border-radius: 100px; ">
             <div style="width: auto;">
                 <p class = "paragraph" style="text-align: center;">CUENTA sin restricciones<br><br> 
                 Felicidades, el tiempo de restrincción de su cuenta a finalizado</p>

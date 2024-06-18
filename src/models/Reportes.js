@@ -21,9 +21,8 @@ const Reporte = new Schema ({
         type: String,
         default: "No resuelto"
     },
-    proceso:{
-        type: Boolean,
-        default: false
+    reportante:{
+        type: String
     }
 },
 {

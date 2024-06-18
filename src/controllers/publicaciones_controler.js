@@ -207,12 +207,14 @@ const reporte = async(req,res) =>{
 
     const idUser = await Publicacion.findById(id)
 
-    const nuevoReporte = await Reportes(req.body)
+
+    const nuevoReporte = await Reportes(req.body) 
 
     const Reportante = await Usuario.findById(req.usuarioBDD._id)
 
     nuevoReporte.idPublicacion = id
     nuevoReporte.usuarioId = idUser.usuarioID
+    nuevoReporte.Reportante = Reportante.nombre
 
     //enviar notifiacion a moderadores
     await crearNotifiacionModerador(idUser.nombre, Reportante.nombre)
