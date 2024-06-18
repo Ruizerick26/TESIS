@@ -95,9 +95,8 @@ const AgregarLike = async (req,res)=>{
 
     const usuarioA = await Usuario.findById(req.usuarioBDD._id) 
 
-    if(req.usuarioBDD._id === publicacion.usuarioID){
+    if(usuarioA._id.equals(publicacion.usuarioID)){
         await publicacion.save()
-
         res.status(200).json({msg:"Diste like"})
     }else{
         await crearNotifiacionL(usuarioA.nombre,publicacion.imagen.secure_url,publicacion.usuarioID, usuarioA.fotoperfil.secure_url)

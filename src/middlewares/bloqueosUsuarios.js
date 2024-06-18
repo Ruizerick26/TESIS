@@ -28,6 +28,17 @@ const verificarBloqueo = async (req,res,next) => {
     }
 }
 
+const verificarB = async (req,res,next)=>{
+    try{
+        const usuario = await Usuario.findById(req.usuarioBDD._id)
+        if(usuario.bloqueo === true) return 
+
+
+    }catch(error){
+        console.log(error)
+    }
+}
+
 export {
     verificarBloqueo,
     verificarRestrin
