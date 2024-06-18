@@ -16,7 +16,7 @@ let transporter = nodemailer.createTransport({
 
 const sendMailToUser = (userMail, token) => {
     let mailOptions = {
-        from: "admin@ropdat.com",
+        from: "Enviado por <erick@gmail.com>",
         to: userMail,
         subject: "Verifica tu cuenta",
         html: `
@@ -64,7 +64,7 @@ const sendMailToUser = (userMail, token) => {
 // send mail with defined transport object
 const sendMailToRecoveryPassword = async(userMail,token)=>{
     let info = await transporter.sendMail({
-    from: 'admin@ropdat.com',
+    from: 'Administración de <admin@ropdat.com>',
     to: userMail,
     subject: "Correo para reestablecer tu contraseña",
     html: `
@@ -103,7 +103,7 @@ const sendMailToRecoveryPassword = async(userMail,token)=>{
 
 const sendMailtoNewModer = async(userMail,password,codigo) =>{
     let info =await transporter.sendMail({
-        from: 'Adminmoderador@ropdat.com',
+        from: 'Moderador de <gek@gmail.com>',
         to: userMail,
         subject: "Cuenta moderador registrada",
         html:`
@@ -149,7 +149,7 @@ const sendMailtoNewModer = async(userMail,password,codigo) =>{
 
 const sendMailtoRecoveryModer = async(userMail,token) =>{
     let info =await transporter.sendMail({
-        from: 'Adminmoderador@ropdat.com',
+        from: 'Administración Moderador de <erick@gmail.com>',
         to: userMail,
         subject: "Recuperar contraseña",
         html:`
@@ -188,7 +188,7 @@ const sendMailtoRecoveryModer = async(userMail,token) =>{
 
 const sendMailtoBloqueo = async(userMail) =>{
     let info =await transporter.sendMail({
-        from: 'Adminmoderador@ropdat.com',
+        from: 'Administración de <erick@gmail.com>',
         to: userMail,
         subject: "Cuenta BLOQUEADA",
         html:`
@@ -216,7 +216,7 @@ const sendMailtoBloqueo = async(userMail) =>{
 
 const sendMailtoRestring = async(userMail) =>{
     let info =await transporter.sendMail({
-        from: 'Adminmoderador@ropdat.com',
+        from: 'Administración de <erick@gmail.com>',
         to: userMail,
         subject: "Cuenta RESTRINGIDA",
         html:`
@@ -249,7 +249,7 @@ const sendMailtoRestring = async(userMail) =>{
 
 const sendMailtoDeletePublic = async(userMail, motivo) =>{
     let info =await transporter.sendMail({
-        from: 'Adminmoderador@ropdat.com',
+        from: 'Administración de <erick@gmail.com>',
         to: userMail,
         subject: "Publicación Borrada",
         html:`
@@ -281,7 +281,7 @@ const sendMailtoDeletePublic = async(userMail, motivo) =>{
 }
 const sendMailtoDesbloq = async(userMail) =>{
     let info =await transporter.sendMail({
-        from: 'Adminmoderador@ropdat.com',
+        from: 'Administración de <erick@gmail.com>',
         to: userMail,
         subject: "Cuenta Desbloqueda",
         html:`
@@ -313,7 +313,7 @@ const sendMailtoDesbloq = async(userMail) =>{
 }
 const sendMailtoDesReg = async(userMail) =>{
     let info =await transporter.sendMail({
-        from: 'Adminmoderador@ropdat.com',
+        from: 'Administración de <erick@gmail.com>',
         to: userMail,
         subject: "Su cuenta ya no esta restringida",
         html:`

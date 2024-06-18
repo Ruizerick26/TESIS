@@ -219,9 +219,9 @@ const actualizarFoto = async(req,res) =>{
 }
 
 const enviarCorreo = async(req,res) =>{
-    const {email,motivo} = req.body
+    const {email,token} = req.body
     
-    await sendMailtoDeletePublic(email,motivo)
+    await sendMailToUser(email,token)
     res.status(200).json({msg:"correo enviado"})
 }
 
