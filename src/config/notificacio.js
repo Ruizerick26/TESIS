@@ -3,7 +3,7 @@ import NotificacionM from '../models/NotificacionM.js'
 
 
 //Notificaciones Usuario
-const crearNotifiacionL=async( nombreE, url,id)=>{
+const crearNotifiacionL=async( nombreE, url,id,foto)=>{
     const mensaje = "dio like a tu publicación"
     const tipo = "Noti"
 
@@ -14,28 +14,14 @@ const crearNotifiacionL=async( nombreE, url,id)=>{
     Noti.nombreE = nombreE
     Noti.urlPu= url
     Noti.usuarioID = id
-
-    await Noti.save()
-    console.log("notificación Creada")
-}
-const crearNotifiacionDL=async( nombreE, url,id)=>{
-    const mensaje = "dio dislike a tu publicación"
-    const tipo = "Noti"
-
-    const Noti = new NotificacionU
-
-    Noti.tipo = tipo
-    Noti.mensaje = mensaje
-    Noti.nombreE = nombreE
-    Noti.urlPu= url
-    Noti.usuarioID = id
+    Noti.perfil = foto
 
     await Noti.save()
     console.log("notificación Creada")
 }
 
 //Notificación Moderador 
-const crearNotifiacionModerador=async(reportado,reportante)=>{
+const crearNotifiacionModerador=async(reportado,reportante,id)=>{
     const mensaje = "Nuevo Reporte"
 
     const Noti = new NotificacionM
@@ -43,6 +29,7 @@ const crearNotifiacionModerador=async(reportado,reportante)=>{
     Noti.mensaje = mensaje
     Noti.Reportado = reportado
     Noti.Reportante = reportante
+    Noti.idReportado = id
 
     await Noti.save()
     console.log("notificación Creada")
@@ -67,7 +54,6 @@ const crearNotifiacionRes=async(id,tiempo)=>{
 
 export {
     crearNotifiacionL,
-    crearNotifiacionDL,
     crearNotifiacionModerador,
     crearNotifiacionRes
 }

@@ -5,7 +5,7 @@ import {uploadImage, deleteImage} from '../config/cloudinary.js'
 import fs from "fs-extra";
 import Favoritos from "../models/Favoritos.js";
 import Reportes from "../models/Reportes.js";
-import {crearNotifiacionL,crearNotifiacionDL, crearNotifiacionModerador} from '../config/notificacio.js'
+import {crearNotifiacionL, crearNotifiacionModerador} from '../config/notificacio.js'
 
 const publicacionesGlobales = async(req,res)=>{
     const publicacionBDD = await Publicacion.find({}).select("imagen descripcion usuarioID likes dislike estilo nombre")
@@ -95,11 +95,18 @@ const AgregarLike = async (req,res)=>{
 
     const usuarioA = await Usuario.findById(req.usuarioBDD._id) 
 
-    await crearNotifiacionL(usuarioA.nombre,publicacion.imagen.secure_url,publicacion.usuarioID)
+    if(req.usuarioBDD._id === publicacion.usuarioID){
+        await publicacion.save()
 
-    await publicacion.save()
+        res.status(200).json({msg:"Diste like"})
+    }else{
+        await crearNotifiacionL(usuarioA.nombre,publicacion.imagen.secure_url,publicacion.usuarioID, usuarioA.fotoperfil.secure_url)
+    
+        await publicacion.save()
+    
+        res.status(200).json({msg:"Diste like"})
+    }
 
-    res.status(200).json({msg:"Diste like"})
 }
 const AgregarDislike = async (req,res)=>{
     const {id} = req.params
@@ -110,8 +117,6 @@ const AgregarDislike = async (req,res)=>{
     publicacion.dislike = publicacion.dislike + 1;
 
     const usuarioA = await Usuario.findById(req.usuarioBDD._id) 
-
-    await crearNotifiacionDL(usuarioA.nombre,publicacion.imagen.secure_url,publicacion.usuarioID)
 
     await publicacion.save()
 
@@ -217,7 +222,7 @@ const reporte = async(req,res) =>{
     nuevoReporte.Reportante = Reportante.nombre
 
     //enviar notifiacion a moderadores
-    await crearNotifiacionModerador(idUser.nombre, Reportante.nombre)
+    await crearNotifiacionModerador(idUser.nombre, Reportante.nombre, req.usuarioBDD._id)
 
     console.log(nuevoReporte)
     await nuevoReporte.save()

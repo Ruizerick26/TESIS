@@ -5,6 +5,10 @@ const NotiSchema = new Schema({
         type: String,
         trim: true
     },
+    idReportado:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "usuario"
+    },
     Reportado:{
         type: String,
         ref: "usuario"

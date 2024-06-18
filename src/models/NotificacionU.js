@@ -18,6 +18,9 @@ const NotiSchema = new Schema({
     usuarioID:{
         type: mongoose.Schema.Types.ObjectId,
         ref: "usuario"
+    },
+    perfil:{
+        type: String
     }
 },
 {

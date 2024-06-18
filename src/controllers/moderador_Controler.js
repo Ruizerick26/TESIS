@@ -8,6 +8,7 @@ import Publicacion from "../models/Publicacion.js"
 import {deleteImage} from "../config/cloudinary.js"
 import Favoritos from "../models/Favoritos.js"
 import {crearNotifiacionRes} from '../config/notificacio.js'
+import NotificacionM from "../models/NotificacionM.js"
 
 const registrar = async(req,res) =>{
 
@@ -173,6 +174,11 @@ const eliminarPublicacion = async(req,res) =>{
 
     reporte.estado = "Resuelto"
 
+    const notificacioM = await NotificacionM.find({idReportado: idP.usuarioID })
+    for(let i=0; i< notificacioM.length; i++){
+        await NotificacionM.findByIdAndDelete(notificacioM[i]._id)
+    }
+
     await reporte.save()
     res.status(200).json({msg:"Publicación Eliminada"})
 }
@@ -181,11 +187,17 @@ const falsoReporte = async(req,res) =>{
 
     const reporte = await Reportes.findById(id).select("-status -__v -token -updatedAt -createdAt")
     if(!reporte) return res.status(404).json({msg:"no se encontro el reporte"})
-
+    const idP = await Publicacion.findById(reporte.idPublicacion)
+    
     reporte.estado = "Resuelto"
 
+    const notificacioM = await NotificacionM.find({idReportado: idP.usuarioID})
+    for(let i=0; i< notificacioM.length; i++){
+        await NotificacionM.findByIdAndDelete(notificacioM[i]._id)
+    }
+
     await reporte.save()
-    res.status(200).json({msg:"Publicación Bloqueada"})
+    res.status(200).json({msg:"Publicación sin sanción"})
 }
 const cambio = async(req,res) =>{
     const {id} = req.params
