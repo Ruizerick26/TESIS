@@ -22,6 +22,8 @@ const verificarAutentication = async (req,res,next)=>{
     }catch(error){
         const e = new Error("Formato de token invalido")
         console.log(e)
+        console.log("////////////////////////")
+        console.log(error)
         return res.status(404).json({msg: e.message})
     }
 }

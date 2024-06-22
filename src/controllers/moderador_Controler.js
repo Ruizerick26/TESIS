@@ -18,7 +18,7 @@ const registrar = async(req,res) =>{
     if (Object.entries(Object.values(req.body)).length ===0) return res.status(404).json({msg:"Lo sentimos, debes llenar todos los campos"}) 
 
     const Bemail = await Moderador.findOne({email})
-    if(Bemail) return res.status(404).json({msg:"moderador registrado"})
+    if(Bemail) return res.status(404).json({msg:"moderador ya registrado"})
     
     const Uemail = await Usuario.findOne({email})
     if(Uemail) return res.status(404).json({msg:"Email registrado en la aplicación"})
