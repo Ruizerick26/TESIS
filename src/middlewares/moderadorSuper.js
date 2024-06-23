@@ -1,4 +1,3 @@
-import Usuario from "../models/Usuario.js";
 import Moderador from "../models/Moderador.js";
 
 const verificarSuper = async(req,res,next) =>{

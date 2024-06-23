@@ -341,6 +341,16 @@ const borrarUsuarioN = async(req,res) =>{
 
 }
 
+const modersN = async (req,res)=>{
+    const moderN = await Moderador.find({})
+    const moderador = []
+    for(let data of moderN){
+        if(data.codigo != null){
+            moderador.push(data)
+        }
+    }
+    res.status(200).json(moderador)
+}
 
 export{
     registrar,
@@ -364,5 +374,6 @@ export{
     desbloquearU,
     desRestrinU,
     verUsuarioNoC,
-    borrarUsuarioN
+    borrarUsuarioN,
+    modersN
 }

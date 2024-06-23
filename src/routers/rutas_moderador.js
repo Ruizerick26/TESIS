@@ -20,12 +20,14 @@ import {registrar,
         desbloquearU,
         desRestrinU,
         verUsuarioNoC,
-        borrarUsuarioN
+        borrarUsuarioN,
+        modersN
 } from '../controllers/moderador_Controler.js'
 import verificarAutentication from '../middlewares/autentication.js'
 import verificarModerador from '../middlewares/moderadorSuper.js'
 import {validacionModerador,validacionContra,validacionContraU} from '../middlewares/validacionFormularios.js'
 import {verNotificacionM} from '../controllers/notificacion_controler.js'
+
 
 
 const router = Router()
@@ -65,6 +67,7 @@ router.put('/cambio/estado/:id',verificarAutentication,cambio)
 router.post('/registrar/moderador',verificarAutentication,verificarModerador,validacionModerador,registrar)
 router.get('/moderadores',verificarAutentication,verificarModerador,moderadores)
 router.delete('/moderador/eliminar/:id',verificarAutentication,verificarModerador,moderadoresEliminar)
+router.get('/moderador/sin/verificar',verificarAutentication,verificarModerador,modersN)
 
 
 export default router
