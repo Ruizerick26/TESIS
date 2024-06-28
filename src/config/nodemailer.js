@@ -5,6 +5,7 @@ dotenv.config()
 //modelo json para almacenar en la base de datos
 let transporter = nodemailer.createTransport({
     service: 'gmail',
+    pool: true,
     host: process.env.HOST_MAILTRAP,
     port: process.env.PORT_MAILTRAP,
     auth: {
