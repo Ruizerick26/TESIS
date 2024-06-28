@@ -138,7 +138,7 @@ const eliminarLike = async (req,res)=>{
     }
     await publicacion.save()
 
-    res.status(200).json({msg:"Diste like"})
+    res.status(200).json({msg:"Eliminar like"})
 }
 const EliminarDislike = async (req,res)=>{
     const {id} = req.params
@@ -153,7 +153,7 @@ const EliminarDislike = async (req,res)=>{
     }
     await publicacion.save()
 
-    res.status(200).json({msg:"Diste dislike"})
+    res.status(200).json({msg:"Eliminar Dislike"})
 }
 
 const agregarFavorito = async (req,res)=>{
