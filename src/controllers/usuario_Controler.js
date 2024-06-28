@@ -158,6 +158,7 @@ const nuevaContraseña = async(req,res)=>{
 
 
 const actualizarPassword = async(req,res)=>{
+    try{
     const {passwordactual,password} = req.body
 
     const usuarioBDD = await Usuario.findById(req.usuarioBDD._id)
@@ -169,6 +170,9 @@ const actualizarPassword = async(req,res)=>{
     usuarioBDD.password = await usuarioBDD.encrypPassword(password)
     await usuarioBDD.save()
     res.status(200).json({msg:"Password actualizado correctamente"})
+    }catch(error){
+        console.log(error)
+    }
 }
 const perfil = async(req,res)=>{
     
