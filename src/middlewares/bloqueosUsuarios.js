@@ -18,6 +18,7 @@ const verificarBloqueo = async (req,res,next) => {
     const {email} = req.body
     try{
         const usuario = await Usuario.findOne({email})
+        if(!usuario) return res.status(404).json({msg:"cuenta no registrada"})
         
         if(usuario.bloqueo === true) return res.status(200).json({msg:"Su cuenta esta bloqueada"})
 

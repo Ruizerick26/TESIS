@@ -47,7 +47,6 @@ const register = async(req,res)=>{
 
 const login = async (req,res)=>{
 
-    try{
     const {email, password} = req.body
 
     Object.entries(Object.values(req.body)).length ===0 ? console.log("esta vacio"):console.log("esta lleno")
@@ -77,9 +76,6 @@ const login = async (req,res)=>{
         fechaNacimiento,
         email: UsuarioBDD.email
     })
-    }catch(error){
-        console.log(error)
-    }
 }
 
 const confirmemail = async (req,res)=>{
