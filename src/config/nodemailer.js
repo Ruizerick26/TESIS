@@ -44,6 +44,7 @@ const sendMailToUser = (userMail, token) => {
                         text-decoration: none;
                         border-radius: 15px;">Confimar cuenta</a>
             </div>
+            <div>Contactanos por correo: fashiongec@gmail.com</div>
         </div>
         </body>
         </html>
@@ -93,6 +94,7 @@ const sendMailToRecoveryPassword = async(userMail,token)=>{
                         border-radius: 15px;">${token}</p>
                 <p>Este código es valido por 24 horas</p>
             </div>
+            <div>Contactanos por correo: fashiongec@gmail.com</div>
         </div>
         </body>
         </html>
@@ -139,7 +141,9 @@ const sendMailtoNewModer = async(userMail,password,codigo) =>{
             <br>
         <footer style="color: white; padding: 9px 15px;
         background-color: #3898EC; border-radius: 15px;">
-        ROPDAT TE AGRADECE POR FORMAR PARTE DE NUESTROS MODERADORES</footer>
+        ROPDAT TE AGRADECE POR FORMAR PARTE DE NUESTROS MODERADORES
+        <div>Contactanos por correo: fashiongec@gmail.com</div>
+        </footer>
         </body>
         </html>
         `
@@ -178,7 +182,9 @@ const sendMailtoRecoveryModer = async(userMail,token) =>{
             <br>
             <footer style="color: white; padding: 9px 15px;
         background-color: #3898EC; border-radius: 15px;">
-        ROPDAT TE AGRADECE POR FORMAR PARTE DE NUESTROS MODERADORES</footer>
+        ROPDAT TE AGRADECE POR FORMAR PARTE DE NUESTROS MODERADORES
+        <div>Contactanos por correo: fashiongec@gmail.com</div>
+        </footer>
         </body>
         </html>
         `
@@ -206,6 +212,7 @@ const sendMailtoBloqueo = async(userMail) =>{
                 <p class = "paragraph" style="text-align: center;">CUENTA BLOQUEADA <br><br> Has cometido diversas infracciones <br> dentro del aplicativo. <br> Tu cuenta estara bloqueda <br> indefinidamente </p>
                 <br>
             </div>
+            <div>Contactanos por correo: fashiongec@gmail.com</div>
             </div>
         </body>
         </html>
@@ -239,6 +246,7 @@ const sendMailtoRestring = async(userMail) =>{
                 <p>No podras publicar, ni reportar </p>
                 <br>
             </div>
+            <div>Contactanos por correo: fashiongec@gmail.com</div>
             </div>
         </body>
         </html>
@@ -272,6 +280,7 @@ const sendMailtoDeletePublic = async(userMail, motivo) =>{
                 <p>Esperamos que no vuelva a reincidir en estas conductas</p>
                 <br>
             </div>
+            <div>Contactanos por correo: fashiongec@gmail.com</div>
             </div>
         </body>
         </html>
@@ -304,6 +313,7 @@ const sendMailtoDesbloq = async(userMail) =>{
                 <p>Recuerde no volver a infringir nuestros terminos y condiciones</p>
                 <br>
             </div>
+            <div>Contactanos por correo: fashiongec@gmail.com</div>
             </div>
         </body>
         </html>
@@ -334,6 +344,7 @@ const sendMailtoDesReg = async(userMail) =>{
                 <p>Recuerde no volver a infringir nuestros terminos y condiciones</p>
                 <br>
             </div>
+            <div>Contactanos por correo: fashiongec@gmail.com</div>
             </div>
         </body>
         </html>

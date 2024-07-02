@@ -3,7 +3,7 @@ import NotificacionM from '../models/NotificacionM.js'
 
 
 //Notificaciones Usuario
-const crearNotifiacionL=async( nombreE, url,id,foto)=>{
+const crearNotifiacionL=async( nombreE, url,id,foto,idP)=>{
     const mensaje = "dio like a tu publicación"
     const tipo = "Noti"
 
@@ -15,6 +15,7 @@ const crearNotifiacionL=async( nombreE, url,id,foto)=>{
     Noti.urlPu= url
     Noti.usuarioID = id
     Noti.perfil = foto
+    Noti.publiID = idP
 
     await Noti.save()
     console.log("notificación Creada")
@@ -47,6 +48,7 @@ const crearNotifiacionRes=async(id,tiempo)=>{
     Noti.usuarioID = id
     Noti.nombreE = null
     Noti.urlPu = null
+    Noti.publiID = null
 
     await Noti.save()
     console.log("notificación Creada")

@@ -6,6 +6,7 @@ import fs from "fs-extra";
 import Favoritos from "../models/Favoritos.js";
 import Reportes from "../models/Reportes.js";
 import {crearNotifiacionL, crearNotifiacionModerador} from '../config/notificacio.js'
+import notifiU from "../models/NotificacionU.js"
 
 const publicacionesGlobales = async(req,res)=>{
     const publicacionBDD = await Publicacion.find({}).select("imagen descripcion usuarioID likes dislike estilo nombre")
@@ -82,6 +83,11 @@ const BorrarPublicacion = async(req,res)=>{
     for(let i=0; i< favoritos.length; i++){
         await Favoritos.findByIdAndDelete(favoritos[i]._id)
     }
+
+    const notiU = await notifiU.find({publiID:id})
+    for(let i=0; i< notiU.length; i++){
+        await notifiU.findByIdAndDelete(notiU[i]._id)
+    }
     
     await Publicacion.findByIdAndDelete(id)
     await deleteImage(publicacion.imagen.public_id)
@@ -103,7 +109,7 @@ const AgregarLike = async (req,res)=>{
         await publicacion.save()
         res.status(200).json({msg:"Diste like"})
     }else{
-        await crearNotifiacionL(usuarioA.nombre,publicacion.imagen.secure_url,publicacion.usuarioID, usuarioA.fotoperfil.secure_url)
+        await crearNotifiacionL(usuarioA.nombre,publicacion.imagen.secure_url,publicacion.usuarioID, usuarioA.fotoperfil.secure_url,id)
     
         await publicacion.save()
     

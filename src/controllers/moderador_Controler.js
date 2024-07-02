@@ -9,6 +9,7 @@ import {deleteImage} from "../config/cloudinary.js"
 import Favoritos from "../models/Favoritos.js"
 import {crearNotifiacionRes} from '../config/notificacio.js'
 import NotificacionM from "../models/NotificacionM.js"
+import notifiU from "../models/NotificacionU.js"
 
 const registrar = async(req,res) =>{
     try{
@@ -170,10 +171,14 @@ const eliminarPublicacion = async(req,res) =>{
     const motivo = reporte.motivo
 
     const favoritos = await Favoritos.find({idPublicacion:idP._id})
-
     for(let i=0; i< favoritos.length; i++){
         await Favoritos.findByIdAndDelete(favoritos[i]._id)
     }
+
+    const notiU = await notifiU.find({publiID:idP._id})
+    for(let i=0; i< notiU.length; i++){
+        await notifiU.findByIdAndDelete(notiU[i]._id)
+    } 
 
     await sendMailtoDeletePublic(email,motivo)
     await Publicacion.findByIdAndDelete(idP)

@@ -15,9 +15,13 @@ const NotiSchema = new Schema({
     urlPu:{
         type: String
     },
+    publiID:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'Publicacion' 
+    },
     usuarioID:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "usuario"
+        ref: "Usuario"
     },
     perfil:{
         type: String
