@@ -38,7 +38,7 @@ router.post('/enviarcorreo',enviarCorreo)
 router.put('/usuario/actualizarPassword',verificarAutentication,validacionContraU, actualizarPassword)
 router.get('/usuario/:id',verificarAutentication,verificarB, perfil)
 router.put('/usuario/:id',verificarAutentication, validacionActualizar, actualizarPerfil)
-router.put('/usuario/foto/:id',upload.single('image'),validacionPublicacion,actualizarFoto)
+router.put('/usuario/foto/:id',upload.single('image'),actualizarFoto)
 router.get('/usuario/notificaciones/:id',verificarAutentication,verificarB,verNotifiacionU)
 
 export default router

@@ -45,6 +45,7 @@ const publicar = async(req,res)=>{
     await publicacion.save()
     res.status(200).json({msg:"Publicado"})
 }
+
 const actualizarPublicacion = async (req,res)=>{
     const {id} = req.params
 

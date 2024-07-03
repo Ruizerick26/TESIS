@@ -31,7 +31,7 @@ router.get('/publicacionesF',publicacionesGlobalesF)
 
 //rutas privadas
 //ya restringido
-router.post('/publicar',upload.single('image'),verificarAutentication,verificarB,verificarRestrin,validacionPublicacion,publicar)
+router.post('/publicar',verificarAutentication,verificarB,verificarRestrin,upload.single('image'),validacionPublicacion,publicar)
 router.put('/publicar/actualizar/:id',verificarAutentication,verificarRestrin,validacionPublicacion,actualizarPublicacion)
 //sin restringir no necesario
 router.get('/publicar/:id',verificarAutentication, publicacionUnica)
