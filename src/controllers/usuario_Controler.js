@@ -10,7 +10,6 @@ import fs from 'fs-extra'
 moment.suppressDeprecationWarnings = true
 
 const register = async(req,res)=>{
-    try{
     const {email,password, fechaNacimiento} = req.body
 
     Object.entries(Object.values(req.body)).length ===0 ? console.log("esta vacio"):console.log("esta lleno")
@@ -40,9 +39,7 @@ const register = async(req,res)=>{
     await nuevoUsuario.save()
 
     res.status(200).json({msg:"Revisa tu correo electronico"})
-    }catch(error){
-        console.log(error)
-    }
+   
 }
 
 const login = async (req,res)=>{

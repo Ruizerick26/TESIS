@@ -12,7 +12,6 @@ import NotificacionM from "../models/NotificacionM.js"
 import notifiU from "../models/NotificacionU.js"
 
 const registrar = async(req,res) =>{
-    try{
     const {email} = req.body
 
     Object.entries(Object.values(req.body)).length ===0 ? console.log("esta vacio"):console.log("esta lleno")
@@ -37,14 +36,9 @@ const registrar = async(req,res) =>{
     await sendMailtoNewModer(email,password,codigo)
     await moderadorN.save()
     return res.status(200).json({msg:"Registrado el moderador"})    
-    }catch(error){
-        console.log(error)
-    }
-
     
 }
 const login = async(req,res) =>{
-    try{
 
     const {email,password} = req.body
 
@@ -71,9 +65,6 @@ const login = async(req,res) =>{
         apellido,
         _id
     })
-    }catch(error){
-        console.log(error)
-    }
 }
 const contraNuevaI = async(req,res) =>{
     const {email,password, passwordnuevo, codigo} = req.body
@@ -165,7 +156,9 @@ const eliminarPublicacion = async(req,res) =>{
     if(!reporte) return res.status(404).json({msg:"no se encontro el reporte"})
 
     const idP = await Publicacion.findById(reporte.idPublicacion)
+    if(!idP) return res.status(404).json({msg:"No se encontro la publicacion"})
     const user = await Usuario.findById(idP.usuarioID)
+    if(!user) return res.status(404).json({msg:"No se encontro el usuario"})
 
     const email = user.email
     const motivo = reporte.motivo
