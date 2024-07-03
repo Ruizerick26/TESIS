@@ -10,6 +10,9 @@ import Favoritos from "../models/Favoritos.js"
 import {crearNotifiacionRes} from '../config/notificacio.js'
 import NotificacionM from "../models/NotificacionM.js"
 import notifiU from "../models/NotificacionU.js"
+import moment from 'moment'
+
+moment.suppressDeprecationWarnings = true 
 
 const registrar = async(req,res) =>{
     const {email} = req.body
@@ -94,7 +97,8 @@ const bloquearU = async(req,res) =>{
     const {id} = req.params
 
     const usuario = await Usuario.findById(id).select("-status -__v -token -updatedAt -createdAt")
-    if(!usuario) return res.status(200).json({msg:"usuario no encontrado"})
+    if(!usuario) return res.status(404).json({msg:"usuario no encontrado"})
+    if(usuario.restriccion === true) return res.status(404).json({msg:"usuario ya bloqueado"})
 
     usuario.bloqueo = true
     await sendMailtoBloqueo(usuario.email)
@@ -108,7 +112,13 @@ const RestrinU = async(req,res) =>{
     const {tiempo} = req.body
 
     const usuario = await Usuario.findById(id).select("-status -__v -token -updatedAt -createdAt")
-    if(!usuario) return res.status(200).json({msg:"usuario no encontrado"})
+    if(!usuario) return res.status(404).json({msg:"usuario no encontrado"})
+    if(usuario.restriccion === true) return res.status(404).json({msg:"usuario ya restringido"})
+
+    const dias = parseInt(tiempo)
+    console.log(dias)
+    const fecha = moment(Date.now()).add(dias,"days").format("LLL")
+    usuario.tiempoR = fecha
 
     usuario.restriccion = true
 
@@ -141,6 +151,7 @@ const desRestrinU = async(req,res) =>{
     if(!usuario) return res.status(200).json({msg:"usuario no encontrado"})
 
     usuario.restriccion = false
+    usuario.tiempoR = null
     await sendMailtoDesReg(usuario.email)
     await usuario.save()
 

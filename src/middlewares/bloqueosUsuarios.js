@@ -1,13 +1,27 @@
 import Usuario from "../models/Usuario.js";
+import moment from "moment";
 
 const verificarRestrin = async(req,res,next) =>{
 
     try{
         const usuarioV = await Usuario.findById(req.usuarioBDD._id).select('-createdAt -updatedAt -__v')
         
-        if(usuarioV.restriccion === true) return res.status(200).json({msg:"Su cuenta esta restringida"})
+        if(usuarioV.tiempoR != null){
+            const tiempo = moment(usuarioV.tiempoR).format("LLL")
+            const ac = moment(Date.now()).format("LLL")
+           
+            if(moment(tiempo).isBefore(ac)) {
+                console.log("entro")
+                usuarioV.restriccion = false
+                await usuarioV.save()
+            }
+        }
 
-        if(usuarioV.restriccion === false) return next()
+        const usuarioA = await Usuario.findById(req.usuarioBDD._id).select('-createdAt -updatedAt -__v')
+
+        if(usuarioA.restriccion === true) return res.status(200).json({msg:"Su cuenta esta restringida"})
+
+        if(usuarioA.restriccion === false) return next()
     }catch(error){
         console.log(error)
         return res.status(404).json({error: error})

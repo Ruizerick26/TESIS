@@ -55,6 +55,10 @@ const usuarioSchema = new Schema({
     },
     fechaCodigo:{
         type: Date
+    },
+    tiempoR:{
+        type: Date,
+        default: null
     }
 },{
     timestamps: true

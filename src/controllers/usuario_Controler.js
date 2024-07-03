@@ -1,7 +1,7 @@
 import Usuario from '../models/Usuario.js'
 import generarJWT from '../helpers/crearJWT.js'
 import mongoose from 'mongoose'
-import { sendMailToUser, sendMailToRecoveryPassword,sendMailtoDeletePublic } from '../config/nodemailer.js'
+import { sendMailToUser, sendMailToRecoveryPassword} from '../config/nodemailer.js'
 import moment from 'moment'
 import Publicacion from '../models/Publicacion.js'
 import {deleteImage, uploadImageP} from '../config/cloudinary.js'
@@ -130,7 +130,7 @@ const nuevaContraseña = async(req,res)=>{
     const fechab = moment(Date.now()).format('LLL')
 
 
-    if(verfecha < fechab){
+    if(moment(verfecha).isBefore(fechab)){
         UsuarioBDD.token = null
         UsuarioBDD.save()
         return res.status(404).json({msg:"Lo sentimos el código a caducado, vuelve a enviar tu correo para restablecer tu contraseña"})
@@ -151,7 +151,6 @@ const nuevaContraseña = async(req,res)=>{
 
 
 const actualizarPassword = async(req,res)=>{
-    try{
     const {passwordactual,password} = req.body
 
     const usuarioBDD = await Usuario.findById(req.usuarioBDD._id)
@@ -163,9 +162,6 @@ const actualizarPassword = async(req,res)=>{
     usuarioBDD.password = await usuarioBDD.encrypPassword(password)
     await usuarioBDD.save()
     res.status(200).json({msg:"Password actualizado correctamente"})
-    }catch(error){
-        console.log(error)
-    }
 }
 const perfil = async(req,res)=>{
     
