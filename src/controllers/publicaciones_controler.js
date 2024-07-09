@@ -126,8 +126,6 @@ const AgregarDislike = async (req,res)=>{
     
     publicacion.dislike = publicacion.dislike + 1;
 
-    const usuarioA = await Usuario.findById(req.usuarioBDD._id) 
-
     await publicacion.save()
 
     res.status(200).json({msg:"Diste dislike"})
