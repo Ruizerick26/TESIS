@@ -15,9 +15,11 @@
 ## Instalación 
 Deberemos instalar la Herramienta Node.js para poder trabajar en este proyecto:
 - Link de la página oficial: [Node.js](https://nodejs.org/en)
+
 Para la instalación del presente Proyecto se requiere los siguientes comandos:
 - Para instalar todas las dependencias:  `npn install `
 - Para ejecutar el proyecto: `npm run dev` o `node --watch src/index.js`
+
 Se debe crear un archivo `.env` en la raiz del proyecto donde se agregaran las variables de entorno (segir el archivo `.env.example`):
 - Credenciales de la base de datos MongoDb Atlas
 - Credenciales de Cloudinary
